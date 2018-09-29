@@ -12,7 +12,7 @@ class Request(BaseModel, AuthoredMixin, CategorizableMixin):
     importance = models.CharField(max_length=255)
     status = models.CharField(max_length=255)
     materials = models.TextField()
-    performer = models.ForeignKey(settings.AUTH_USER_MODEL)
+    performer = models.ForeignKey('core.User', related_name='performer')
 
     def get_author(self):
 
