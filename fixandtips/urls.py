@@ -24,7 +24,12 @@ from request import views as request_views
 
 router = routers.DefaultRouter()
 
+router.register(r'news', news_views.NewsViewSet)
+router.register(r'requests', request_views.RequestViewSet)
+router.register(r'users', core_views.UserViewSet)
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
