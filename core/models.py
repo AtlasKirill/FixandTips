@@ -5,6 +5,8 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
+
+
 # Create your models here.
 
 class BaseModel(models.Model):
@@ -23,10 +25,19 @@ class AuthoredMixin(models.Model):
     class Meta:
         abstract = True
 
+class TitledMixin(models.Model):
+
+    title = models.CharField(max_length=255)
+
+    class Meta:
+        abstract = True
+
 class CategorizableMixin(models.Model):
 
-    category = models.CharField(max_length=255)
+    category = models.ForeignKey('category.Category')
 
+    class Meta:
+        abstract = True
 
 class User(AbstractUser):
 
@@ -42,7 +53,7 @@ class User(AbstractUser):
     flat = models.IntegerField(default=0)
     gender = models.CharField(max_length=1)
     avatar = models.ImageField()
-    role = models.CharField(max_length=255)
+    role = models.ForeignKey('role.Role', default=1)
 
     def get_username(self):
         return self.username

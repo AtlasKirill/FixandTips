@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-from news.models import News
+from category.models import Category
 
 from django.contrib import admin
 
 # Register your models here.
-admin.site.register(News)
+admin.site.register(Category)

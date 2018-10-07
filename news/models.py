@@ -2,9 +2,9 @@
 from __future__ import unicode_literals
 
 from django.db import models
-from core.models import  AuthoredMixin, BaseModel, CategorizableMixin
+from core.models import  AuthoredMixin, BaseModel, TitledMixin
 
-class News(BaseModel, AuthoredMixin, CategorizableMixin):
+class News(BaseModel, AuthoredMixin, TitledMixin):
 
     text = models.TextField()
 

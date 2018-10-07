@@ -1,18 +1,16 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 from django.db import models
-from django.conf import settings
-
-from core.models import  AuthoredMixin, BaseModel, CategorizableMixin
+from status.models import Status
+from core.models import AuthoredMixin, BaseModel, CategorizableMixin
 
 class Request(BaseModel, AuthoredMixin, CategorizableMixin):
 
     description = models.TextField()
-    importance = models.CharField(max_length=255)
-    status = models.CharField(max_length=255)
+    urgency = models.BooleanField(default=False)
+    status = models.ForeignKey(Status)
     materials = models.TextField()
-    performer = models.ForeignKey('core.User', related_name='performer')
+
 
     def get_author(self):
 

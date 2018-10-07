@@ -9,6 +9,6 @@ class RequestSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Request
-        fields = ('author', 'created_at', 'type', 'id', 'is_deleted')
+        fields = ('author', 'created_at', 'category', 'id', 'is_deleted')
 
 

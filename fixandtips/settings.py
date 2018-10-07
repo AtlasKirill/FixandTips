@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'core',
     'news',
     'request',
+    'category',
+    'status',
+    'role',
 ]
 
 AUTH_USER_MODEL = 'core.User'
@@ -82,7 +85,7 @@ WSGI_APPLICATION = 'fixandtips.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'FTDB',
+        'NAME': 'FT_DB',
         'USER': 'lizanoskova',
         'PASSWORD': 'qwert2',
         'HOST': 'localhost',
