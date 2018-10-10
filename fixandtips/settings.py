@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'webpack_loader',
     'core',
     'news',
     'request',
@@ -45,6 +46,19 @@ INSTALLED_APPS = [
     'status',
     'role',
 ]
+
+
+WEBPACK_LOADER = {
+    'DEFAULT': {
+        'CACHE': not DEBUG,
+        'BUNDLE_DIR_NAME': 'webpack_bundles/', # must end with slash
+        'STATS_FILE': os.path.join(BASE_DIR, 'webpack-stats.json'),
+        'POLL_INTERVAL': 0.1,
+        'TIMEOUT': None,
+        'IGNORE': ['.+\.hot-update.js', '.+\.map']
+    }
+}
+
 
 AUTH_USER_MODEL = 'core.User'
 
@@ -58,6 +72,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+
+
+MIDDLEWARE_CLASSES = (
+
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+),
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 ROOT_URLCONF = 'fixandtips.urls'
 
 TEMPLATES = [

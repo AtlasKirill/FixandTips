@@ -22,6 +22,7 @@ from request import views as request_views
 from category import views as category_views
 from status import views as status_views
 from role import views as role_views
+from fixandtips import index
 
 router = routers.DefaultRouter()
 
@@ -35,5 +36,7 @@ router.register(r'roles', role_views.RoleViewSet)
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api/', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^$', index.index, name='index_page'),
+    url(r'^.*?/$', index.index),
 ]
