@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-
+const BundleTracker = require('webpack-bundle-tracker');
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
 module.exports = {
@@ -52,6 +52,11 @@ module.exports = {
     },
 
     devtool: NODE_ENV === 'development' ? 'cheap-inline-module-source-map' : false,
+
+    plugins: [
+        new webpack.NoEmitOnErrorsPlugin(),
+        new BundleTracker({ filename: './webpack-stats.json'}),
+      ],
 };
 
 

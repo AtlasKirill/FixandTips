@@ -1,11 +1,19 @@
 import React from 'react';
-import {render} from 'react-dom';
+import ReactDOM from 'react-dom';
+// import createHistory from 'history/createBrowserHistory';
+// import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
+import App from './components/App.jsx';
+import { BrowserRouter } from 'react-router-dom';
 
-class App extends React.Component {
-  render () {
-    return <p>Hello</p>;
-  }
-}
+// const history = createHistory();
 
-render(<App/>, document.getElementById('root'));
+ReactDOM.render(
+
+      <BrowserRouter>
+            <div>
+                <App />
+            </div>
+      </BrowserRouter>,
+document.getElementById('root'));
+
 
