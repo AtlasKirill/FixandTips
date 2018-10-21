@@ -1,55 +1,59 @@
+import 'typeface-roboto';
 import React from 'react';
 import PropTypes from 'prop-types';
+import {withStyles} from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
-import CardActions from '@material-ui/core/CardActions';
-import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
 import DeleteIcon from '@material-ui/icons/Delete';
-import Button from '@material-ui/core/Button';
-import Grid from '@material-ui/core/Grid';
-import { Link } from 'react-router-dom';
 
-class News extends React.Component{
-   
-    render(){
-       
-        return( 
-            <div>
-            
-                        <Card >
-                            <Grid container spacing={24}>
-                            <CardHeader
-                                action={
-                                    <IconButton>
-                                        <DeleteIcon />
-                                    </IconButton>
-                                }
-                                title="Хим обработка"
-                                subheader="September 14, 2016"
-                            />
-                            <CardContent>
-                                <Typography component="p">
-                                    29 сентября в 12-ом общежитии пройдет химическая обработка
-                                </Typography>
-                            </CardContent>
-                            <CardActions  disableActionSpacing>
-                                <Grid item xs={6}>
-                                    <Button variant="contained" color="secondary">
-                                        Secondary
-                                    </Button>
-                                </Grid>
-                            </CardActions>   
-                            </Grid>
-                            
-                        </Card>
-                   
-        </div>
-    );
-  }
+
+const styles = theme => ({
+    card: {
+        width: '100%',
+        margin: 10,
+    },
+    button: {
+        margin: theme.spacing.unit,
+    },
+});
+
+class News extends React.Component {
+
+
+    render() {
+        const {classes} = this.props;
+
+        return (
+            <Card className={classes.card}>
+                <CardHeader
+                    title="Ремонт окон"
+                    subheader="26.09.2018"
+                />
+
+                <CardContent>
+                    <Typography component="p">
+                        Для всех студентов обязательно!
+                        Если вы обнаружили, что у вас неисправны ручки от окон (не открываются,
+                        не переводятся в вертикальное положение) или другие проблемы,
+                        сообщите об этом в виде заявки в личном кабинете!
+                    </Typography>
+                    <Divider/>
+                </CardContent>
+                <IconButton className={classes.button} aria-label="Delete">
+                    <DeleteIcon/>
+                </IconButton>
+
+            </Card>
+        );
+    }
 }
 
-export default News;
+News.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(News);

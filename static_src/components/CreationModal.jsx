@@ -6,12 +6,50 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import Grid from '@material-ui/core/Grid';
+import Typography from '@material-ui/core/Typography';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 
-export default class RequestCreationModal extends React.Component {
 
+
+
+const styles = theme => ({
+  root: {
+    background: 'white',
+    borderRadius: 20,
+    color: 'black',
+    padding: '0 30px',
+    boxShadow: 'white',
+    border: 'solid',
+    borderWidth: 1,
+  },
+  textField: {
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 400,
+    alignSelf: 'center',
+  },
+  formControl: {
+    margin: theme.spacing.unit * 3,
+  },
+  group: {
+    margin: `${theme.spacing.unit}px 0`,
+  },
+});
+
+
+class NewRequest extends React.Component {
   state = {
     open: false,
+    valueType:'san',
+    valuePriority:'high',
   };
 
   handleClickOpen = () => {
@@ -21,39 +59,88 @@ export default class RequestCreationModal extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   };
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
+  };
+
+
+  handleChangeType = event => {
+    this.setState({ valueType: event.target.value });
+  };
+
+  handleChangePriority = event => {
+    this.setState({ valuePriority: event.target.value });
+  };
 
   render() {
+    const { classes } = this.props;
     return (
       <div>
-        <Paper>
-        <Button onClick={this.handleClickOpen}>Создать заявку</Button>
-        </Paper>
+        <Button onClick={this.handleClickOpen} className={classes.root} >СОЗДАТЬ</Button>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
-          aria-labelledby="form-dialog-title"
+          aria-labelledby="registration-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Создать заявку</DialogTitle>
+          <DialogTitle id="registration-dialog-title" align="center">Создание заявки</DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              To subscribe to this website, please enter your email address here. We will send
-              updates occasionally.
-            </DialogContentText>
+            <DialogContentText align="center">
+              Заполните данные формы
+              </DialogContentText>
             <TextField
-              autoFocus
-              margin="dense"
-              id="name"
-              label="Email Address"
-              type="email"
-              fullWidth
+              id="outlined-multiline-flexible"
+              label="Опишите проблему"
+              multiline
+              rowsMax="4"
+              value={this.state.multiline}
+              onChange={this.handleChange('multiline')}
+              className={classes.textField}
+              margin="normal"
+              helperText="Что сломалось"
+              variant="outlined"
             />
+            <Typography align="center">
+              Выберите тип заявки
+              </Typography>
+            <FormControl component="fieldset" className={classes.formControl}>
+              <RadioGroup
+                aria-label="requestType"
+                name="request"
+                className={classes.group}
+                value={this.state.valueType}
+                onChange={this.handleChangeType}
+              >
+                <FormControlLabel value="san" control={<Radio />} label="Сантехник" />
+                <FormControlLabel value="plot" control={<Radio />} label="Плотник" />
+                <FormControlLabel value="el" control={<Radio />} label="Электрик" />
+                <FormControlLabel value="other" control={<Radio />} label="Другое" />
+              </RadioGroup>
+            </FormControl>
+            <Typography align="center">
+              Выберите приоритет заявки
+              </Typography>
+            <FormControl component="fieldpriority" className={classes.formControl}>
+              <RadioGroup
+                aria-label="requestType"
+                name="priority"
+                className={classes.group}
+                value={this.state.valuePriority}
+                onChange={this.handleChangePriority}
+              >
+                <FormControlLabel value="high" control={<Radio />} label="Срочно" />
+                <FormControlLabel value="low" control={<Radio />} label="Не срочно" />
+              </RadioGroup>
+            </FormControl>
+
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
-              Cancel
+              Отмена
             </Button>
             <Button onClick={this.handleClose} color="primary">
-              Subscribe
+              Создать
             </Button>
           </DialogActions>
         </Dialog>
@@ -61,3 +148,10 @@ export default class RequestCreationModal extends React.Component {
     );
   }
 }
+
+
+NewRequest.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(NewRequest);

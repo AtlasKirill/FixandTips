@@ -8,37 +8,29 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+import Grid from '@material-ui/core/Grid';
 
 
-const styles = theme => ({
+
+const styles = theme =>({
   root: {
-    background: 'white',
-    borderRadius: 20,
-    color: 'black',
+    background: 'grey',
+    borderRadius: 3,
+    border: 0,
+    color: 'white',
     padding: '0 30px',
-    boxShadow: 'white',
-    border: 'solid',
-    borderWidth: 1,
+    boxShadow: 'gray',
   },
   textField: {
-    marginLeft: 5,
-    marginRight: 5,
-    minWidth: '100%',
+    marginLeft: theme.spacing.unit,
+    marginRight: theme.spacing.unit,
+    width: 200,
     alignSelf: 'center',
   },
-  formControl: {
-    margin: theme.spacing.unit * 3,
-  },
-  group: {
-    margin: `${theme.spacing.unit}px 0`,
-  },
-  dialog: {
-    maxWidth: 550,
-  }
 });
 
 
-class NewRequest extends React.Component {
+class RegButton extends React.Component {
   state = {
     open: false,
   };
@@ -50,61 +42,56 @@ class NewRequest extends React.Component {
   handleClose = () => {
     this.setState({ open: false });
   };
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value,
-    });
-  };
-
-
 
 
   render() {
     const { classes } = this.props;
-
     return (
-
       <div>
-        <Button onClick={this.handleClickOpen} className={classes.root}>СОЗДАТЬ</Button>
+        <Button onClick={this.handleClickOpen} className = {classes.root} >Регистрация</Button>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
           aria-labelledby="registration-dialog-title"
-          classes={classes.dialog}
-          maxWidth={"md"}
         >
-          <DialogTitle id="registration-dialog-title" align="center">Создание новости</DialogTitle>
+          <DialogTitle id="registration-dialog-title" align = "center">Регистрация</DialogTitle>
           <DialogContent>
             <DialogContentText align="center">
-              Заполните данные формы
-                        </DialogContentText>
+              Создайте аккаунт в Fix&Tips
+            </DialogContentText>
+            <Grid Grid container spacing={10}>
+            <Grid item md={12}>
             <TextField
-              id="outlined-dense"
-              label="Введите заголовок новости"
+              id="outlined-email-input"
+              label="Email"
               className={classes.textField}
-              margin="dense"
-              variant="outlined"
-            />
-            <TextField
-              id="outlined-multiline-flexible"
-              label="Введите текст новости"
-              multiline
-              rowsMax="4"
-              value={this.state.multiline}
-              onChange={this.handleChange('multiline')}
-              className={classes.textField}
+              type="email"
+              name="email"
+              autoComplete="email"
               margin="normal"
               variant="outlined"
             />
-
+            </Grid>
+              <Grid item md={12}>
+            <TextField
+              id="outlined-password-input"
+              label="Password"
+              className={classes.textField}
+              type="password"
+              autoComplete="current-password"
+              margin="normal"
+              variant="outlined"
+            />
+            </Grid>
+            </Grid>
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
-              Отмена
-                        </Button>
+              Cancel
+            </Button>
             <Button onClick={this.handleClose} color="primary">
-              Создать
-                        </Button>
+              Subscribe
+            </Button>
           </DialogActions>
         </Dialog>
       </div>
@@ -113,8 +100,8 @@ class NewRequest extends React.Component {
 }
 
 
-NewRequest.propTypes = {
+RegButton.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(NewRequest);
+export default withStyles(styles)(RegButton);
