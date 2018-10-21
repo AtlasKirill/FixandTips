@@ -12,9 +12,9 @@ import Grid from '@material-ui/core/Grid';
 
 
 
-const styles = theme =>({
+const styles = theme => ({
   root: {
-    background: 'grey',
+    background: 'inherit',
     borderRadius: 3,
     border: 0,
     color: 'white',
@@ -22,11 +22,11 @@ const styles = theme =>({
     boxShadow: 'gray',
   },
   textField: {
-    marginLeft: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
+    margin: 5,
+    minWidth: '100%',
     alignSelf: 'center',
   },
+
 });
 
 
@@ -48,49 +48,50 @@ class RegButton extends React.Component {
     const { classes } = this.props;
     return (
       <div>
-        <Button onClick={this.handleClickOpen} className = {classes.root} >Регистрация</Button>
+        <Button onClick={this.handleClickOpen} className={classes.root} >Регистрация</Button>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
           aria-labelledby="registration-dialog-title"
+          maxWidth={"md"}
         >
-          <DialogTitle id="registration-dialog-title" align = "center">Регистрация</DialogTitle>
+          <DialogTitle id="registration-dialog-title" align="center">Регистрация</DialogTitle>
           <DialogContent>
             <DialogContentText align="center">
               Создайте аккаунт в Fix&Tips
             </DialogContentText>
             <Grid Grid container spacing={10}>
-            <Grid item md={12}>
-            <TextField
-              id="outlined-email-input"
-              label="Email"
-              className={classes.textField}
-              type="email"
-              name="email"
-              autoComplete="email"
-              margin="normal"
-              variant="outlined"
-            />
-            </Grid>
               <Grid item md={12}>
-            <TextField
-              id="outlined-password-input"
-              label="Password"
-              className={classes.textField}
-              type="password"
-              autoComplete="current-password"
-              margin="normal"
-              variant="outlined"
-            />
-            </Grid>
+                <TextField
+                  id="outlined-email-input"
+                  label="Email"
+                  className={classes.textField}
+                  type="email"
+                  name="email"
+                  autoComplete="email"
+                  margin="normal"
+                  variant="outlined"
+                />
+              </Grid>
+              <Grid item md={12}>
+                <TextField
+                  id="outlined-password-input"
+                  label="Password"
+                  className={classes.textField}
+                  type="password"
+                  autoComplete="current-password"
+                  margin="normal"
+                  variant="outlined"
+                />
+              </Grid>
             </Grid>
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
-              Cancel
+              Отмена
             </Button>
             <Button onClick={this.handleClose} color="primary">
-              Subscribe
+              Зарегистрироваться
             </Button>
           </DialogActions>
         </Dialog>
