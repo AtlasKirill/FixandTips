@@ -7,7 +7,7 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import NewsCreationModal from './NewsCreationModal'
-import FilterPaper from './FilterPaper';
+import Filters from './Filter';
 
 class CommandantPage extends React.Component{
   
@@ -17,7 +17,7 @@ class CommandantPage extends React.Component{
             <div>
                 <Grid container spacing={24}>
                     <Grid item md={6}>
-                        <FilterPaper/> 
+                        <Filters/>
                     </Grid>
                     <Grid item md={6}>
                       

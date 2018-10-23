@@ -95,6 +95,9 @@ class Filters extends React.Component {
         <Button variant="contained" className={classes.button}>
           СРОЧНО
         </Button>
+        <Button variant="contained" className={classes.button}>
+          ВЫПОЛНЕНЫ
+        </Button>
         <Typography variant="overline" gutterBottom className={classes.status}>
           Тип заявок:
       </Typography>
