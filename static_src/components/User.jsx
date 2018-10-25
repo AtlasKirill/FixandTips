@@ -30,15 +30,6 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 
-// const styles = {
-//   card: {
-//     maxWidth: 345,
-//   },
-//   media: {
-//     height: 140,
-//   },
-// };
-
 function User(props) {
   const { classes } = props;
   return (

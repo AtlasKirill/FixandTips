@@ -6,58 +6,125 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
-import Paper from '@material-ui/core/Paper';
+import { withStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
+import apiUrls from './../constants/apiUrls.js';
+import { connect } from 'react-redux';
+import { createNews } from '../actions/news';
+import { bindActionCreators } from 'redux';
 
-export default class NewsCreationModal extends React.Component {
+const styles = theme => ({
+  root: {
+    background: 'white',
+    borderRadius: 20,
+    color: 'black',
+    padding: '0 30px',
+    boxShadow: 'white',
+    border: 'solid',
+    borderWidth: 1,
+  },
+  textField: {
+    marginLeft: 5,
+    marginRight: 5,
+    minWidth: '100%',
+    alignSelf: 'center',
+  },
+  formControl: {
+    margin: theme.spacing.unit * 3,
+  },
+  group: {
+    margin: `${theme.spacing.unit}px 0`,
+  },
+  dialog: {
+    maxWidth: 550,
+  }
+});
 
+
+class NewRequest extends React.Component {
   state = {
     open: false,
+    text: '',
+    title: '',
   };
 
   handleClickOpen = () => {
     this.setState({ open: true });
   };
-
   handleClose = () => {
     this.setState({ open: false });
   };
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
+  };
+  handleClickSubmit = (e) => {
+    console.log('onClick')
+    this.props.createNews(apiUrls.news,{text:this.state.text,title:this.state.title });
+    this.setState({ open: false });
+  };
+
 
   render() {
+    const { classes } = this.props;
+
     return (
+
       <div>
-        <Paper>
-        <Button onClick={this.handleClickOpen}>Создать новость</Button>
-        </Paper>
+        <Button onClick={this.handleClickOpen} className={classes.root}>СОЗДАТЬ</Button>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
-          aria-labelledby="form-dialog-title"
+          aria-labelledby="registration-dialog-title"
+          classes={classes.dialog}
+          maxWidth={"md"}
         >
-          <DialogTitle id="form-dialog-title">Создать новость</DialogTitle>
+          <DialogTitle id="registration-dialog-title" align="center">Создание новости</DialogTitle>
           <DialogContent>
-            <DialogContentText>
-              To subscribe to this website, please enter your email address here. We will send
-              updates occasionally.
-            </DialogContentText>
+            <DialogContentText align="center">
+              Заполните данные формы
+                        </DialogContentText>
             <TextField
-              autoFocus
+              id="outlined-dense"
+              label="Введите заголовок новости"
+              className={classes.textField}
+              value={this.state.title}
+              onChange={this.handleChange('title')}
               margin="dense"
-              id="name"
-              label="Email Address"
-              type="email"
-              fullWidth
+              variant="outlined"
             />
+            <TextField
+              id="outlined-multiline-flexible"
+              label="Введите текст новости"
+              multiline
+              rowsMax="4"
+              value={this.state.text}
+              onChange={this.handleChange('text')}
+              className={classes.textField}
+              margin="normal"
+              variant="outlined"
+            />
+
           </DialogContent>
           <DialogActions>
             <Button onClick={this.handleClose} color="primary">
-              Cancel
-            </Button>
-            <Button onClick={this.handleClose} color="primary">
-              Subscribe
-            </Button>
+              Отмена
+                        </Button>
+            <Button onClick={this.handleClickSubmit} color="primary">
+              Создать
+                        </Button>
           </DialogActions>
         </Dialog>
       </div>
     );
   }
 }
+
+NewRequest.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ createNews }, dispatch)
+}
+export default connect(null,mapDispatchToProps)(withStyles(styles)(NewRequest));

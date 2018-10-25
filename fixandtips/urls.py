@@ -32,6 +32,7 @@ router.register(r'users', core_views.UserViewSet)
 router.register(r'categories', category_views.CategoryViewSet)
 router.register(r'statuses', status_views.StatusViewSet)
 router.register(r'roles', role_views.RoleViewSet)
+router.register(r'session', core_views.SessionUserViewSet, base_name='session')
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

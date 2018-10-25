@@ -1,6 +1,6 @@
 import React from 'react';
-import Request from './Request.jsx';
-import News from './News.jsx';
+import RequestList from './RequestList.jsx';
+import NewsList from './NewsList.jsx';
 import User from './User.jsx';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -14,15 +14,15 @@ class StudentPage extends React.Component{
         return( 
             <div>
                 <Grid container spacing={24}>
-                    <Grid item md={12} justify="center" alignItems="center" >
+                    <Grid item md={12} >
                         <RequestCreationModal/>   
                     </Grid>
                     <Grid item md={6}>
-                        <Request/>
+                        <RequestList/>
                     </Grid>
 
                     <Grid item md={6}>
-                        <News/>
+                        <NewsList/>
                     </Grid>
                 </Grid>
             </div>

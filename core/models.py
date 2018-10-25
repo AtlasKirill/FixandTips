@@ -34,7 +34,8 @@ class TitledMixin(models.Model):
 
 class CategorizableMixin(models.Model):
 
-    category = models.ForeignKey('category.Category')
+    # category = models.ForeignKey('category.Category')
+    category = models.CharField(max_length=255)
 
     class Meta:
         abstract = True

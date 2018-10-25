@@ -57,7 +57,7 @@ function Login(props) {
             <LockIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Login
           </Typography>
           <form className={classes.form}>
             <FormControl margin="normal" required fullWidth>
@@ -84,7 +84,7 @@ function Login(props) {
               color="primary"
               className={classes.submit}
             >
-              Sign in
+              Login
             </Button>
           </form>
         </Paper>
