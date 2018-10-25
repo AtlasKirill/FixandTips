@@ -40,7 +40,7 @@ class NavBar extends React.Component {
                         <Typography variant="h6" color="inherit" className={classes.grow}>
                             Fix&Tips
                         </Typography>
-                        {auth && (
+                        {!auth && (
                             <div>
                                 <RegButton/>
                             </div>

@@ -13,8 +13,9 @@ import DeleteIcon from '@material-ui/icons/Delete';
 
 const styles = theme => ({
     card: {
-        width: '100%',
+        // width: '90%',
         margin: 10,
+        // padding:10,
     },
     button: {
         margin: theme.spacing.unit,
