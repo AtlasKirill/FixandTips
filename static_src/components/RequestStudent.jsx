@@ -23,7 +23,7 @@ import PropTypes from 'prop-types';
 const styles = theme => ({
   card: {
     // maxHeight: 200,
-      margin: 10,
+    margin: 10,
   },
   urgently_button: {
     // ...theme.typography.button,
@@ -78,7 +78,7 @@ const styles = theme => ({
   },
 });
 
-class Request extends React.Component {
+class RequestStudent extends React.Component {
 
   render() {
     const { classes } = this.props;
@@ -87,8 +87,8 @@ class Request extends React.Component {
         <Card className={classes.card}>
           <Grid container spacing={10} >
             <Grid md={6}  >
-              <CardContent classes={{root: classes.content}} >
-                <Typography variant="subtitle2">
+              <CardContent classes={{ root: classes.content }} >
+                <Typography variant="subtitle1">
                   Елизавета Носкова
                 </Typography>
                 <Typography variant="body1" >
@@ -132,22 +132,22 @@ class Request extends React.Component {
                   Tип заявки (тех персонал)
                 </Typography>
                 <Typography variant="body1" >
-                  Электрик
+                  Сантехник
                 </Typography>
               </CardContent>
             </Grid>
             <Grid item md={12}>
               <Divider />
             </Grid>
-            <Grid item md={3} className={classes.content}>
+            <Grid item md={6} className={classes.content}>
               <CardContent classes={{ root: classes.content }}>
                 <Done />
                 <Typography>
-                  ВЫПОЛНЕНА
+                  Отправлена
               </Typography>
               </CardContent>
             </Grid>
-            <Grid item md={3}>
+            <Grid item md={6}>
               <CardContent classes={{ root: classes.content }}>
                 <Paper className={classes.Cancel}>
                   <Typography >
@@ -156,16 +156,6 @@ class Request extends React.Component {
                 </Paper>
               </CardContent>
             </Grid>
-            <Grid item md={5}>
-              <CardContent>
-                <Tooltip title="Delete 'position: absolute;'">
-                  <IconButton aria-label="Delete" className={classes.absolute_delete}>
-                    <DeleteIcon />
-                  </IconButton>
-                </Tooltip>
-              </CardContent>
-            </Grid>
-
           </Grid>
 
         </Card>
@@ -174,7 +164,7 @@ class Request extends React.Component {
     );
   }
 }
-Request.propTypes = {
+RequestStudent.propTypes = {
   classes: PropTypes.object.isRequired,
 };
-export default withStyles(styles)(Request);
+export default withStyles(styles)(RequestStudent);

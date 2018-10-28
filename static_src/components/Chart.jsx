@@ -18,17 +18,17 @@ import TextField from '@material-ui/core/TextField';
 
 
 const data = [
-    {name: '1', Visits: 2200, Orders: 3400},
-    {name: '2', Visits: 1280, Orders: 2398},
-    {name: '3', Visits: 5000, Orders: 4300},
-    {name: '4', Visits: 4780, Orders: 2908},
-    {name: '5', Visits: 5890, Orders: 4800},
-    {name: '6', Visits: 4390, Orders: 3800},
-    {name: '7', Visits: 4490, Orders: 4300},
-    {name: '8', Visits: 4490, Orders: 4300},
-    {name: '9', Visits: 4490, Orders: 4300},
-    {name: '10', Visits: 4490, Orders: 4300},
-    {name: '11', Visits: 5000, Orders: 4300},
+    {name: '1', Электрик: 4, Сантехник: 5, Плотник: 5},
+    {name: '2', Электрик: 2, Сантехник: 1, Плотник: 8},
+    {name: '3', Электрик: 6, Сантехник: 8, Плотник: 13},
+    {name: '4', Электрик: 9, Сантехник: 9, Плотник: 9},
+    {name: '5', Электрик: 3, Сантехник: 12, Плотник: 6},
+    // {name: '6', Visits: 4390, Сантехник: 3800},
+    // {name: '7', Visits: 4490, Сантехник: 4300},
+    // {name: '8', Visits: 4490, Сантехник: 4300},
+    // {name: '9', Visits: 4490, Сантехник: 4300},
+    // {name: '10', Visits: 4490, Сантехник: 4300},
+    // {name: '11', Visits: 5000, Сантехник: 4300},
 ];
 
 
@@ -71,6 +71,9 @@ const styles = theme => ({
         marginRight: theme.spacing.unit,
         width: 200,
     },
+    head: {
+        marginTop: theme.spacing.unit * 2,
+    },
 });
 
 class Chart extends React.Component {
@@ -90,14 +93,14 @@ class Chart extends React.Component {
         return (
             <React.Fragment>
 
-                <Typography variant="h4" gutterBottom align="center">
-                    Оперативная информация
+                <Typography variant="h4" gutterBottom className={classes.head}>
+                    Статистика
                 </Typography>
-                <Typography variant="overline" gutterBottom className={classes.status} align="center">
+                <Typography variant="overline" gutterBottom className={classes.status}>
                     Статус:
                 </Typography>
 
-                <Grid container spacing={5} justify="center">
+                <Grid container spacing={5}>
                     <Button
                         className={classes.button}
                         onClick={this.handleClickChange}
@@ -124,10 +127,10 @@ class Chart extends React.Component {
                     </Button>
                 </Grid>
 
-                <Typography variant="overline" gutterBottom className={classes.status} align="center">
+                <Typography variant="overline" gutterBottom className={classes.status}>
                     Тип заявок:
                 </Typography>
-                <Grid container spacing={5} justify="center">
+                <Grid container spacing={5}>
 
                     <Button variant="contained" className={classes.button}>
                         ПЛОТНИК
@@ -146,11 +149,10 @@ class Chart extends React.Component {
                     </Button>
                 </Grid>
                 <Typography
-                    align="center"
                     variant="overline" gutterBottom className={classes.status}>
                     Димнамика зарегистрированных и решенных заявок
                 </Typography>
-                <Grid container spacing={5} justify="center">
+                <Grid container spacing={5}>
                     <form className={classes.container} noValidate>
                         <TextField
                             id="date"
@@ -182,15 +184,16 @@ class Chart extends React.Component {
                 </Grid>
 
 
-                <ResponsiveContainer width="95%" height={320} >
+                <ResponsiveContainer width="95%" height={320}>
                     <LineChart data={data}>
                         <XAxis dataKey="name"/>
                         <YAxis/>
                         <CartesianGrid vertical={false} strokeDasharray="3 3"/>
                         <Tooltip/>
                         <Legend/>
-                        <Line type="monotone" dataKey="Visits" stroke="#82ca9d"/>
-                        <Line type="monotone" dataKey="Orders" stroke="#8884d8" activeDot={{r: 8}}/>
+                        <Line type="monotone" dataKey="Электрик" stroke="#82ca9d"/>
+                        <Line type="monotone" dataKey="Плотник" stroke="#ff1744"/>
+                        <Line type="monotone" dataKey="Сантехник" stroke="#8884d8" activeDot={{r: 8}}/>
                     </LineChart>
                 </ResponsiveContainer>
 

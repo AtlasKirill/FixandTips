@@ -11,7 +11,6 @@ import PropTypes from 'prop-types';
 import AddIcon from '@material-ui/icons/Add';
 
 
-
 const styles = theme => ({
     root: {
         background: 'white',
@@ -21,8 +20,8 @@ const styles = theme => ({
         boxShadow: 'white',
         border: 'solid',
         borderWidth: 1,
-        marginTop: 30,
-        marginBottom:30,
+        margin: 0,
+
     },
     textField: {
         marginLeft: 5,

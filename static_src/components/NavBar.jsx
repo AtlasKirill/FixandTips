@@ -10,6 +10,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import RegButton from './Registration'
 import Icon from '@material-ui/core/Icon';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import GetPrintAndStatistics from "./GetPrintAndStatistics.jsx"
+
 
 const styles = {
     root: {
@@ -40,9 +42,14 @@ class NavBar extends React.Component {
                         <Typography variant="h6" color="inherit" className={classes.grow}>
                             Fix&Tips
                         </Typography>
-                        {!auth && (
+                        {/*{!auth && (*/}
+                            {/*<div>*/}
+                                {/*<RegButton/>*/}
+                            {/*</div>*/}
+                        {/*)}*/}
+                        {auth && (
                             <div>
-                                <RegButton/>
+                                <GetPrintAndStatistics/>
                             </div>
                         )}
                         {!auth && (

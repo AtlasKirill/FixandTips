@@ -22,7 +22,7 @@ const styles = theme => ({
     },
 });
 
-class News extends React.Component {
+class NewsStudent extends React.Component {
 
 
     render() {
@@ -44,17 +44,14 @@ class News extends React.Component {
                     </Typography>
                     <Divider/>
                 </CardContent>
-                <IconButton className={classes.button} aria-label="Delete">
-                    <DeleteIcon/>
-                </IconButton>
 
             </Card>
         );
     }
 }
 
-News.propTypes = {
+NewsStudent.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(News);
+export default withStyles(styles)(NewsStudent);
