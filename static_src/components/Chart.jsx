@@ -110,7 +110,7 @@ class Chart extends React.Component {
                                     '--background-start': '#ec407a',
                                 }
                                 : {
-                                    '--background-start': '#ffffff',
+                                    '--background-end': '#ffffff',
                                 }
                         }
                     >

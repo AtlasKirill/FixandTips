@@ -18,6 +18,10 @@ import Tooltip from '@material-ui/core/Tooltip';
 import Done from '@material-ui/icons/Done';
 import PropTypes from 'prop-types';
 import ErrorOutline from '@material-ui/icons/ErrorOutline'
+import CommandantRequestWarning from "./CommandantRequestWarning.jsx"
+import Menu from "@material-ui/core/Menu/Menu";
+import Fade from "@material-ui/core/Fade/Fade";
+import MenuItem from "@material-ui/core/MenuItem/MenuItem";
 
 
 const styles = theme => ({
@@ -90,13 +94,26 @@ const styles = theme => ({
 });
 
 class RequestCommandant extends React.Component {
+    // state = {
+    //     anchorEl: null,
+    // };
+    //
+    // handleClick = event => {
+    //     this.setState({anchorEl: event.currentTarget});
+    // };
+    //
+    // handleClose = () => {
+    //     this.setState({anchorEl: null});
+    // };
 
     render() {
+        // const {anchorEl} = this.state;
+        // const open = Boolean(anchorEl);
         const {classes} = this.props;
         return (
             <div>
                 <Card className={classes.card}>
-                    <Grid container spacing={10}>
+                    <Grid container spacing={8}>
                         <Grid item md={6}>
                             <CardContent classes={{root: classes.content}}>
                                 <Typography variant="subtitle2">
@@ -145,8 +162,30 @@ class RequestCommandant extends React.Component {
                                     Tип заявки (тех персонал)
                                 </Typography>
                                 <Typography variant="body1">
-                                    Сантехник
+                                Сантехник
                                 </Typography>
+
+                                {/*<div>*/}
+                                    {/*<Button*/}
+
+                                        {/*aria-owns={open ? 'fade-menu' : undefined}*/}
+                                        {/*aria-haspopup="true"*/}
+                                        {/*onClick={this.handleClick}*/}
+                                    {/*>*/}
+                                        {/*sdsfdf*/}
+                                    {/*</Button>*/}
+                                    {/*<Menu*/}
+                                        {/*id="fade-menu"*/}
+                                        {/*anchorEl={anchorEl}*/}
+                                        {/*open={open}*/}
+                                        {/*onClose={this.handleClose}*/}
+                                        {/*TransitionComponent={Fade}*/}
+                                    {/*>*/}
+                                        {/*<MenuItem onClick={this.handleClose}>Profile</MenuItem>*/}
+                                        {/*<MenuItem onClick={this.handleClose}>My account</MenuItem>*/}
+                                        {/*<MenuItem onClick={this.handleClose}>Logout</MenuItem>*/}
+                                    {/*</Menu>*/}
+                                {/*</div>*/}
                             </CardContent>
                         </Grid>
 
@@ -166,9 +205,7 @@ class RequestCommandant extends React.Component {
                         <Grid item md={6}>
                             <CardContent classes={{root: classes.delete}}>
                                 <Tooltip title="Delete 'position: absolute;'">
-                                    <IconButton aria-label="Delete" className={classes.absolute_delete}>
-                                        <DeleteIcon/>
-                                    </IconButton>
+                                    <CommandantRequestWarning/>
                                 </Tooltip>
                             </CardContent>
                         </Grid>

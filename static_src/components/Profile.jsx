@@ -18,14 +18,18 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 
 const styles = theme => ({
-    root: {
-        flexGrow: 1,
-    },
+    // root: {
+    //     flexGrow: 1,
+    // },
     card: {
-        maxWidth: 700,
+        // display: 'flex',
+        // flexDirection: 'column',
+        // alignContent: 'center',
+        // justify: 'center',
+        maxWidth: 800,
         margin: 20,
-        minWidth: 600,
-        alignItems: 'center',
+        // minWidth: 700,
+
     },
 
     main_info: {
@@ -38,35 +42,40 @@ const styles = theme => ({
         background: red[500],
         // justifyItems: 'center',
         objectPosition: '50% 50%',
-
-    },
-    bigAvatar: {
         width: 180,
         height: 180,
+
     },
     input: {
         display: 'none',
     },
     button_upload: {
+
         margin: theme.spacing.unit,
         padding: 5,
         objectPosition: '50% 50%',
+        // flex: 1,
+
     },
     button_password: {
         background: red[500],
         marginLeft: 20,
     },
     content: {
-    // borderRadius:0,
-    // borderColor: 'white',
-    // borderShadow:'white',
-    // color:'white',
-    '&:last-child': {
-      padding: 10,
-      paddingRight: 5,
-      margin: 5,
+        // borderRadius:0,
+        // borderColor: 'white',
+        // borderShadow:'white',
+        // color:'white',
+        margin: 15,
+        padding: 15,
+        float: 'none',
+        minWidth: 200,
+        // '&:last-child': {
+        //     padding: 10,
+        //     paddingRight: 5,
+        //     margin: 5,
+        // },
     },
-  },
 });
 
 class StudentPage extends React.Component {
@@ -75,19 +84,19 @@ class StudentPage extends React.Component {
         const {classes} = this.props;
 
         return (
-            <Grid container className={classes.root} spacing={16}>
-                <Grid item md={6}>
-                    <Card className={classes.card}>
-                        <Grid container spacing={10}>
+            <Grid container spacing={8}>
+                <Grid item md={12}>
+                    <Paper className={classes.card}>
+                        <Grid container spacing={8}>
                             <Grid item md={4}>
-                                <CardContent classes={{ root: classes.content }}>
+                                <Paper classes={{root: classes.content}}>
                                     <Avatar
                                         //alt="Лиза Носкова"
-                                        src="images/Liza.jpg"
-                                        className={classNames(classes.avatar, classes.bigAvatar)}
+                                        src="/static_src/components/images/Liza.jpg"
+                                        className={classNames(classes.avatar)}
                                     />
 
-                                    <Typography component="h2" variant="subtitle1" align="center">
+                                    <Typography component="h2" variant="title" align="center">
                                         Елизавета Носкова
                                     </Typography>
                                     <input
@@ -98,12 +107,15 @@ class StudentPage extends React.Component {
                                         type="file"
                                     />
                                     <label htmlFor="contained-button-file">
-                                        <Button variant="outlined" size="mdall" component="span"
-                                                className={classes.button_upload} align="center">
+                                        <Button
+                                            variant="outlined"
+                                            size="mdall"
+                                            component="span"
+                                            className={classes.button_upload}>
                                             Изменить аватар
                                         </Button>
                                     </label>
-                                </CardContent>
+                                </Paper>
                             </Grid>
                             <Grid item md={8}>
                                 <Paper className={classes.main_info}>
@@ -144,7 +156,7 @@ class StudentPage extends React.Component {
                                 </Paper>
                             </Grid>
                         </Grid>
-                    </Card>
+                    </Paper>
                 </Grid>
             </Grid>
         );

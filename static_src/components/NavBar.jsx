@@ -22,19 +22,23 @@ const styles = {
     },
     button: {
         margin: 0,
-        color:'white',
+        color: 'white',
     },
 };
 
 class NavBar extends React.Component {
 
     state = {
-        auth: false,
+        authorized: true,
+        isCommandant: true,
     };
 
     render() {
         const {classes} = this.props;
-        const {auth} = this.state;
+
+        // const authorized = true;
+        // const isCommandant = false;
+
         return (
             <div className={classes.root}>
                 <AppBar position="static">
@@ -42,19 +46,20 @@ class NavBar extends React.Component {
                         <Typography variant="h6" color="inherit" className={classes.grow}>
                             Fix&Tips
                         </Typography>
-                        {/*{!auth && (*/}
-                            {/*<div>*/}
-                                {/*<RegButton/>*/}
-                            {/*</div>*/}
-                        {/*)}*/}
-                        {auth && (
+                        {!this.state.authorized && (
+                            <div>
+                                <RegButton/>
+                            </div>
+                        )}
+                        {this.state.authorized && this.state.isCommandant && (
                             <div>
                                 <GetPrintAndStatistics/>
                             </div>
                         )}
-                        {!auth && (
+                        {this.state.authorized && !this.state.isCommandant && (
                             <div>
-                                <IconButton className={classes.button} href="#address_of_profile" aria-label="AccountCircle">
+                                <IconButton className={classes.button} href="#address_of_profile"
+                                            aria-label="AccountCircle">
                                     <AccountCircle/>
                                 </IconButton>
                             </div>

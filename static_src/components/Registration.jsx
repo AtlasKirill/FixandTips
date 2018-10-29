@@ -60,7 +60,7 @@ class RegButton extends React.Component {
             <DialogContentText align="center">
               Создайте аккаунт в Fix&Tips
             </DialogContentText>
-            <Grid Grid container spacing={10}>
+            <Grid Grid container spacing={8}>
               <Grid item md={12}>
                 <TextField
                   id="outlined-email-input"

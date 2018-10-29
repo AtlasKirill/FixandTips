@@ -26,7 +26,7 @@ class StudentPage extends React.Component {
 
         return (
             <div>
-                <Grid container spacing={10} justify="center">
+                <Grid container spacing={8} justify="center">
 
                     <Grid item md={6}>
                         <Typography variant="h5" gutterBottom className={classes.headline}>

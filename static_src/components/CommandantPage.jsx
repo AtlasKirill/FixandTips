@@ -11,13 +11,8 @@ import Filters from './Filter';
 import {withStyles} from "@material-ui/core";
 import PropTypes from 'prop-types';
 import Typography from "@material-ui/core/Typography/Typography";
-import GetPrintAndStatistics from "./GetPrintAndStatistics.jsx"
-
 
 const styles = theme => ({
-    root: {
-        padding: 20,
-    },
     headline: {
         margin: 20,
     },
@@ -31,17 +26,16 @@ class CommandantPage extends React.Component {
 
         return (
             <div>
-                <Grid container spacing={10}>
-                    <Grid item md={6} className={classes.root}>
-                        <Typography variant="h5" gutterBottom>
+                <Grid container spacing={8}>
+                    <Grid item md={6}>
+                        <Typography variant="h5" gutterBottom className={classes.headline}>
                             Запросы
                         </Typography>
                         <Filters/>
 
                     </Grid>
-                    <Grid item md={6} className={classes.root}>
-                        {/*<GetPrintAndStatistics/>*/}
-                        <Typography variant="h5" gutterBottom>
+                    <Grid item md={6}>
+                        <Typography variant="h5" gutterBottom className={classes.headline}>
                             Объявления общежития
                         </Typography>
                         <NewsCreationModal/>

@@ -20,6 +20,10 @@ const styles = theme => ({
     button: {
         margin: theme.spacing.unit,
     },
+    devider: {
+        marginTop: 15,
+        // width: '90%',
+    },
 });
 
 class NewsStudent extends React.Component {
@@ -42,7 +46,7 @@ class NewsStudent extends React.Component {
                         не переводятся в вертикальное положение) или другие проблемы,
                         сообщите об этом в виде заявки в личном кабинете!
                     </Typography>
-                    <Divider/>
+                    <Divider className={classes.devider}/>
                 </CardContent>
 
             </Card>

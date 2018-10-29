@@ -13,6 +13,7 @@ const styles = theme => ({
     button: {
         margin: theme.spacing.unit,
         minWidth: 150,
+        borderRadius:5,
     },
     extendedIcon: {
         marginRight: theme.spacing.unit,
