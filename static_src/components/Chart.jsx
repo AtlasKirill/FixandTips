@@ -18,11 +18,11 @@ import TextField from '@material-ui/core/TextField';
 
 
 const data = [
-    {name: '1', Электрик: 4, Сантехник: 5, Плотник: 5},
-    {name: '2', Электрик: 2, Сантехник: 1, Плотник: 8},
-    {name: '3', Электрик: 6, Сантехник: 8, Плотник: 13},
-    {name: '4', Электрик: 9, Сантехник: 9, Плотник: 9},
-    {name: '5', Электрик: 3, Сантехник: 12, Плотник: 6},
+    {date: '01.02.2017', Электрик: 0, Сантехник: 5, Плотник: 5},
+    {date: '01.02.2017', Электрик: 0, Сантехник: 1, Плотник: 8},
+    {date: '01.02.2017', Электрик: 0, Сантехник: 8, Плотник: 13},
+    {date: '01.02.2017', Электрик: 0, Сантехник: 9, Плотник: 9},
+    {date: '01.02.2017', Электрик: 0, Сантехник: 12, Плотник: 6},
     // {name: '6', Visits: 4390, Сантехник: 3800},
     // {name: '7', Visits: 4490, Сантехник: 4300},
     // {name: '8', Visits: 4490, Сантехник: 4300},
@@ -186,7 +186,7 @@ class Chart extends React.Component {
 
                 <ResponsiveContainer width="95%" height={320}>
                     <LineChart data={data}>
-                        <XAxis dataKey="name"/>
+                        <XAxis dataKey="date"/>
                         <YAxis/>
                         <CartesianGrid vertical={false} strokeDasharray="3 3"/>
                         <Tooltip/>

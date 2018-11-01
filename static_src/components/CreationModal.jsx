@@ -8,15 +8,15 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {withStyles} from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
 import FormHelperText from '@material-ui/core/FormHelperText';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
 import AddIcon from '@material-ui/icons/Add';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormGroup from '@material-ui/core/FormGroup';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
 
 
 const styles = theme => ({
@@ -46,6 +46,9 @@ const styles = theme => ({
     group: {
         margin: `${theme.spacing.unit}px 0`,
     },
+    formGroupControl:{
+        margin: theme.spacing.unit * 3,
+    },
 });
 
 
@@ -54,6 +57,7 @@ class NewRequest extends React.Component {
         open: false,
         valueType: 'san',
         valuePriority: 'high',
+        checkedUrgent: false,
     };
 
     handleClickOpen = () => {
@@ -76,6 +80,11 @@ class NewRequest extends React.Component {
 
     handleChangePriority = event => {
         this.setState({valuePriority: event.target.value});
+    };
+
+
+    handleChangeUrgent = name => event => {
+        this.setState({[name]: event.target.checked});
     };
 
     render() {
@@ -128,19 +137,36 @@ class NewRequest extends React.Component {
                         <Typography align="center">
                             Выберите приоритет заявки
                         </Typography>
-                        <FormControl component="fieldpriority" className={classes.formControl}>
-                            <RadioGroup
-                                aria-label="requestType"
-                                name="priority"
-                                className={classes.group}
-                                value={this.state.valuePriority}
-                                onChange={this.handleChangePriority}
-                            >
-                                <FormControlLabel value="high" control={<Radio/>} label="Срочно"/>
-                                <FormControlLabel value="low" control={<Radio/>} label="Не срочно"/>
-                            </RadioGroup>
-                        </FormControl>
-
+                        {/*<FormControl component="fieldpriority" className={classes.formControl}>*/}
+                        {/*<RadioGroup*/}
+                        {/*aria-label="requestType"*/}
+                        {/*name="priority"*/}
+                        {/*className={classes.group}*/}
+                        {/*value={this.state.valuePriority}*/}
+                        {/*onChange={this.handleChangePriority}*/}
+                        {/*>*/}
+                        {/*<FormControlLabel value="high" control={<Radio/>} label="Срочно"/>*/}
+                        {/*<FormControlLabel value="low" control={<Radio/>} label="Не срочно"/>*/}
+                        {/*</RadioGroup>*/}
+                        {/*</FormControl>*/}
+                        {/*<Checkbox*/}
+                            {/*value="skldmmf"*/}
+                            {/*checked={this.state.checkedA}*/}
+                            {/*onChange={this.handleChangeUrgent('checkedUrgent')}*/}
+                            {/*value="checkedA"*/}
+                        {/*/>*/}
+                        <FormGroup className={classes.formGroupControl}>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={this.state.checkedUrgent}
+                                        onChange={this.handleChangeUrgent('checkedUrgent')}
+                                        value="checkedUrgent"
+                                    />
+                                }
+                                label="Срочно"
+                            />
+                        </FormGroup>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleClose} color="primary">

@@ -19,9 +19,9 @@ import Done from '@material-ui/icons/Done';
 import PropTypes from 'prop-types';
 import ErrorOutline from '@material-ui/icons/ErrorOutline'
 import CommandantRequestWarning from "./CommandantRequestWarning.jsx"
-import Menu from "@material-ui/core/Menu/Menu";
-import Fade from "@material-ui/core/Fade/Fade";
-import MenuItem from "@material-ui/core/MenuItem/MenuItem";
+import Icon from '@material-ui/core/Icon';
+import DoneIcon from '@material-ui/icons/Done';
+import TextField from '@material-ui/core/TextField';
 
 
 const styles = theme => ({
@@ -91,6 +91,17 @@ const styles = theme => ({
         color: 'red',
         margin: 4,
     },
+    button: {
+        margin: 4,
+        padding: 10,
+    },
+    textField: {
+        marginLeft: 0,
+        marginRight: theme.spacing.unit,
+        marginTop:0,
+        marginBottom:0,
+        width: 300,
+    },
 });
 
 class RequestCommandant extends React.Component {
@@ -105,6 +116,16 @@ class RequestCommandant extends React.Component {
     // handleClose = () => {
     //     this.setState({anchorEl: null});
     // };
+
+    state = {
+        materials: '',
+    };
+
+    handleChangeMaterials = name => event => {
+        this.setState({
+            [name]: event.target.value,
+        });
+    };
 
     render() {
         // const {anchorEl} = this.state;
@@ -148,12 +169,25 @@ class RequestCommandant extends React.Component {
                         </Grid>
                         <Grid item md={6}>
                             <CardContent classes={{root: classes.content}}>
-                                <Typography variant="subtitle2">
-                                    Использованные материалы:
-                                </Typography>
-                                <Typography variant="body1">
-                                    2 патрубка
-                                </Typography>
+                                {/*<Typography variant="subtitle2">*/}
+                                    {/*Использованные материалы:*/}
+                                {/*</Typography>*/}
+                                {/*<Typography variant="body1">*/}
+                                {/*2 патрубка*/}
+                                {/*</Typography>*/}
+
+
+                                <TextField
+                                    id="standard-name"
+                                    label="Использованные материалы"
+                                    className={classes.textField}
+                                    value={this.state.name}
+                                    onChange={this.handleChangeMaterials('materials')}
+                                    margin="normal"
+                                />
+                                <IconButton className={classes.button} aria-label="Done">
+                                    <DoneIcon/>
+                                </IconButton>
                             </CardContent>
                         </Grid>
                         <Grid item md={6}>
@@ -162,29 +196,29 @@ class RequestCommandant extends React.Component {
                                     Tип заявки (тех персонал)
                                 </Typography>
                                 <Typography variant="body1">
-                                Сантехник
+                                    Сантехник
                                 </Typography>
 
                                 {/*<div>*/}
-                                    {/*<Button*/}
+                                {/*<Button*/}
 
-                                        {/*aria-owns={open ? 'fade-menu' : undefined}*/}
-                                        {/*aria-haspopup="true"*/}
-                                        {/*onClick={this.handleClick}*/}
-                                    {/*>*/}
-                                        {/*sdsfdf*/}
-                                    {/*</Button>*/}
-                                    {/*<Menu*/}
-                                        {/*id="fade-menu"*/}
-                                        {/*anchorEl={anchorEl}*/}
-                                        {/*open={open}*/}
-                                        {/*onClose={this.handleClose}*/}
-                                        {/*TransitionComponent={Fade}*/}
-                                    {/*>*/}
-                                        {/*<MenuItem onClick={this.handleClose}>Profile</MenuItem>*/}
-                                        {/*<MenuItem onClick={this.handleClose}>My account</MenuItem>*/}
-                                        {/*<MenuItem onClick={this.handleClose}>Logout</MenuItem>*/}
-                                    {/*</Menu>*/}
+                                {/*aria-owns={open ? 'fade-menu' : undefined}*/}
+                                {/*aria-haspopup="true"*/}
+                                {/*onClick={this.handleClick}*/}
+                                {/*>*/}
+                                {/*sdsfdf*/}
+                                {/*</Button>*/}
+                                {/*<Menu*/}
+                                {/*id="fade-menu"*/}
+                                {/*anchorEl={anchorEl}*/}
+                                {/*open={open}*/}
+                                {/*onClose={this.handleClose}*/}
+                                {/*TransitionComponent={Fade}*/}
+                                {/*>*/}
+                                {/*<MenuItem onClick={this.handleClose}>Profile</MenuItem>*/}
+                                {/*<MenuItem onClick={this.handleClose}>My account</MenuItem>*/}
+                                {/*<MenuItem onClick={this.handleClose}>Logout</MenuItem>*/}
+                                {/*</Menu>*/}
                                 {/*</div>*/}
                             </CardContent>
                         </Grid>

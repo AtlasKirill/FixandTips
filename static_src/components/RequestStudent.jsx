@@ -134,16 +134,6 @@ class RequestStudent extends React.Component {
                         <Grid item md={6}>
                             <CardContent classes={{root: classes.content}}>
                                 <Typography variant="subtitle2">
-                                    Использованные материалы:
-                                </Typography>
-                                <Typography variant="body1">
-                                    2 патрубка
-                                </Typography>
-                            </CardContent>
-                        </Grid>
-                        <Grid item md={6}>
-                            <CardContent classes={{root: classes.content}}>
-                                <Typography variant="subtitle2">
                                     Tип заявки (тех персонал)
                                 </Typography>
                                 <Typography variant="body1">

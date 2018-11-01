@@ -29,8 +29,8 @@ const styles = {
 class NavBar extends React.Component {
 
     state = {
-        authorized: true,
-        isCommandant: true,
+        authorized: false,
+        isCommandant: false,
     };
 
     render() {
