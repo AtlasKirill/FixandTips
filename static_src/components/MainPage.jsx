@@ -1,8 +1,11 @@
 import React from 'react';
-import RequestList from './RequestList.jsx';
-import NewsList from './NewsList.jsx';
+import CommandantRequestList from './CommandantRequestList.jsx';
+import CommandantNewsList from './CommandantNewsList.jsx';
+import StudentRequestList from './StudentRequestList.jsx';
+import StudentNewsList from './StudentNewsList.jsx';
 import CommandantPage from './CommandantPage';
 import StudentPage from './StudentPage';
+import CreationModal from './CreationModal';
 import Grid from '@material-ui/core/Grid';
 import NewsCreationModal from './NewsCreationModal'
 import Filter from './Filter';
@@ -47,10 +50,10 @@ class MainPage extends React.Component{
                     
             </Grid>
             <Grid item md={6} >
-                <RequestList/>
+                <CommandantRequestList/>
             </Grid>
             <Grid item md={6} >
-                <NewsList/>
+                <CommandantNewsList/>
             </Grid>
         </Grid>
         }
@@ -62,7 +65,7 @@ class MainPage extends React.Component{
                         <Typography variant="h5" gutterBottom className={classes.headline}>
                             Мои запросы(Студент)
                         </Typography>
-                        <RequestCreationModal/>
+                        <CreationModal/>
                     </Grid>
                     <Grid item md={6}>
                         <Typography variant="h5" gutterBottom className={classes.headline}>
@@ -70,10 +73,10 @@ class MainPage extends React.Component{
                         </Typography>
                     </Grid>
                     <Grid item md={6}>
-                        <RequestList/>
+                        <StudentRequestList/>
                     </Grid>
                     <Grid item md={6}>
-                        <NewsList/>
+                        <StudentNewsList/>
                     </Grid>
                 </Grid>
         }

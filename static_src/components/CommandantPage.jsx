@@ -1,13 +1,12 @@
 import React from 'react';
-import RequestList from './RequestList.jsx';
-import NewsList from './NewsList.jsx';
+import CommandantRequestList from './RequestList.jsx';
+import CommandantNewsList from './NewsList.jsx';
 import Grid from '@material-ui/core/Grid';
 import NewsCreationModal from './NewsCreationModal'
 import Filter from './Filter';
 import {withStyles} from "@material-ui/core";
 import PropTypes from 'prop-types';
 import Typography from "@material-ui/core/Typography/Typography";
-import GetPrintAndStatistics from './GetPrintAndStatistic';
 
 const styles = theme => ({
     root: {
@@ -39,10 +38,10 @@ class CommandantPage extends React.Component{
                             
                     </Grid>
                     <Grid item md={6} >
-                        <RequestList/>
+                        <CommandantRequestList/>
                     </Grid>
                     <Grid item md={6} >
-                        <NewsList/>
+                        <CommandantNewsList/>
                     </Grid>
                 </Grid>
             </div>

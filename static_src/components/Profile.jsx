@@ -66,6 +66,10 @@ class Profile extends React.Component {
     render() {
         const {classes} = this.props;
         // const info = this.props.sessionInfo.data;
+        if(this.props.isLoading)
+        {
+            return(<div>Loading...</div>)
+        }
         return (
             <Grid container spacing={8}>
                 <Grid item md={12}>
@@ -79,7 +83,7 @@ class Profile extends React.Component {
                                     />
 
                                     <Typography component="h2" variant="title" align="center">
-                                        {/* { this.props.user} */}
+                                        { this.props.user.username}
                                     </Typography>
                                     <input
                                         accept="image/*"
@@ -106,7 +110,7 @@ class Profile extends React.Component {
                                         Основная информация
                                     </Typography>
                                     <Typography variant="subtitle2" gutterBottom>
-                                        {/* { this.props.user } */}
+                                        { this.props.user.email }
                                     </Typography>
                                     <Typography variant="subtitle2" gutterBottom>
                                         студент

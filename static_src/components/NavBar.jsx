@@ -15,6 +15,8 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import GetPrintAndStatistics from './GetPrintAndStatistic'
+import { connect } from 'react-redux';
+
 
 const styles = {
     root: {
@@ -57,34 +59,33 @@ class NavBar extends React.Component {
     };
 
     render() {
+        let buttons;
         const {classes} = this.props;
+        if(this.props.isLoading)
+        {
+            return(<div></div>)
+        }
+        else if(this.props.user.role == 1)
+        {
+            buttons  = <GetPrintAndStatistics/>
+        }
+        else if(this.props.user.role == 4)
+        {
+            buttons  = <ListItemLink className={classes.button} to="/profile" primary="Profile" icon={<AccountCircle/>} />
+        }
         return (
             <div className={classes.root}>
                 <AppBar position="static">
                     <Toolbar>
                         <Typography variant="h6" color="inherit" className={classes.grow}>
-                          <ListItemLink to="/student" primary="Fix&Tips"  />
+                          <ListItemLink to="/main" primary="Fix&Tips"  />
                         </Typography>
-                    {!this.state.authorized && (
+                    {!this.props.isAuthenticated && (
                         <div>
                             <RegButton/>
                         </div>
                     )}
-                    {this.state.authorized && this.state.isCommandant && (
-                        <div>
-                            <GetPrintAndStatistics/>
-                        </div>
-                    )}
-                    {this.state.authorized && !this.state.isCommandant && (
-                            <div>
-                               <ListItemLink className={classes.button} to="/profile" primary="Profile" icon={<AccountCircle/>} />
-                                {/* <IconButton className={classes.button} aria-label="AccountCircle">
-                                  <Link to="/profile">
-                                    <AccountCircle/>
-                                  </Link> */}
-                                {/* </IconButton> */}
-                            </div>
-                    )}
+                        { buttons }
 
                     </Toolbar>
                 </AppBar>
@@ -97,5 +98,19 @@ class NavBar extends React.Component {
 NavBar.propTypes = {
     classes: PropTypes.object.isRequired,
 };
+const mapStateToProps = ({ auth }) => {
+    return {
+        user: auth.user,
+        isAuthenticated: auth.isAuthenticated,
+        isLoading: auth.isLoading,
+    }
+}
+const mapDispatchToProps = dispatch => {
+    return {
+      loadUser: () => {
+        return dispatch(loadUser());
+      }
+    }
+  }
 
-export default withStyles(styles)(NavBar);
+export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(NavBar));
