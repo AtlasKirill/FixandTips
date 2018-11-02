@@ -1,4 +1,4 @@
-import News from './News.jsx';
+import StudentNews from './StudentNews.jsx';
 import React from 'react';
 import PropTypes from 'prop-types';
 import apiUrls from './../constants/apiUrls';
@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 
-class NewsList extends React.Component{
+class StudentNewsList extends React.Component{
     
     static propTypes = {
         isLoading: PropTypes.bool,
@@ -24,7 +24,7 @@ class NewsList extends React.Component{
         }
         const news = this.props.newsList.map(
             
-            item =>  <News key = { item } id = { item }/>,
+            item =>  <StudentNews key = { item } id = { item }/>,
         );
         return( 
             <div>
@@ -44,4 +44,4 @@ const mapStateToProps = ({ news }) => {
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({ loadNews }, dispatch)
 }
-export default connect(mapStateToProps, mapDispatchToProps)(NewsList);
+export default connect(mapStateToProps, mapDispatchToProps)(StudentNewsList);

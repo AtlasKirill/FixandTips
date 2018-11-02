@@ -56,3 +56,22 @@ export const createNews = (url,data) => {
     };
 };
 
+export const deleteNews = (url,data) => {
+    console.log('Delete')
+    return {
+        [RSAA]: {
+            credentials: 'include',
+            endpoint: url,
+            method: 'PATCH',
+            body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRFToken': Cookies.get("csrftoken")
+              },
+            types: [START_NEWS_DELETING, 
+                    SUCCESS_NEWS_DELETING,
+                    ERROR_NEWS_DELETING],
+        },
+    };
+};

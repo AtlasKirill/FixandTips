@@ -41,7 +41,20 @@ export default function posts(store = initialState, action){
 
         case 'ERROR_NEWS_SENDING':{
             return true;
-        }       
+        }
+        
+        case 'START_NEWS_DELETING':{
+            return store;
+            
+        }
+
+        case 'SUCCESS_NEWS_DELETING':{
+            return store;
+        }
+
+        case 'ERROR_NEWS_DELETING':{
+            return store;
+        }
         default:
             return store;
     }

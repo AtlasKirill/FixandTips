@@ -4,6 +4,7 @@ import requests from './requests';
 import news from './news';
 import session from './session';
 import categories from './categories';
+import auth from './auth';
 
 export default combineReducers({
     routing:routerReducer,
@@ -11,4 +12,5 @@ export default combineReducers({
     news,
     categories,
     sessionInfo: session,
+    auth,
 });

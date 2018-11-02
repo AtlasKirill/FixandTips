@@ -7,6 +7,10 @@ import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
 import classNames from 'classnames';
 import TextField from '@material-ui/core/TextField';
+import apiUrls from './../constants/apiUrls.js';
+import { filterRequest } from '../actions/requests';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
 
 
@@ -51,15 +55,79 @@ button_show:{
   },
 });
 
-class Filters extends React.Component {
+class Filter extends React.Component {
   state = {
     color: 'default',
-    clicked: false,
+    clickedUrgent: false,
+    clickedProcessing: false,
+    clickedSent: false,
+    clickedCarpenter: false,
+    clickedElictrician: false,
+    clickedPlumber: false,
+    clickedChemistry: false,
+    colorProcessing: 'default',
+    colorSent: 'default',
+    colorUrgent: 'default',
+    colorCarpenter: 'default',
+    colorElictrician: 'default',
+    colorPlumber: 'default',
+    colorChemistry: 'default',
+    status:'',
+    category:'',
+    urgency: false
 };
 
-  handleClickChange = event => {
-    this.setState({ clicked: ! this.state.clicked });
-    this.setState({ color: this.state.clicked ? 'default' : 'secondary' });
+  searchProcessing = event => {
+    this.setState({ clickedProcessing: ! this.state.clickedProcessing });
+    this.setState({ colorProcessing: this.state.clickedProcessing ? 'default' : 'secondary' });
+    this.setState({ urgency: ! this.state.urgency });
+
+  };
+  searchSent = event => {
+    this.setState({ clickedSent: ! this.state.clickedSent });
+    this.setState({ colorSent: this.state.clickedSent ? 'default' : 'secondary' });
+    this.setState({ urgency: ! this.state.urgency });
+
+  };
+  searchUrgent = event => {
+    this.setState({ clickedUrgent: ! this.state.clickedUrgent });
+    this.setState({ colorUrgent: this.state.clickedUrgent ? 'default' : 'secondary' });
+    this.setState({ urgency: ! this.state.urgency });
+
+  };
+  searchСarpenter = event => {
+    this.setState({ clickedCarpenter: ! this.state.clickedCarpenter });
+    this.setState({ colorCarpenter: this.state.clickedCarpenter ? 'default' : 'secondary' });
+    this.setState({ category: 'Плотник' });
+
+  };
+  searchPlumber = event => {
+    this.setState({ clickedPlumber: ! this.state.clickedPlumber });
+    this.setState({ colorPlumber: this.state.clickedPlumber ? 'default' : 'secondary' });
+    this.setState({ category: 'Сантехник' });
+
+  };
+  searchElectrician = event => {
+    this.setState({ clickedElictrician: ! this.state.clickedElictrician });
+    this.setState({ colorElictrician: this.state.clickedElictrician ? 'default' : 'secondary' });
+    this.setState({ category: 'Электрик' });
+
+  };
+  searchChemistry = event => {
+    this.setState({ clickedChemistry: ! this.state.clickedChemistry });
+    this.setState({ colorChemistry: this.state.clickedChemistry ? 'default' : 'secondary' });
+    this.setState({ category: 'Хим обработка' });
+
+  };
+  handleChange = name => event => {
+    this.setState({
+      [name]: event.target.value,
+    });
+  };
+  showItems = event => {
+    console.log(apiUrls.filter(this.state.status,this.state.category,this.state.urgency,this.state.fromDate, this.state.toDate));
+    this.props.filterRequest(apiUrls.filter(this.state.status,this.state.category,this.state.urgency,this.state.fromDate, this.state.toDate));
+    
   };
 
   render(){
@@ -72,9 +140,8 @@ class Filters extends React.Component {
       </Typography>
         <Button
           className={classes.button}
-          onClick={this.handleClickChange}
           style={
-            this.state.color === 'secondary'
+            this.state.colorProcessing === 'secondary'
               ? {
                 '--background-start': '#ec407a',
               }
@@ -82,31 +149,98 @@ class Filters extends React.Component {
                 '--background-start': '#ffffff',
               }
           }
+          onClick={this.searchProcessing}
         >
           В ПРОЦЕССЕ
         </Button>
-        <Button variant="contained"  className={classes.button} >
+        <Button variant="contained"  className={classes.button} 
+          style={
+            this.state.colorSent === 'secondary'
+              ? {
+                '--background-start': '#ec407a',
+              }
+              : {
+                '--background-start': '#ffffff',
+              }
+            }
+            onClick={this.searchSent}
+        >
           НОВЫЕ
         </Button>
-        <Button variant="contained" className={classes.button}>
+        <Button variant="contained" className={classes.button} 
+        style={
+          this.state.colorUrgent === 'secondary'
+            ? {
+              '--background-start': '#ec407a',
+            }
+            : {
+              '--background-start': '#ffffff',
+            }
+          }
+          onClick={this.searchUrgent}
+        >
           СРОЧНО
         </Button>
         <Typography variant="overline" gutterBottom className={classes.status}>
           Тип заявок:
       </Typography>
-        <Button variant="contained" className={classes.button}>
+        <Button variant="contained" className={classes.button} 
+        style={
+          this.state.colorCarpenter === 'secondary'
+            ? {
+              '--background-start': '#ec407a',
+            }
+            : {
+              '--background-start': '#ffffff',
+            }
+          }
+          onClick={this.searchСarpenter}
+        >
           ПЛОТНИК
         </Button>
-        <Button variant="contained" className={classes.button}>
+        <Button variant="contained" className={classes.button} 
+        style={
+          this.state.colorPlumber === 'secondary'
+            ? {
+              '--background-start': '#ec407a',
+            }
+            : {
+              '--background-start': '#ffffff',
+            }
+          }
+          onClick={this.searchPlumber}
+        >
           САНТЕХНИК
         </Button>
-        <Button variant="contained" className={classes.button}>
+        <Button variant="contained" className={classes.button} 
+        style={
+          this.state.colorElictrician === 'secondary'
+            ? {
+              '--background-start': '#ec407a',
+            }
+            : {
+              '--background-start': '#ffffff',
+            }
+          }
+        onClick={this.searchElectrician}
+        >
           ЭЛЕКТРИК
         </Button>
-        <Button variant="contained" className={classes.button}>
+        <Button variant="contained" className={classes.button} 
+        style={
+          this.state.colorChemistry === 'secondary'
+            ? {
+              '--background-start': '#ec407a',
+            }
+            : {
+              '--background-start': '#ffffff',
+            }
+          }
+          onClick={this.searchChemistry}
+        >
           ХИМ ОБРАБОТКА
         </Button>
-        <Button variant="contained" className={classes.button}>
+        <Button variant="contained" className={classes.button} >
           ДРУГОЕ
         </Button>
         <Typography variant="overline" gutterBottom className={classes.status}>
@@ -118,6 +252,8 @@ class Filters extends React.Component {
             id="date"
             label="С"
             type="date"
+            value={this.state.fromDate}
+            onChange={this.handleChange('fromDate')}
             defaultValue="2017-05-24"
             className={classes.textField}
             InputLabelProps={{
@@ -131,6 +267,8 @@ class Filters extends React.Component {
             id="date"
             label="По"
             type="date"
+            value={this.state.toDate}
+            onChange={this.handleChange('toDate')}
             defaultValue="2017-05-24"
             className={classes.textField}
             InputLabelProps={{
@@ -138,7 +276,7 @@ class Filters extends React.Component {
             }}
           />
         </form>
-          <Button variant="contained" className={classes.button_show}>
+          <Button variant="contained" className={classes.button_show} onClick={this.showItems}>
             Показать
         </Button>
       </Grid>
@@ -150,8 +288,13 @@ class Filters extends React.Component {
   }
 }
 
-Filters.propTypes = {
+Filter.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Filters);
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ filterRequest }, dispatch)
+}
+
+
+export default connect(null,mapDispatchToProps)(withStyles(styles)(Filter));

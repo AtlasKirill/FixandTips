@@ -15,30 +15,25 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { connect } from 'react-redux';
+import { logout } from '../actions/auth';
 
 
 const styles = theme => ({
-    root: {
-        flexGrow: 1,
-    },
+
     card: {
-        maxWidth: 700,
+        // maxWidth: 700,
         margin: 20,
-        minWidth: 600,
+        maxWidth: 800,
     },
 
     main_info: {
         margin: 15,
         padding: 15,
-        // minHeight: 200,
     },
     avatar: {
         margin: 10,
         background: red[500],
-        // justifyItems: 'center',
         objectPosition: 50,
-    },
-    bigAvatar: {
         width: 180,
         height: 180,
     },
@@ -53,6 +48,13 @@ const styles = theme => ({
         background: red[500],
         marginLeft: 20,
     },
+
+    content: {
+        margin: 15,
+        padding: 15,
+        float: 'none',
+        minWidth: 200,
+    }
 });
 
 class Profile extends React.Component {
@@ -63,22 +65,21 @@ class Profile extends React.Component {
 
     render() {
         const {classes} = this.props;
-        const info = this.props.sessionInfo.data;
+        // const info = this.props.sessionInfo.data;
         return (
-            <Grid container className={classes.root} spacing={16}>
-                <Grid item sm={6}>
-                    <Card className={classes.card}>
-                        <Grid container spacing={24}>
-                            <Grid item sm={4}>
-                                <CardContent>
+            <Grid container spacing={8}>
+                <Grid item md={12}>
+                    <Paper className={classes.card}>
+                        <Grid container spacing={8}>
+                            <Grid item md={4}>
+                                <Paper classes={{root: classes.content}}>
                                     <Avatar
-                                        //alt="Лиза Носкова"
-                                        src="images/Liza.jpg"
-                                        className={classNames(classes.avatar, classes.bigAvatar)}
+                                        src="/static_src/components/images/Liza.jpg"
+                                        className={classNames(classes.avatar)}
                                     />
 
-                                    <Typography component="h2" variant="subtitle1" align="center">
-                                        { info.username }
+                                    <Typography component="h2" variant="title" align="center">
+                                        {/* { this.props.user} */}
                                     </Typography>
                                     <input
                                         accept="image/*"
@@ -88,12 +89,16 @@ class Profile extends React.Component {
                                         type="file"
                                     />
                                     <label htmlFor="contained-button-file">
-                                        <Button variant="outlined" size="small" component="span"
-                                                className={classes.button_upload} align="center">
+                                    <Button
+                                            variant="outlined"
+                                            size="mdall"
+                                            component="span"
+                                            className={classes.button_upload}>
                                             Изменить аватар
                                         </Button>
                                     </label>
-                                </CardContent>
+                                </Paper>
+                                
                             </Grid>
                             <Grid item sm={8}>
                                 <Paper className={classes.main_info}>
@@ -101,7 +106,7 @@ class Profile extends React.Component {
                                         Основная информация
                                     </Typography>
                                     <Typography variant="subtitle2" gutterBottom>
-                                        { info.email }
+                                        {/* { this.props.user } */}
                                     </Typography>
                                     <Typography variant="subtitle2" gutterBottom>
                                         студент
@@ -113,25 +118,25 @@ class Profile extends React.Component {
                                     </Typography>
                                     <List>
                                         <ListItem>
-                                            <ListItemText primary="Группа" secondary={ info.group_num }/>
+                                            {/* <ListItemText primary="Группа" secondary={ this.props.user }/> */}
                                         </ListItem>
                                         <ListItem>
-                                            <ListItemText primary="Квартира" secondary={ info.flat }/>
+                                            {/* <ListItemText primary="Квартира" secondary={ this.props.user }/> */}
                                         </ListItem>
                                         <ListItem>
-                                            <ListItemText primary="Телефон" secondary={ info.phone }/>
+                                            {/* <ListItemText primary="Телефон" secondary={ this.props.user}/> */}
                                         </ListItem>
                                     </List>
                                     <Button variant="outlined" className={classes.button} onClick={ this.onClick }>
                                         Изменить
                                     </Button>
-                                    <Button variant="contained" color="secondary" className={classes.button_password}>
-                                        Сменить пароль
+                                    <Button variant="contained" color="secondary" className={classes.button_password} onClick={this.props.logout}>
+                                        Выйти
                                     </Button>
                                 </Paper>
                             </Grid>
                         </Grid>
-                    </Card>
+                    </Paper>
                 </Grid>
             </Grid>
         );
@@ -142,10 +147,18 @@ Profile.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => {
+const mapStateToProps = ({ auth }) => {
     return {
-        sessionInfo: state.sessionInfo,
-    };
-};
+        user: auth.user,
+        isAuthenticated: auth.isAuthenticated,
+        isLoading: auth.isLoading,
+    }
+}
 
-export default connect(mapStateToProps, null)(withStyles(styles)(Profile));
+const mapDispatchToProps = dispatch => {
+    return {
+      
+      logout: () => dispatch(logout()),
+    }
+  }
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Profile));

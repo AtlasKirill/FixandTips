@@ -54,7 +54,7 @@ class User(AbstractUser):
     flat = models.IntegerField(default=0)
     gender = models.CharField(max_length=1)
     avatar = models.ImageField()
-    role = models.ForeignKey('role.Role', default=1)
+    role = models.ForeignKey('role.Role', default=2)
 
     def get_username(self):
         return self.username

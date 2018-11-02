@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import GetPrintAndStatistics from './GetPrintAndStatistic'
 
 const styles = {
     root: {
@@ -51,12 +52,12 @@ ListItemLink.propTypes = {
 class NavBar extends React.Component {
 
     state = {
-        auth: false,
+        authorized: true,
+        isCommandant: true,
     };
 
     render() {
         const {classes} = this.props;
-        const {auth} = this.state;
         return (
             <div className={classes.root}>
                 <AppBar position="static">
@@ -64,12 +65,17 @@ class NavBar extends React.Component {
                         <Typography variant="h6" color="inherit" className={classes.grow}>
                           <ListItemLink to="/student" primary="Fix&Tips"  />
                         </Typography>
-                        {auth && (
-                            <div>
-                                <RegButton/>
-                            </div>
-                        )}
-                        {!auth && (
+                    {!this.state.authorized && (
+                        <div>
+                            <RegButton/>
+                        </div>
+                    )}
+                    {this.state.authorized && this.state.isCommandant && (
+                        <div>
+                            <GetPrintAndStatistics/>
+                        </div>
+                    )}
+                    {this.state.authorized && !this.state.isCommandant && (
                             <div>
                                <ListItemLink className={classes.button} to="/profile" primary="Profile" icon={<AccountCircle/>} />
                                 {/* <IconButton className={classes.button} aria-label="AccountCircle">
@@ -78,7 +84,7 @@ class NavBar extends React.Component {
                                   </Link> */}
                                 {/* </IconButton> */}
                             </div>
-                        )}
+                    )}
 
                     </Toolbar>
                 </AppBar>

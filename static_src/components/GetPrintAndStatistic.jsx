@@ -13,38 +13,34 @@ const styles = theme => ({
   button: {
     margin: theme.spacing.unit,
     minWidth:150,
+    borderRadius:5,
   },
   extendedIcon: {
     marginRight: theme.spacing.unit,
   },
 });
 
-function FloatingActionButtons(props) {
-  const { classes } = props;
-  return (
-    <div>
-      <Grid container spacing={5}>
-      <Grid item md={12}>
-      <Button variant="extendedFab" aria-label="Delete" className={classes.button}>
-        <PrintIcon className={classes.extendedIcon} />
-        ПЕЧАТЬ
-      </Button>
-      </Grid>
-        <Grid item md={12}>
-
-      <Button variant="extendedFab" href = '#statistics' aria-label="Delete" className={classes.button}>
-        <BarChart className={classes.extendedIcon} />
-        Статистика
-      </Button>
-        </Grid>
-
-      </Grid>
-    </div>
-  );
+class GetPrintAndStatistics extends React.Component {
+  render() {
+      const {classes} = this.props;
+      return (
+         <div>
+              <Button variant="extendedFab" aria-label="Delete" className={classes.button}>
+                 <PrintIcon className={classes.extendedIcon}/>
+                 ПЕЧАТЬ
+             </Button>
+             <Button variant="extendedFab" href='#statistics' aria-label="Delete" className={classes.button}>
+                 <BarChart className={classes.extendedIcon}/>
+                 Статистика
+             </Button>
+          </div>
+     )
+  }
+ ;
 }
 
-FloatingActionButtons.propTypes = {
+GetPrintAndStatistics.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(FloatingActionButtons);
+export default withStyles(styles)(GetPrintAndStatistics);

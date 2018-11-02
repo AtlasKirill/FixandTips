@@ -11,6 +11,9 @@ export const ERROR_REQUEST_SENDING = 'ERROR_REQUEST_SENDING';
 export const START_REQUEST_DELETING = 'START_REQUEST_DELETING';
 export const SUCCESS_REQUEST_DELETING = 'SUCCESS_REQUEST_DELETING';
 export const ERROR_REQUEST_DELETING = 'ERROR_REQUEST_DELETING';
+export const START_REQUEST_FILTERING = 'START_REQUEST_FILTERING';
+export const SUCCESS_REQUEST_FILTERING = 'SUCCESS_REQUEST_FILTERING';
+export const ERROR_REQUEST_FILTERING = 'ERROR_REQUEST_FILTERING';
 
 export const loadRequests = (url) => {
     return {
@@ -72,6 +75,30 @@ export const createRequest = (url,data) => {
             types: [START_REQUEST_SENDING, 
                     SUCCESS_REQUEST_SENDING,
                     ERROR_REQUEST_SENDING],
+        },
+    };
+};
+
+export const filterRequest = (url) => {
+    console.log('FILTER')
+    return {
+        [RSAA]: {
+            credentials: 'include',
+            endpoint: url,
+            method: 'GET',
+            types: [START_REQUEST_FILTERING, 
+                {
+                    type: SUCCESS_REQUEST_FILTERING,
+                    payload: (action, state, res) =>{
+                        return getJSON(res).then(
+                            (json) => {
+                                const normalizedData = normalize(json, [request]);
+                                return Object.assign({}, json, normalizedData);
+                            },
+                        );
+                    },
+                }, 
+                    ERROR_REQUEST_FILTERING],
         },
     };
 };

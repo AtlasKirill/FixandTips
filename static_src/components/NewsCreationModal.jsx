@@ -12,32 +12,34 @@ import apiUrls from './../constants/apiUrls.js';
 import { connect } from 'react-redux';
 import { createNews } from '../actions/news';
 import { bindActionCreators } from 'redux';
+import AddIcon from '@material-ui/icons/Add';
 
 const styles = theme => ({
   root: {
     background: 'white',
-    borderRadius: 20,
+    borderRadius: 5,
     color: 'black',
-    padding: '0 30px',
+    padding: '5px 20px 5px 20px',
     boxShadow: 'white',
     border: 'solid',
     borderWidth: 1,
-  },
-  textField: {
+    margin: 0,
+},
+textField: {
     marginLeft: 5,
     marginRight: 5,
     minWidth: '100%',
     alignSelf: 'center',
-  },
-  formControl: {
+},
+formControl: {
     margin: theme.spacing.unit * 3,
-  },
-  group: {
+},
+group: {
     margin: `${theme.spacing.unit}px 0`,
-  },
-  dialog: {
+},
+dialog: {
     maxWidth: 550,
-  }
+}
 });
 
 
@@ -72,7 +74,10 @@ class NewRequest extends React.Component {
     return (
 
       <div>
-        <Button onClick={this.handleClickOpen} className={classes.root}>СОЗДАТЬ</Button>
+        <Button onClick={this.handleClickOpen} className={classes.root}>
+          <AddIcon/>
+          СОЗДАТЬ
+        </Button>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}
@@ -84,7 +89,7 @@ class NewRequest extends React.Component {
           <DialogContent>
             <DialogContentText align="center">
               Заполните данные формы
-                        </DialogContentText>
+            </DialogContentText>
             <TextField
               id="outlined-dense"
               label="Введите заголовок новости"
@@ -112,8 +117,8 @@ class NewRequest extends React.Component {
               Отмена
                         </Button>
             <Button onClick={this.handleClickSubmit} color="primary">
-              Создать
-                        </Button>
+                Создать
+            </Button>
           </DialogActions>
         </Dialog>
       </div>

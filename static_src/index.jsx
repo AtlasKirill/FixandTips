@@ -7,23 +7,23 @@ import createHistory from 'history/createBrowserHistory';
 import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 import { loadSessionUserInfo } from './actions/session';
 import apiUrl from './constants/apiUrls';
-
+import { loadUser } from './actions/auth';
 const history = createHistory();
 const middleware = routerMiddleware(history);
 
-const initialState = {
-      sessionInfo: {
-          data:
-              {
-                  id: 1,
-                  username:''
-              },
-          isLogined: false,
-      }
-};
+// const initialState = {
+//       sessionInfo: {
+//           data:
+//               {
+//                   id: 1,
+//                   username:''
+//               },
+//           isLogined: false,
+//       }
+// };
 
-const store = initStore(initialState);
-store.dispatch(loadSessionUserInfo(apiUrl.session));
+const store = initStore();
+store.dispatch(loadUser());
 
 ReactDOM.render(
       <Provider store={ store }>

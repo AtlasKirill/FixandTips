@@ -20,6 +20,7 @@ import apiUrls from './../constants/apiUrls.js';
 import { bindActionCreators } from 'redux';
 import { createRequest } from '../actions/requests';
 import { connect } from 'react-redux';
+import AddIcon from '@material-ui/icons/Add';
 import CategoryList from './CategoryList';
 import { loadRequests } from './../actions/requests.js';
 import { loadNews } from './../actions/news.js';
@@ -27,25 +28,25 @@ import { loadNews } from './../actions/news.js';
 const styles = theme => ({
   root: {
     background: 'white',
-    borderRadius: 20,
+    borderRadius: 5,
     color: 'black',
-    padding: '0 30px',
+    padding: '5px 20px 5px 20px',
     boxShadow: 'white',
     border: 'solid',
     borderWidth: 1,
-  },
-  textField: {
+},
+textField: {
     marginLeft: theme.spacing.unit,
     marginRight: theme.spacing.unit,
     width: 400,
     alignSelf: 'center',
-  },
-  formControl: {
+},
+formControl: {
     margin: theme.spacing.unit * 3,
-  },
-  group: {
+},
+group: {
     margin: `${theme.spacing.unit}px 0`,
-  },
+},
 });
 
 
@@ -53,8 +54,8 @@ class NewRequest extends React.Component {
   state = {
     open: false,
     description:'No description',
-    status:1,
-    category:1,
+    status:'Отправлена',
+    category:'No category',
     materials: 'No materials',
     urgency: false,
   };
@@ -95,7 +96,10 @@ class NewRequest extends React.Component {
     const { classes } = this.props;
     return (
       <div>
-        <Button onClick={this.handleClickOpen} className={classes.root} >СОЗДАТЬ</Button>
+        <Button onClick={this.handleClickOpen} className={classes.root} >
+          <AddIcon/>
+          СОЗДАТЬ
+        </Button>
         <Dialog
           open={this.state.open}
           onClose={this.handleClose}

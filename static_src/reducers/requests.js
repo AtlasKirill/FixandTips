@@ -37,15 +37,11 @@ export default function posts(store = initialState, action){
         }
 
         case 'SUCCESS_REQUEST_SENDING':{
-            return update(store, {
-                isLoading: { $set: false },
-                // requestList: { $set: action.payload.result },
-                requests: { $merge: action.payload }
-            });
+            return store;
         }
 
         case 'ERROR_REQUEST_SENDING':{
-            return true;
+            return store;
         }
         
         case 'START_REQUEST_DELETING':{
@@ -60,6 +56,28 @@ export default function posts(store = initialState, action){
         case 'ERROR_REQUEST_DELETING':{
             return store;
         }
+
+        case 'START_REQUEST_FILTERING':{
+            return update(store, {
+                isLoading: { $set: true },
+            });
+            
+        }
+
+        case 'SUCCESS_REQUEST_FILTERING':{
+            return update(store, {
+                isLoading: { $set: false },
+                requestList: { $set: action.payload.result },
+                requests: { $merge: action.payload.entities.requests }
+            });
+        }
+
+        case 'ERROR_REQUEST_FILTERING':{
+            return update(store, {
+                isLoading: { $set: false },
+            });
+        }
+
         default:
             return store;
     }
