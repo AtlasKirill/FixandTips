@@ -12,5 +12,5 @@ export default combineReducers({
     news,
     categories,
     sessionInfo: session,
-    auth,
+    auth: auth,
 });

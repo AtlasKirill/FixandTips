@@ -10,9 +10,10 @@ import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import apiUrls from './../constants/apiUrls.js';
 import { connect } from 'react-redux';
-import { createNews } from '../actions/news';
+import { createNews, loadNews } from '../actions/news';
 import { bindActionCreators } from 'redux';
 import AddIcon from '@material-ui/icons/Add';
+import store from './../index.jsx';
 
 const styles = theme => ({
   root: {
@@ -63,8 +64,9 @@ class NewRequest extends React.Component {
   };
   handleClickSubmit = (e) => {
     console.log('onClick')
-    this.props.createNews(apiUrls.news,{text:this.state.text,title:this.state.title });
+    this.props.createNews(apiUrls.news,{text:this.state.text,title:this.state.title },store.getState().auth.token);
     this.setState({ open: false });
+    this.props.loadNews(apiUrls.news);
   };
 
 
@@ -130,6 +132,6 @@ NewRequest.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ createNews }, dispatch)
+  return bindActionCreators({ createNews, loadNews }, dispatch)
 }
 export default connect(null,mapDispatchToProps)(withStyles(styles)(NewRequest));

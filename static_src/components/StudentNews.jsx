@@ -38,10 +38,6 @@ class StudentNews extends React.Component {
         is_deleted: PropTypes.bool,
     }
 
-    onClick=(e)=> {
-        console.log(apiUrls.newsDetail(this.props.id))
-        this.props.deleteNews(apiUrls.newsDetail(this.props.id),{is_deleted:true});
-    }
     render() {
         const {classes} = this.props;
 
@@ -76,7 +72,5 @@ const mapStateToProps = ({ news }, ownProps ) => {
         ...news.news[ownProps.id],
     }
 }
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ deleteNews }, dispatch)
-  }
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(StudentNews));
+
+export default connect(mapStateToProps, null)(withStyles(styles)(StudentNews));

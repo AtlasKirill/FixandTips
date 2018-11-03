@@ -65,11 +65,11 @@ class NavBar extends React.Component {
         {
             return(<div></div>)
         }
-        else if(this.props.user.role == 1)
+        else if(this.props.user.role == 4)
         {
             buttons  = <GetPrintAndStatistics/>
         }
-        else if(this.props.user.role == 4)
+        else if(this.props.user.role == 2)
         {
             buttons  = <ListItemLink className={classes.button} to="/profile" primary="Profile" icon={<AccountCircle/>} />
         }
@@ -78,7 +78,7 @@ class NavBar extends React.Component {
                 <AppBar position="static">
                     <Toolbar>
                         <Typography variant="h6" color="inherit" className={classes.grow}>
-                          <ListItemLink to="/main" primary="Fix&Tips"  />
+                          <ListItemLink to="/" primary="Fix&Tips"  />
                         </Typography>
                     {!this.props.isAuthenticated && (
                         <div>

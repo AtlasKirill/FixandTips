@@ -16,12 +16,25 @@ function newsDetail(pk='')
     return url
 }
 
+function myRequests(author_id='')
+{
+    var url = 'api/requests/?author='+author_id
+    return url
+}
+
+function myNews(author_id='')
+{
+    var url = 'api/news/?author='+author_id
+    return url
+}
 
 export default {
-    requests: '/api/requests/',
+    requests: '/api/requests',
     news: '/api/news/',
     session: '/api/session/',
     filter,
     requestDetail,
     newsDetail,
+    myRequests,
+    myNews,
 };

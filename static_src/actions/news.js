@@ -13,12 +13,15 @@ export const SUCCESS_NEWS_DELETING = 'SUCCESS_NEWS_DELETING';
 export const ERROR_NEWS_DELETING = 'ERROR_NEWS_DELETING';
 
 
-export const loadNews = (url) => {
+export const loadNews = (url, token) => {
     return {
         [RSAA]: {
             credentials: 'include',
             endpoint: url,
             method: 'GET',
+            headers: {
+                'Authorization': `Token ${token}`,
+            },
             types: [START_NEWS_LOADING, 
                 {
                     type: SUCCESS_NEWS_LOADING,
@@ -36,7 +39,7 @@ export const loadNews = (url) => {
     };
 };
 
-export const createNews = (url,data) => {
+export const createNews = (url,data, token) => {
     console.log('SEND')
     return {
         [RSAA]: {
@@ -47,16 +50,29 @@ export const createNews = (url,data) => {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'X-CSRFToken': Cookies.get("csrftoken")
+                'X-CSRFToken': Cookies.get("csrftoken"),
+                'Authorization': `Token ${token}`,
               },
             types: [START_NEWS_SENDING, 
-                    SUCCESS_NEWS_SENDING,
-                    ERROR_NEWS_SENDING],
+                {
+                    type:SUCCESS_NEWS_SENDING,
+                        payload: (action, state, res) => {
+                            return getJSON(res).then(
+                                (json) => {
+                                    json = {news: json};
+                                    const normalizedData = normalize(json, [news]);
+                                    delete json.results;
+                                    return Object.assign({}, json, normalizedData);
+                                },
+                            );
+                        },
+                    },
+                ERROR_NEWS_SENDING],
         },
     };
 };
 
-export const deleteNews = (url,data) => {
+export const deleteNews = (url,data, token) => {
     console.log('Delete')
     return {
         [RSAA]: {
@@ -67,7 +83,8 @@ export const deleteNews = (url,data) => {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'X-CSRFToken': Cookies.get("csrftoken")
+                'X-CSRFToken': Cookies.get("csrftoken"),
+                'Authorization': `Token ${token}`,
               },
             types: [START_NEWS_DELETING, 
                     SUCCESS_NEWS_DELETING,

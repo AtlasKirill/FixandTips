@@ -24,6 +24,10 @@ import AddIcon from '@material-ui/icons/Add';
 import CategoryList from './CategoryList';
 import { loadRequests } from './../actions/requests.js';
 import { loadNews } from './../actions/news.js';
+import Checkbox from '@material-ui/core/Checkbox';
+import FormGroup from '@material-ui/core/FormGroup';
+import store from './../index.jsx';
+
 
 const styles = theme => ({
   root: {
@@ -79,7 +83,7 @@ class NewRequest extends React.Component {
   };
 
   handleChangePriority = event => {
-    this.setState({ urgency: true });
+    this.setState({ urgency: !this.state.urgency });
   };
 
   onClick=(e)=> {
@@ -89,8 +93,10 @@ class NewRequest extends React.Component {
                             category:this.state.category, 
                             materials:this.state.materials,
                             status:this.state.status,
-                            urgency: this.state.urgency});
+                            urgency: this.state.urgency},
+                            store.getState().auth.token);
     this.setState({ open: false });
+    this.props.loadRequests(apiUrls.myRequests(this.props.user.id), store.getState().auth.token);
 }
   render() {
     const { classes } = this.props;
@@ -142,18 +148,18 @@ class NewRequest extends React.Component {
             <Typography align="center">
               Выберите приоритет заявки
               </Typography>
-            <FormControl component="fieldpriority" className={classes.formControl}>
-              <RadioGroup
-                aria-label="requestType"
-                name="priority"
-                className={classes.group}
-                value={this.state.urgency}
-                onChange={this.handleChangePriority}
-              >
-                <FormControlLabel value="true" control={<Radio />} label="Срочно" />
-                <FormControlLabel value="false" control={<Radio />} label="Не срочно" />
-              </RadioGroup>
-            </FormControl>
+              <FormGroup className={classes.formGroupControl}>
+                            <FormControlLabel
+                                control={
+                                    <Checkbox
+                                        checked={this.state.urgency}
+                                        onChange={this.handleChangePriority}
+                                        value={this.state.urgency}
+                                    />
+                                }
+                                label="Срочно"
+                            />
+                        </FormGroup>
 
           </DialogContent>
           <DialogActions>
@@ -175,8 +181,12 @@ NewRequest.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-
-const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ createRequest }, dispatch)
+const mapStateToProps = ({ auth }) => {
+  return {
+      user: auth.user,
+  }
 }
-export default connect(null,mapDispatchToProps)(withStyles(styles)(NewRequest));
+const mapDispatchToProps = (dispatch) => {
+  return bindActionCreators({ createRequest, loadRequests }, dispatch)
+}
+export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(NewRequest));

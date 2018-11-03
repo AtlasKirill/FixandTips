@@ -9,12 +9,19 @@ import { connect } from 'react-redux';
 import apiUrls from './../constants/apiUrls.js';
 import { bindActionCreators } from 'redux';
 import { deleteRequest } from '../actions/requests';
+import { loadRequests } from '../actions/requests';
+import store from './../index.jsx';
 
 class StudentRequestWarning extends React.Component {
   state = {
     open: false,
   };
-
+  onClick=(e)=> {
+    console.log(apiUrls.requestDetail(this.props.id))
+    this.props.deleteRequest(apiUrls.requestDetail(this.props.id),{is_deleted:true},store.getState().auth.token);
+    this.setState({ open: false });
+    this.props.loadRequests(apiUrls.requests,store.getState().auth.token);
+  };
   handleClickOpen = () => {
     this.setState({ open: true });
   };
@@ -23,11 +30,7 @@ class StudentRequestWarning extends React.Component {
     this.setState({ open: false });
   };
 
-  onClick=(e)=> {
-    console.log(apiUrls.requestDetail(this.props.id))
-    this.props.deleteRequest(apiUrls.requestDetail(this.props.id),{is_deleted:true});
-    this.setState({ open: false });
-  }
+  
 
   render() {
     return (
@@ -45,12 +48,12 @@ class StudentRequestWarning extends React.Component {
         >
           <DialogTitle id="alert-dialog-title">{"Вы уверены, что хотите отменить запрос?"}</DialogTitle>
           <DialogActions>
-            <Button onClick={this.handleClose} color="primary">
-              Отменить
-            </Button>
-            <Button onClick={this.onclick} color="secondary" autoFocus>
+            <Button onClick={this.onClick} color="primary">
               Подтвердить
             </Button>
+            {/* <Button  color="secondary" onClick={this.onСlick}>
+              Подтвердить
+            </Button> */}
           </DialogActions>
         </Dialog>
       </div>
@@ -64,7 +67,7 @@ const mapStateToProps = ({ requests }, ownProps ) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-  return bindActionCreators({ deleteRequest }, dispatch)
+  return bindActionCreators({ deleteRequest, loadRequests }, dispatch)
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(StudentRequestWarning);

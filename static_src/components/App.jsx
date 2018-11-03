@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import MainPage from './MainPage.jsx';
 import Login from './LoginPage';
-import NavBar from './NavBar.jsx';
 import Profile from './Profile.jsx';
 import Chart from './Chart.jsx';
 import CommandantPage from './CommandantPage';
@@ -35,11 +34,11 @@ class App extends React.Component{
         let {PrivateRoute} = this;
         return(  
             <div>
-                <NavBar/> 
+                {/* <NavBar/>  */}
                 <Switch>
                     <Route path="/login" component={ Login }/>
                     <Route path="/register" component={ Register }/>
-                    <Route path="/main" component={ MainPage }/>
+                    <Route exact path="/" component={ MainPage }/>
                     <Route path="/profile" component={ Profile }/>
                     <Route path="/statistic" component={ Chart }/>
                 </Switch> 
@@ -49,20 +48,20 @@ class App extends React.Component{
 }
 
  
-const mapStateToProps = ({ auth }) => {
-    return {
-        user: auth.user,
-        isAuthenticated: auth.isAuthenticated,
-        isLoading: auth.isLoading,
-    }
-}
-const mapDispatchToProps = dispatch => {
-    return {
-      loadUser: () => {
-        return dispatch(loadUser());
-      }
-    }
-  }
+// const mapStateToProps = ({ auth }) => {
+//     return {
+//         user: auth.user,
+//         isAuthenticated: auth.isAuthenticated,
+//         isLoading: auth.isLoading,
+//     }
+// }
+// const mapDispatchToProps = dispatch => {
+//     return {
+//       loadUser: () => {
+//         return dispatch(loadUser());
+//       }
+//     }
+//   }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
-// export default App;
+// export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

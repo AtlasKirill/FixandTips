@@ -7,6 +7,7 @@ import Filter from './Filter';
 import {withStyles} from "@material-ui/core";
 import PropTypes from 'prop-types';
 import Typography from "@material-ui/core/Typography/Typography";
+import NavBar from './NavBar';
 
 const styles = theme => ({
     root: {
@@ -23,6 +24,7 @@ class CommandantPage extends React.Component{
         const {classes} = this.props;
         return( 
             <div>
+                <NavBar/>
                 <Grid container spacing={8}>
                     <Grid item md={6}>
                         <Typography variant="h5" gutterBottom className={classes.headline}>

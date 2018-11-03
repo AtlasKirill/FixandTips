@@ -16,6 +16,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { connect } from 'react-redux';
 import { logout } from '../actions/auth';
+import NavBar from './NavBar';
 
 
 const styles = theme => ({
@@ -59,9 +60,7 @@ const styles = theme => ({
 
 class Profile extends React.Component {
 
-    onClick=(e)=> {
-        console.log('Want to change smth')
-    }
+
 
     render() {
         const {classes} = this.props;
@@ -70,7 +69,14 @@ class Profile extends React.Component {
         {
             return(<div>Loading...</div>)
         }
+        if(!this.props.isAuthenticated)
+        {
+            return <Redirect push to="/login"/>
+        }
+        
         return (
+            <div>
+            <NavBar/>
             <Grid container spacing={8}>
                 <Grid item md={12}>
                     <Paper className={classes.card}>
@@ -134,7 +140,7 @@ class Profile extends React.Component {
                                     <Button variant="outlined" className={classes.button} onClick={ this.onClick }>
                                         Изменить
                                     </Button>
-                                    <Button variant="contained" color="secondary" className={classes.button_password} onClick={this.props.logout}>
+                                    <Button variant="contained" color="secondary" className={classes.button_password} onClick={this.props.logout} href='/login'>
                                         Выйти
                                     </Button>
                                 </Paper>
@@ -143,6 +149,7 @@ class Profile extends React.Component {
                     </Paper>
                 </Grid>
             </Grid>
+            </div>
         );
     }
 }

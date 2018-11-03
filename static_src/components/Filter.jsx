@@ -11,6 +11,7 @@ import apiUrls from './../constants/apiUrls.js';
 import { filterRequest } from '../actions/requests';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import store from './../index.jsx';
 
 
 
@@ -126,7 +127,7 @@ class Filter extends React.Component {
   };
   showItems = event => {
     console.log(apiUrls.filter(this.state.status,this.state.category,this.state.urgency,this.state.fromDate, this.state.toDate));
-    this.props.filterRequest(apiUrls.filter(this.state.status,this.state.category,this.state.urgency,this.state.fromDate, this.state.toDate));
+    this.props.filterRequest(apiUrls.filter(this.state.status,this.state.category,this.state.urgency,this.state.fromDate, this.state.toDate),store.getState().auth.token);
     
   };
 

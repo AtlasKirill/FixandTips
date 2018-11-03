@@ -24,3 +24,8 @@ urlpatterns = [
     url("^auth/login/$", LoginAPI.as_view()),
     url("^auth/user/$", UserAPI.as_view()),
 ]
+# urlpatterns = [
+#      url(r'auth/login/', LoginView.as_view(), name='knox_login'),
+#      # url(r'logout/', knox_views.LogoutView.as_view(), name='knox_logout'),
+#      # url(r'logoutall/', knox_views.LogoutAllView.as_view(), name='knox_logoutall'),
+# ]

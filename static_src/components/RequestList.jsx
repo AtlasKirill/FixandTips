@@ -15,7 +15,7 @@ class RequestList extends React.Component{
         requestList: PropTypes.arrayOf(PropTypes.number),
     }
     componentDidMount() {
-        this.props.loadRequests(apiUrls.requests);
+        this.props.myRequests(apiUrls.requests(this.props.user.id));
     }
 
     render(){
@@ -32,8 +32,9 @@ class RequestList extends React.Component{
         );
     }
 }
-const mapStateToProps = ({ requests }) => {
+const mapStateToProps = ({ requests, auth }) => {
     return {
+        user: auth.user,
         requestList: requests.requestList,
         isLoading: requests.isLoading,
     }

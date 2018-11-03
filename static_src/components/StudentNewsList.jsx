@@ -5,7 +5,7 @@ import apiUrls from './../constants/apiUrls';
 import { loadNews } from './../actions/news.js';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
+import store from './../index.jsx';
 
 class StudentNewsList extends React.Component{
     
@@ -15,7 +15,7 @@ class StudentNewsList extends React.Component{
     }
 
     componentDidMount() {
-        this.props.loadNews(apiUrls.news);
+        this.props.loadNews(apiUrls.news,store.getState().auth.token);
     }
 
     render(){

@@ -11,18 +11,19 @@ import { loadUser } from './actions/auth';
 const history = createHistory();
 const middleware = routerMiddleware(history);
 
-// const initialState = {
-//       sessionInfo: {
-//           data:
-//               {
-//                   id: 1,
-//                   username:''
-//               },
-//           isLogined: false,
-//       }
-// };
+const initialState = {
+      auth: {
+          data:
+              {
+                  id: 1,
+                  username:''
+              },
+          isLogined: false,
+      }
+};
 
 const store = initStore();
+// console.log(store.getState());
 store.dispatch(loadUser());
 
 ReactDOM.render(

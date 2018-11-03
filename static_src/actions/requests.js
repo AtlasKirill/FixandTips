@@ -15,12 +15,15 @@ export const START_REQUEST_FILTERING = 'START_REQUEST_FILTERING';
 export const SUCCESS_REQUEST_FILTERING = 'SUCCESS_REQUEST_FILTERING';
 export const ERROR_REQUEST_FILTERING = 'ERROR_REQUEST_FILTERING';
 
-export const loadRequests = (url) => {
+export const loadRequests = (url, token) => {
     return {
         [RSAA]: {
             credentials: 'include',
             endpoint: url,
             method: 'GET',
+            headers: {
+                'Authorization': `Token ${token}`,
+            },
             types: [START_REQUEST_LOADING, 
                 {
                     type: SUCCESS_REQUEST_LOADING,
@@ -39,7 +42,7 @@ export const loadRequests = (url) => {
 };
 
 
-export const deleteRequest = (url,data) => {
+export const deleteRequest = (url, data, token) => {
     console.log('Delete')
     return {
         [RSAA]: {
@@ -50,7 +53,8 @@ export const deleteRequest = (url,data) => {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'X-CSRFToken': Cookies.get("csrftoken")
+                'X-CSRFToken': Cookies.get("csrftoken"),
+                'Authorization': `Token ${token}`,
               },
             types: [START_REQUEST_DELETING, 
                     SUCCESS_REQUEST_DELETING,
@@ -59,7 +63,7 @@ export const deleteRequest = (url,data) => {
     };
 };
 
-export const createRequest = (url,data) => {
+export const createRequest = (url,data, token) => {
     console.log('SEND')
     return {
         [RSAA]: {
@@ -70,22 +74,38 @@ export const createRequest = (url,data) => {
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                'X-CSRFToken': Cookies.get("csrftoken")
+                'X-CSRFToken': Cookies.get("csrftoken"),
+                'Authorization': `Token ${token}`,
               },
             types: [START_REQUEST_SENDING, 
-                    SUCCESS_REQUEST_SENDING,
-                    ERROR_REQUEST_SENDING],
+                    {
+                        type:SUCCESS_REQUEST_SENDING,
+                        payload: (action, state, res) => {
+                            return getJSON(res).then(
+                                (json) => {
+                                    json = {requests: json};
+                                    const normalizedData = normalize(json, [request]);
+                                    delete json.results;
+                                    return Object.assign({}, json, normalizedData);
+                                },
+                            );
+                        },
+                    },
+            ERROR_REQUEST_SENDING]
         },
     };
 };
 
-export const filterRequest = (url) => {
+export const filterRequest = (url, token) => {
     console.log('FILTER')
     return {
         [RSAA]: {
             credentials: 'include',
             endpoint: url,
             method: 'GET',
+            headers: {
+                'Authorization': `Token ${token}`,
+            },
             types: [START_REQUEST_FILTERING, 
                 {
                     type: SUCCESS_REQUEST_FILTERING,

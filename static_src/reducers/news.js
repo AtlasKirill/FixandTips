@@ -9,53 +9,72 @@ const initialState = {
 };
 
 export default function posts(store = initialState, action){
+    let newStore = store;
+    if (action.payload && action.payload.entities && action.payload.entities.news) {
+        newStore = update(store, {
+            news: { $merge: action.payload.entities.news },
+        });
+    }
     switch(action.type){
 
         case 'START_NEWS_LOADING':{
-            return update(store, {
+            return update(newStore, {
                 isLoading: { $set: true },
             });
         }
 
         case 'SUCCESS_NEWS_LOADING':{
-            return update(store, {
+            return update(newStore, {
                 isLoading: { $set: false },
                 newsList: { $set: action.payload.result },
-                news: { $merge: action.payload.entities.news }
             });
         }
 
         case 'ERROR_NEWS_LOADING':{
-            return update(store, {
+            return update(newStore, {
                 isLoading: { $set: false },
             });
         }
 
         case 'START_NEWS_SENDING':{
-            return store;
+            return update(newStore, {
+                isLoading: { $set: true },
+            });
         }
 
         case 'SUCCESS_NEWS_SENDING':{
-            return store;
+            return update(newStore, {
+                isLoading: { $set: false },
+                newsList: { $push: action.payload.result },
+
+            });
         }
 
         case 'ERROR_NEWS_SENDING':{
-            return true;
+            return update(newStore, {
+                isLoading: { $set: false },
+            });
         }
         
         case 'START_NEWS_DELETING':{
-            return store;
+            return update(newStore, {
+                isLoading: { $set: true },
+            });
             
         }
 
         case 'SUCCESS_NEWS_DELETING':{
-            return store;
+            return update(newStore, {
+                isLoading: { $set: false },
+            });
         }
 
         case 'ERROR_NEWS_DELETING':{
-            return store;
+            return update(newStore, {
+                isLoading: { $set: false },
+            });
         }
         default:
-            return store;
+            return newStore;
     }
 }

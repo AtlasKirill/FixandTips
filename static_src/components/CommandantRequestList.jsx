@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import React from 'react';
-
+import store from './../index.jsx';
 
 
 class CommandantRequestList extends React.Component{
@@ -15,7 +15,7 @@ class CommandantRequestList extends React.Component{
         requestList: PropTypes.arrayOf(PropTypes.number),
     }
     componentDidMount() {
-        this.props.loadRequests(apiUrls.requests);
+        this.props.loadRequests(apiUrls.requests, store.getState().auth.token);
     }
 
     render(){

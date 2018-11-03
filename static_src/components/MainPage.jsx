@@ -14,6 +14,8 @@ import PropTypes from 'prop-types';
 import Typography from "@material-ui/core/Typography/Typography";
 import GetPrintAndStatistics from './GetPrintAndStatistic';
 import { connect } from 'react-redux';
+import Redirect from 'react-router-dom/es/Redirect';
+import NavBar from './NavBar.jsx';
 
 const styles = theme => ({
     root: {
@@ -31,9 +33,13 @@ class MainPage extends React.Component{
         const {classes} = this.props;
         if(this.props.isLoading)
         {
-            return(<div>Loading...</div>)
+            return(<div>Loading...</div>);
         }
-        else if(this.props.user.role == 1){
+        if(!this.props.isAuthenticated)
+        {
+            return <Redirect push to='/login'/>
+        }
+        else if(this.props.user.role == 4){
         page =  
         <Grid container spacing={8}>
             <Grid item md={6}>
@@ -58,7 +64,7 @@ class MainPage extends React.Component{
         </Grid>
         }
 
-        else if(this.props.user.role == 4){
+        else if(this.props.user.role == 2){
             page =
                 <Grid container spacing={10} justify="center">
                     <Grid item md={6}>
@@ -84,6 +90,7 @@ class MainPage extends React.Component{
       
         return( 
             <div>
+                <NavBar/>
                 { page }
             </div>
         );

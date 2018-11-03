@@ -8,7 +8,8 @@ import IconButton from '@material-ui/core/IconButton';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { deleteRequest } from '../actions/requests';
-
+import apiUrls from './../constants/apiUrls';
+import store from './../index.jsx';
 class CommandantRequestWarning extends React.Component {
     state = {
         open: false,
@@ -23,7 +24,7 @@ class CommandantRequestWarning extends React.Component {
     };
     onClick=(e)=> {
         console.log(apiUrls.requestDetail(this.props.id))
-        this.props.deleteRequest(apiUrls.requestDetail(this.props.id),{is_deleted:true});
+        this.props.deleteRequest(apiUrls.requestDetail(this.props.id),{is_deleted:true}, store.getState().auth.token);
     }
     render() {
         return (

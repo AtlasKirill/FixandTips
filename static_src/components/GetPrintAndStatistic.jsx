@@ -7,6 +7,8 @@ import Icon from '@material-ui/core/Icon';
 import BarChart from '@material-ui/icons/BarChart';
 import PrintIcon from '@material-ui/icons/Print';
 import Grid from '@material-ui/core/Grid';
+// import ListItemLink from './Navbar.jsx';
+
 
 
 const styles = theme => ({
@@ -29,10 +31,10 @@ class GetPrintAndStatistics extends React.Component {
                  <PrintIcon className={classes.extendedIcon}/>
                  ПЕЧАТЬ
              </Button>
-             <Button variant="extendedFab" href='#statistics' aria-label="Delete" className={classes.button}>
-                 <BarChart className={classes.extendedIcon}/>
-                 Статистика
-             </Button>
+             {/* <ListItemLink className={classes.button} to="/statistic" primary="Статистика" icon={<BarChart className={classes.extendedIcon}/>}/> */}
+            <Button variant="extendedFab" href='/statistic/' aria-label="Delete" className={classes.button}>    
+                Статистика
+            </Button>
           </div>
      )
   }

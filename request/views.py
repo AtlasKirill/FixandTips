@@ -5,7 +5,7 @@ from core.permissions import IsOwnerOrReadOnly
 from rest_framework import viewsets
 from request.models import Request
 from request.serializers import RequestSerializer
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
+from knox.auth import TokenAuthentication
 from django_filters.rest_framework import DjangoFilterBackend
 from django_filters import rest_framework as filters
 import django_filters
@@ -26,13 +26,14 @@ class RequestFilter(filters.FilterSet):
 class RequestViewSet(viewsets.ModelViewSet):
 
     serializer_class = RequestSerializer
-    authentication_classes = (SessionAuthentication, BasicAuthentication)
+    authentication_classes = (TokenAuthentication,)
     queryset = Request.objects.all().order_by('-created_at')
     permission_classes = (permissions.IsAuthenticated, IsOwnerOrReadOnly)
     filter_backends = (DjangoFilterBackend,)
     filter_class = RequestFilter
 
     def perform_create(self, serializer):
+        print (self.request.user.id)
         serializer.save(author=self.request.user)
 #
 #
