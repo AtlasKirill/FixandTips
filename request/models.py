@@ -8,7 +8,8 @@ class Request(BaseModel, AuthoredMixin, CategorizableMixin):
 
     description = models.TextField()
     urgency = models.BooleanField(default=False)
-    status = models.ForeignKey(Status)
+    # status = models.ForeignKey(Status)
+    status = models.CharField(max_length=255)
     materials = models.TextField()
 
 

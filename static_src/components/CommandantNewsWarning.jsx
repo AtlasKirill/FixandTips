@@ -5,7 +5,12 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
-
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {deleteRequest} from '../actions/requests';
+import {loadNews} from '../actions/news';
+import apiUrls from './../constants/apiUrls';
+import store from './../index.jsx';
 
 class CommandantNewsWarning extends React.Component {
     state = {
@@ -19,6 +24,13 @@ class CommandantNewsWarning extends React.Component {
     handleClose = () => {
         this.setState({open: false});
     };
+
+    onDelete = (e) => {
+        console.log(apiUrls.requestDetail(this.props.id))
+        this.props.deleteRequest(apiUrls.requestDetail(this.props.id), {is_deleted: true}, store.getState().auth.token);
+        this.props.loadNews(apiUrls.news, store.getState().auth.token);
+        this.setState({open: false});
+    }
 
     render() {
         return (
@@ -36,12 +48,13 @@ class CommandantNewsWarning extends React.Component {
                 >
                     <DialogTitle id="alert-dialog-title">{"Вы уверены, что хотите удалить объявление?"}</DialogTitle>
                     <DialogActions>
-                        <Button onClick={this.handleClose} color="primary">
-                            Отменить
-                        </Button>
-                        <Button onClick={this.handleClose} color="secondary" autoFocus>
+
+                        <Button onClick={this.onDelete} color="primary">
                             Подтвердить
                         </Button>
+                        {/* <Button onClick={this.onClick} color="secondary" autoFocus>
+                            Отменить
+                        </Button> */}
                     </DialogActions>
                 </Dialog>
             </div>
@@ -49,4 +62,14 @@ class CommandantNewsWarning extends React.Component {
     }
 }
 
-export default CommandantNewsWarning;
+const mapStateToProps = ({requests}, ownProps) => {
+    return {
+        ...requests.requests[ownProps.id],
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({deleteRequest, loadNews}, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CommandantNewsWarning);

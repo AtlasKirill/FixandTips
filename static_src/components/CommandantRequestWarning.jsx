@@ -5,6 +5,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {deleteRequest} from '../actions/requests';
+import apiUrls from './../constants/apiUrls';
+import store from './../index.jsx';
 
 
 class CommandantRequestWarning extends React.Component {
@@ -19,6 +24,11 @@ class CommandantRequestWarning extends React.Component {
     handleClose = () => {
         this.setState({open: false});
     };
+
+    onClick = (e) => {
+        console.log(apiUrls.requestDetail(this.props.id))
+        this.props.deleteRequest(apiUrls.requestDetail(this.props.id), {is_deleted: true}, store.getState().auth.token);
+    }
 
     render() {
         return (
@@ -39,7 +49,8 @@ class CommandantRequestWarning extends React.Component {
                         <Button onClick={this.handleClose} color="primary">
                             Отменить
                         </Button>
-                        <Button onClick={this.handleClose} color="secondary" autoFocus>
+
+                        <Button onClick={this.onClick} color="secondary" autoFocus>
                             Подтвердить
                         </Button>
                     </DialogActions>
@@ -49,4 +60,14 @@ class CommandantRequestWarning extends React.Component {
     }
 }
 
-export default CommandantRequestWarning;
+const mapStateToProps = ({requests}, ownProps) => {
+    return {
+        ...requests.requests[ownProps.id],
+    }
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({deleteRequest}, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(CommandantRequestWarning);

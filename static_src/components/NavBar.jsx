@@ -10,7 +10,12 @@ import MenuIcon from '@material-ui/icons/Menu';
 import RegButton from './Registration'
 import Icon from '@material-ui/core/Icon';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import GetPrintAndStatistics from "./GetPrintAndStatistics.jsx"
+import { Link } from 'react-router-dom';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import GetPrintAndStatistics from './GetPrintAndStatistic'
+import { connect } from 'react-redux';
 
 
 const styles = {
@@ -22,48 +27,66 @@ const styles = {
     },
     button: {
         margin: 0,
-        color: 'white',
+
+        color:'white',
     },
+};
+
+class ListItemLink extends React.Component {
+  renderLink = itemProps => <Link to={this.props.to} {...itemProps} />;
+
+  render() {
+    const { icon, primary } = this.props;
+    return (
+        <ListItem button component={this.renderLink}>
+          <ListItemIcon>{icon}</ListItemIcon>
+          <ListItemText primary={primary} />
+        </ListItem>
+    );
+  }
+}
+
+ListItemLink.propTypes = {
+  icon: PropTypes.node.isRequired,
+  primary: PropTypes.node.isRequired,
+  to: PropTypes.string.isRequired,
 };
 
 class NavBar extends React.Component {
 
     state = {
-        authorized: false,
-        isCommandant: false,
+        authorized: true,
+        isCommandant: true,
     };
 
     render() {
+        let buttons;
         const {classes} = this.props;
-
-        // const authorized = true;
-        // const isCommandant = false;
-
+        if(this.props.isLoading)
+        {
+            return(<div></div>)
+        }
+        else if(this.props.user.role == 4)
+        {
+            buttons  = <GetPrintAndStatistics/>
+        }
+        else if(this.props.user.role == 2)
+        {
+            buttons  = <ListItemLink className={classes.button} to="/profile" primary="Profile" icon={<AccountCircle/>} />
+        }
         return (
             <div className={classes.root}>
                 <AppBar position="static">
                     <Toolbar>
                         <Typography variant="h6" color="inherit" className={classes.grow}>
-                            Fix&Tips
+                          <ListItemLink to="/" primary="Fix&Tips"  />
                         </Typography>
-                        {!this.state.authorized && (
-                            <div>
-                                <RegButton/>
-                            </div>
-                        )}
-                        {this.state.authorized && this.state.isCommandant && (
-                            <div>
-                                <GetPrintAndStatistics/>
-                            </div>
-                        )}
-                        {this.state.authorized && !this.state.isCommandant && (
-                            <div>
-                                <IconButton className={classes.button} href="#address_of_profile"
-                                            aria-label="AccountCircle">
-                                    <AccountCircle/>
-                                </IconButton>
-                            </div>
-                        )}
+                    {!this.props.isAuthenticated && (
+                        <div>
+                            <RegButton/>
+                        </div>
+                    )}
+                        { buttons }
 
                     </Toolbar>
                 </AppBar>
@@ -76,6 +99,19 @@ class NavBar extends React.Component {
 NavBar.propTypes = {
     classes: PropTypes.object.isRequired,
 };
+const mapStateToProps = ({ auth }) => {
+    return {
+        user: auth.user,
+        isAuthenticated: auth.isAuthenticated,
+        isLoading: auth.isLoading,
+    }
+}
+const mapDispatchToProps = dispatch => {
+    return {
+      loadUser: () => {
+        return dispatch(loadUser());
+      }
+    }
+  }
 
-export default withStyles(styles)(NavBar);
-
+export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(NavBar));

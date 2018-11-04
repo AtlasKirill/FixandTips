@@ -151,53 +151,118 @@ const styles = theme => ({
     },
 });
 
-class Login extends React.Component {
+{/*<<<<<<< HEAD*/}
+{/*class Login extends React.Component {*/}
 
-    render() {
-        const {classes} = this.props;
+    {/*render() {*/}
+        {/*const {classes} = this.props;*/}
 
-        return (
-            <main className={classes.layout}>
-                <Paper className={classes.paper}>
-                    <Avatar className={classes.avatar}>
-                        <LockIcon/>
-                    </Avatar>
-                    <Typography component="h1" variant="h5">
-                        Вход
-                    </Typography>
-                    <form className={classes.form}>
-                        <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="email">email</InputLabel>
-                            <Input id="email" name="email" autoComplete="email" autoFocus/>
-                        </FormControl>
-                        <FormControl margin="normal" required fullWidth>
-                            <InputLabel htmlFor="password">Пароль</InputLabel>
-                            <Input
-                                name="password"
-                                type="password"
-                                id="password"
-                                autoComplete="current-password"
-                            />
-                        </FormControl>
-                        {/*<FormControlLabel*/}
-                            {/*control={<Checkbox value="remember" color="primary"/>}*/}
-                            {/*label="Remember me"*/}
-                        {/*/>*/}
-                        <Button
-                            type="submit"
-                            fullWidth
-                            variant="contained"
-                            color="primary"
-                            className={classes.submit}
-                        >
-                            Войти
-                        </Button>
-                    </form>
-                </Paper>
-            </main>
-        );
-    }
+        {/*return (*/}
+            {/*<main className={classes.layout}>*/}
+                {/*<Paper className={classes.paper}>*/}
+                    {/*<Avatar className={classes.avatar}>*/}
+                        {/*<LockIcon/>*/}
+                    {/*</Avatar>*/}
+                    {/*<Typography component="h1" variant="h5">*/}
+                        {/*Вход*/}
+                    {/*</Typography>*/}
+                    {/*<form className={classes.form}>*/}
+                        {/*<FormControl margin="normal" required fullWidth>*/}
+                            {/*<InputLabel htmlFor="email">email</InputLabel>*/}
+                            {/*<Input id="email" name="email" autoComplete="email" autoFocus/>*/}
+                        {/*</FormControl>*/}
+                        {/*<FormControl margin="normal" required fullWidth>*/}
+                            {/*<InputLabel htmlFor="password">Пароль</InputLabel>*/}
+                            {/*<Input*/}
+                                {/*name="password"*/}
+                                {/*type="password"*/}
+                                {/*id="password"*/}
+                                {/*autoComplete="current-password"*/}
+                            {/*/>*/}
+                        {/*</FormControl>*/}
+                        {/*/!*<FormControlLabel*!/*/}
+                            {/*/!*control={<Checkbox value="remember" color="primary"/>}*!/*/}
+                            {/*/!*label="Remember me"*!/*/}
+                        // {/*/!*/>*!/*/}
+                        {/*<Button*/}
+                            {/*type="submit"*/}
+                            {/*fullWidth*/}
+                            {/*variant="contained"*/}
+                            {/*color="primary"*/}
+                            {/*className={classes.submit}*/}
+                        {/*>*/}
+                            {/*Войти*/}
+                        {/*</Button>*/}
+                    {/*</form>*/}
+                {/*</Paper>*/}
+            {/*</main>*/}
+        {/*);*/}
+    {/*}*/}
 
+{/*=======*/}
+function Login(props) {
+  const { classes } = props;
+  state = {
+    email: '',
+    password:'',
+  };
+
+  onChange = name => event => {
+    this.setState({ [name]: event.target.value });
+  };
+
+  onClick = () => {
+    console.log('want to Login')
+  };
+
+  return (
+    <React.Fragment>
+      <CssBaseline />
+      <main className={classes.layout}>
+        <Paper className={classes.paper}>
+          <Avatar className={classes.avatar}>
+            <LockIcon />
+          </Avatar>
+          <Typography component="h1" variant="h5">
+            Вход
+          </Typography>
+          <form className={classes.form}>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="email">Email Address</InputLabel>
+              <Input id="email" name="email" autoComplete="email" autoFocus
+                    onChange={this.onChange('email')}
+                    value={this.state.email} />
+            </FormControl>
+            <FormControl margin="normal" required fullWidth>
+              <InputLabel htmlFor="password">Password</InputLabel>
+              <Input
+                name="password"
+                type="password"
+                id="password"
+                autoComplete="current-password"
+                onChange={this.onChange('password')}
+                value={this.state.password}
+              />
+            </FormControl>
+            <FormControlLabel
+              control={<Checkbox value="remember" color="primary" />}
+              label="Remember me"
+            />
+            <Button
+              type="submit"
+              fullWidth
+              variant="contained"
+              color="primary"
+              className={classes.submit}
+              onClick={this.onClick}
+            >
+              Войти
+            </Button>
+          </form>
+        </Paper>
+      </main>
+    </React.Fragment>
+  );
 }
 
 Login.propTypes = {

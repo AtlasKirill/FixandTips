@@ -5,19 +5,19 @@ from core.permissions import IsOwnerOrReadOnly
 from rest_framework import viewsets
 from news.models import News
 from news.serializers import NewsSerializer
-from rest_framework.authentication import SessionAuthentication, BasicAuthentication
-# from django_filters.rest_framework import DjangoFilterBackend
+from knox.auth import TokenAuthentication
+from django_filters.rest_framework import DjangoFilterBackend
 
 class NewsViewSet(viewsets.ModelViewSet):
 
     serializer_class = NewsSerializer
-    authentication_classes = (SessionAuthentication, BasicAuthentication)
-    queryset = News.objects.all()
+    authentication_classes = (TokenAuthentication,)
+    queryset = News.objects.all().order_by('-created_at')
     # queryset = Post.objects.select_related(
     #     'author', 'blog__author',
     # ).order_by('-created_at')
     permission_classes = (permissions.IsAuthenticated, IsOwnerOrReadOnly)
-    # filter_backends = (DjangoFilterBackend,)
+    filter_backends = (DjangoFilterBackend,)
     filter_fields = ('author', )
 
     def perform_create(self, serializer):

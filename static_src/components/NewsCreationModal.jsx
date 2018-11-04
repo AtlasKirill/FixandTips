@@ -8,8 +8,12 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {withStyles} from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+import apiUrls from './../constants/apiUrls.js';
+import {connect} from 'react-redux';
+import {createNews, loadNews} from '../actions/news';
+import {bindActionCreators} from 'redux';
 import AddIcon from '@material-ui/icons/Add';
-
+import store from './../index.jsx';
 
 const styles = theme => ({
     root: {
@@ -21,7 +25,6 @@ const styles = theme => ({
         border: 'solid',
         borderWidth: 1,
         margin: 0,
-
     },
     textField: {
         marginLeft: 5,
@@ -42,14 +45,16 @@ const styles = theme => ({
 
 
 class NewRequest extends React.Component {
+
     state = {
         open: false,
+        text: '',
+        title: '',
     };
 
     handleClickOpen = () => {
         this.setState({open: true});
     };
-
     handleClose = () => {
         this.setState({open: false});
     };
@@ -57,6 +62,15 @@ class NewRequest extends React.Component {
         this.setState({
             [name]: event.target.value,
         });
+    };
+    handleClickSubmit = (e) => {
+        console.log('onClick')
+        this.props.createNews(apiUrls.news, {
+            text: this.state.text,
+            title: this.state.title
+        }, store.getState().auth.token);
+        this.setState({open: false});
+        this.props.loadNews(apiUrls.news);
     };
 
 
@@ -86,6 +100,8 @@ class NewRequest extends React.Component {
                             id="outlined-dense"
                             label="Введите заголовок новости"
                             className={classes.textField}
+                            value={this.state.title}
+                            onChange={this.handleChange('title')}
                             margin="dense"
                             variant="outlined"
                         />
@@ -94,8 +110,8 @@ class NewRequest extends React.Component {
                             label="Введите текст новости"
                             multiline
                             rowsMax="4"
-                            value={this.state.multiline}
-                            onChange={this.handleChange('multiline')}
+                            value={this.state.text}
+                            onChange={this.handleChange('text')}
                             className={classes.textField}
                             margin="normal"
                             variant="outlined"
@@ -106,7 +122,7 @@ class NewRequest extends React.Component {
                         <Button onClick={this.handleClose} color="primary">
                             Отмена
                         </Button>
-                        <Button onClick={this.handleClose} color="primary">
+                        <Button onClick={this.handleClickSubmit} color="primary">
                             Создать
                         </Button>
                     </DialogActions>
@@ -116,9 +132,10 @@ class NewRequest extends React.Component {
     }
 }
 
-
 NewRequest.propTypes = {
     classes: PropTypes.object.isRequired,
 };
-
-export default withStyles(styles)(NewRequest);
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({createNews, loadNews}, dispatch)
+}
+export default connect(null, mapDispatchToProps)(withStyles(styles)(NewRequest));

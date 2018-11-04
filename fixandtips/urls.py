@@ -15,28 +15,15 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from rest_framework import routers
-from core import views as core_views
-from news import views as news_views
-from request import views as request_views
-from category import views as category_views
-from status import views as status_views
-from role import views as role_views
 from fixandtips import index
+from core import endpoints
 
-router = routers.DefaultRouter()
 
-router.register(r'news', news_views.NewsViewSet)
-router.register(r'requests', request_views.RequestViewSet)
-router.register(r'users', core_views.UserViewSet)
-router.register(r'categories', category_views.CategoryViewSet)
-router.register(r'statuses', status_views.StatusViewSet)
-router.register(r'roles', role_views.RoleViewSet)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^api/', include(router.urls)),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api/', include(endpoints)),
+    url(r'^api/auth/', include('knox.urls')),
     url(r'^$', index.index, name='index_page'),
     url(r'^.*?/$', index.index),
 ]

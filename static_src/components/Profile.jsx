@@ -13,6 +13,12 @@ import Grid from '@material-ui/core/Grid';
 import 'typeface-roboto';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import {connect} from 'react-redux';
+import {logout} from '../actions/auth';
+import NavBar from './NavBar';
 
 
 const styles = theme => ({
@@ -22,20 +28,16 @@ const styles = theme => ({
         flexDirection: 'row',
     },
     card: {
-        // display: 'flex',
-        // flexDirection: 'column',
-        // alignContent: 'center',
-        // justify: 'center',
-        maxWidth: 1000,
+        // maxWidth: 700,
         margin: 20,
-        // minWidth: 700,
-
+        maxWidth: 800,
     },
 
     main_info: {
         margin: 15,
         padding: 15,
         // minHeight: 200,
+
     },
     avatar: {
         margin: 10,
@@ -44,18 +46,18 @@ const styles = theme => ({
         objectPosition: '50% 50%',
         width: 100,
         height: 100,
-
+        // objectPosition: 50,
+        // width: 180,
+        // height: 180,
     },
     input: {
         display: 'none',
     },
     button_upload: {
-
         margin: theme.spacing.unit,
         padding: 5,
         objectPosition: '50% 50%',
         // flex: 1,
-
     },
     button_password: {
         background: red[500],
@@ -100,121 +102,108 @@ const styles = theme => ({
     },
 });
 
-class StudentPage extends React.Component {
+class Profile extends React.Component {
 
-    state = {
-        phone: '',
-        group: '',
-        room: '',
-        hostel: '',
-    };
-
-    handleChangeSettings = name => event => {
-        this.setState({
-            [name]: event.target.value,
-        });
-    };
 
     render() {
         const {classes} = this.props;
+        // const info = this.props.sessionInfo.data;
+        if (this.props.isLoading) {
+            return (<div>Loading...</div>)
+        }
+        if (!this.props.isAuthenticated) {
+            return <Redirect push to="/login"/>
+        }
 
         return (
-            <Grid container spacing={8}>
-                <Grid item md={12} className={classes.grid}>
-                    <Paper className={classes.card}>
-                        <Grid container spacing={8}>
-                            <Grid item md={4} alignContent={"center"} className={classes.root}>
-                                <Paper classes={{root: classes.content}}>
-                                    <Avatar
-                                        //alt="Лиза Носкова"
-                                        src="/static_src/components/images/Liza.jpg"
-                                        className={classNames(classes.avatar)}
-                                    />
+            <div>
+                <NavBar/>
+                <Grid container spacing={8}>
+                    <Grid item md={12}>
+                        <Paper className={classes.card}>
+                            <Grid container spacing={8}>
+                                <Grid item md={4}>
+                                    <Paper classes={{root: classes.content}}>
+                                        <Avatar
+                                            src="/static_src/components/images/Liza.jpg"
+                                            className={classNames(classes.avatar)}
+                                        />
 
-                                    <Typography component="h2" variant="title" align="center">
-                                        Елизавета Носкова
-                                    </Typography>
-                                    <input
-                                        accept="image/*"
-                                        className={classes.input}
-                                        id="contained-button-file"
-                                        multiple
-                                        type="file"
-                                    />
-                                    <label htmlFor="contained-button-file">
-                                        <Button
-                                            variant="outlined"
-                                            size="mdall"
-                                            component="span"
-                                            align={'center'}
-                                            className={classes.button_upload}>
-                                            Изменить аватар
+                                        <Typography component="h2" variant="title" align="center">
+
+                                            {this.props.user.username}
+                                        </Typography>
+                                        <input
+                                            accept="image/*"
+                                            className={classes.input}
+                                            id="contained-button-file"
+                                            multiple
+                                            type="file"
+                                        />
+                                        <label htmlFor="contained-button-file">
+                                            <Button
+                                                variant="outlined"
+                                                size="mdall"
+                                                component="span"
+                                                align={'center'}
+
+                                                className={classes.button_upload}>
+                                                Изменить аватар
+                                            </Button>
+                                        </label>
+                                    </Paper>
+
+
+                                </Grid>
+                                <Grid item sm={8}>
+                                    <Paper className={classes.main_info}>
+                                        <Typography variant="subtitle1" gutterBottom>
+                                            Основная информация
+                                        </Typography>
+                                        <Typography variant="subtitle2" gutterBottom>
+
+                                            {this.props.user.email}
+                                        </Typography>
+                                        <Typography variant="subtitle2" gutterBottom>
+                                            студент
+                                        </Typography>
+                                    </Paper>
+                                    <Paper className={classes.main_info}>
+                                        <Typography variant="subtitle1" gutterBottom>
+                                            Контактная информация
+                                        </Typography>
+
+                                        {/*<Button variant="contained" color="secondary" className={classes.button_password}>*/}
+                                        {/*Сменить пароль*/}
+                                        {/*</Button>*/}
+
+                                        <List>
+                                            <ListItem>
+                                                {/* <ListItemText primary="Группа" secondary={ this.props.user }/> */}
+                                            </ListItem>
+                                            <ListItem>
+                                                {/* <ListItemText primary="Квартира" secondary={ this.props.user }/> */}
+                                            </ListItem>
+                                            <ListItem>
+                                                {/* <ListItemText primary="Телефон" secondary={ this.props.user}/> */}
+                                            </ListItem>
+                                        </List>
+                                        <Button variant="outlined" className={classes.button} onClick={this.onClick}>
+                                            Изменить
                                         </Button>
-                                    </label>
-                                </Paper>
+                                        <Button variant="contained" color="secondary"
+                                                className={classes.button_password} onClick={this.props.logout}
+                                                href='/login'>
+                                            Выйти
+                                        </Button>
+                                    </Paper>
+                                </Grid>
                             </Grid>
-                            <Grid item md={8}>
-                                <Paper className={classes.main_info}>
-                                    <Typography variant="subtitle1" gutterBottom>
-                                        Основная информация
-                                    </Typography>
-                                    <Typography variant="subtitle2" gutterBottom>
-                                        elizabetn@gmail.com
-                                    </Typography>
-                                    <Typography variant="subtitle2" gutterBottom>
-                                        студент
-                                    </Typography>
-                                </Paper>
-                                <Paper className={classes.main_info}>
-                                    <Typography variant="subtitle1" gutterBottom>
-                                        Контактная информация
-                                    </Typography>
-                                    <form className={classes.container} noValidate autoComplete="off">
-                                        <TextField
-                                            id="standard-name"
-                                            label="Группа"
-                                            className={classes.textField}
-                                            value={this.state.group}
-                                            onChange={this.handleChangeSettings('group')}
-                                            margin="normal"
-                                        />
-                                        <TextField
-                                            id="standard-name"
-                                            label="Квартира"
-                                            className={classes.textField}
-                                            value={this.state.room}
-                                            onChange={this.handleChangeSettings('room')}
-                                            margin="normal"
-                                        />
-                                        <TextField
-                                            id="standard-name"
-                                            label="Общежитие"
-                                            className={classes.textField}
-                                            value={this.state.hostel}
-                                            onChange={this.handleChangeSettings('hostel')}
-                                            margin="normal"
-                                        />
-                                        <TextField
-                                            id="standard-name"
-                                            label="Телефон"
-                                            className={classes.textField}
-                                            value={this.state.phone}
-                                            onChange={this.handleChangeSettings('phone')}
-                                            margin="normal"
-                                        />
-                                    </form>
-                                    <Button variant="outlined" className={classes.button}>
-                                        Изменить
-                                    </Button>
-                                    {/*<Button variant="contained" color="secondary" className={classes.button_password}>*/}
-                                    {/*Сменить пароль*/}
-                                    {/*</Button>*/}
-                                </Paper>
-                            </Grid>
-                        </Grid>
-                    </Paper>
+                        </Paper>
+                    </Grid>
                 </Grid>
-            </Grid>
+
+            </div>
         );
     }
 }
@@ -285,8 +274,22 @@ class StudentPage extends React.Component {
 // };
 
 
-StudentPage.propTypes = {
+Profile.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(StudentPage);
+const mapStateToProps = ({auth}) => {
+    return {
+        user: auth.user,
+        isAuthenticated: auth.isAuthenticated,
+        isLoading: auth.isLoading,
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+
+        logout: () => dispatch(logout()),
+    }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Profile));
