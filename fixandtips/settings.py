@@ -30,7 +30,7 @@ SECRET_KEY = 'b!^*)yd+g(h90u@_ime%4e9qwrj=9r15m=m#)p6gl!#f^@p)#@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['95.163.209.25','localhost']
 
 
 # Application definition
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'django_filters',
     'webpack_loader',
     'core',
+    #'psycopg2',
     'news',
     'request',
     'category',
@@ -116,10 +117,13 @@ WSGI_APPLICATION = 'fixandtips.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'FT_DB',
-        'USER': 'lizanoskova',
-        'PASSWORD': 'qwert2',
+        'NAME': 'fixtips',
+        'USER': 'kirill',
+        'PASSWORD': ' ',
         'HOST': 'localhost',
+        'OPTIONS': {
+            "init_command": "SET foreign_key_checks = 0;",
+        },
     }
 }
 
@@ -160,3 +164,4 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+#STATIC_ROOT = os.path.join(BASE_DIR, 'static/')

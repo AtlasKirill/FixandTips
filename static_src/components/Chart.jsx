@@ -329,7 +329,6 @@ class Chart extends React.Component {
                     ДРУГОЕ
                 </Button>
                     </Grid>
->>>>>>> liza_development
                 <Typography
                     variant="overline" gutterBottom className={classes.status}>
                     Димнамика зарегистрированных и решенных заявок
