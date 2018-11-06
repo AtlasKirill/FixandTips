@@ -47,6 +47,18 @@ const styles = theme => ({
 
 function Login(props) {
   const { classes } = props;
+  state = {
+    email: '',
+    password:'',
+  };
+
+  onChange = name => event => {
+    this.setState({ [name]: event.target.value });
+  };
+
+  onClick = () => {
+    console.log('want to Login')
+  };
 
   return (
     <React.Fragment>
@@ -57,12 +69,14 @@ function Login(props) {
             <LockIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign in
+            Login
           </Typography>
           <form className={classes.form}>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="email">Email Address</InputLabel>
-              <Input id="email" name="email" autoComplete="email" autoFocus />
+              <Input id="email" name="email" autoComplete="email" autoFocus
+                    onChange={this.onChange('email')}
+                    value={this.state.email} />
             </FormControl>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="password">Password</InputLabel>
@@ -71,6 +85,8 @@ function Login(props) {
                 type="password"
                 id="password"
                 autoComplete="current-password"
+                onChange={this.onChange('password')}
+                value={this.state.password}
               />
             </FormControl>
             <FormControlLabel
@@ -83,8 +99,9 @@ function Login(props) {
               variant="contained"
               color="primary"
               className={classes.submit}
+              onClick={this.onClick}
             >
-              Sign in
+              Login
             </Button>
           </form>
         </Paper>

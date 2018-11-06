@@ -1,40 +1,57 @@
 import React from 'react';
-import Request from './Request.jsx';
-import News from './News.jsx';
-import User from './User.jsx';
+import CommandantRequestList from './RequestList.jsx';
+import CommandantNewsList from './NewsList.jsx';
 import Grid from '@material-ui/core/Grid';
-import Paper from '@material-ui/core/Paper';
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
 import NewsCreationModal from './NewsCreationModal'
-import FilterPaper from './FilterPaper';
+import Filter from './Filter';
+import {withStyles} from "@material-ui/core";
+import PropTypes from 'prop-types';
+import Typography from "@material-ui/core/Typography/Typography";
+import NavBar from './NavBar';
+
+const styles = theme => ({
+    root: {
+        padding: 20,
+    },
+    headline: {
+        margin: 20,
+    },
+});
 
 class CommandantPage extends React.Component{
   
     render(){
-        
+        const {classes} = this.props;
         return( 
             <div>
-                <Grid container spacing={24}>
+                <NavBar/>
+                <Grid container spacing={8}>
                     <Grid item md={6}>
-                        <FilterPaper/> 
+                        <Typography variant="h5" gutterBottom className={classes.headline}>
+                            Запросы
+                        </Typography>
+                        <Filter/> 
                     </Grid>
                     <Grid item md={6}>
-                      
-                            <NewsCreationModal/>
+                        <Typography variant="h5" gutterBottom className={classes.headline}>
+                            Объявления общежития
+                        </Typography>
+                        <NewsCreationModal/>
                             
-                       
                     </Grid>
-                    <Grid item md={6}>
-                        <Request/>
+                    <Grid item md={6} >
+                        <CommandantRequestList/>
                     </Grid>
-                    <Grid item md={6}>
-                        <News/>
+                    <Grid item md={6} >
+                        <CommandantNewsList/>
                     </Grid>
                 </Grid>
             </div>
         );
     }
 }
-
-export default CommandantPage;
+CommandantPage.propTypes = {
+    classes: PropTypes.object.isRequired,
+  };
+  
+export default withStyles(styles)(CommandantPage);
