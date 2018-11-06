@@ -1,1 +1,1 @@
-{"status":"error","publicPath":"/static/build/","error":"ModuleNotFoundError","message":"Module not found: Error: Can't resolve 'js-cookie' in '/home/ubuntu/project/FixandTips/static_src/actions'"}
+{"status":"done","publicPath":"/staticfiles/build/","chunks":{"indexBundle":[{"name":"indexBundle.js","publicPath":"/staticfiles/build/indexBundle.js","path":"/home/ubuntu/project/FixandTips/staticfiles/build/indexBundle.js"}]}}
