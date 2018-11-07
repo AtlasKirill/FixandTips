@@ -57,8 +57,22 @@ export const deleteRequest = (url, data, token) => {
                 'Authorization': `Token ${token}`,
               },
             types: [START_REQUEST_DELETING, 
-                    SUCCESS_REQUEST_DELETING,
-                    ERROR_REQUEST_DELETING],
+                    {
+                        type: SUCCESS_REQUEST_DELETING,
+                        payload: (action, state, res) =>{
+                            return getJSON(res).then(
+                                (json) => {
+                                    json = {requests: json};
+                                    const normalizedData = normalize(json, [request]);
+                                    delete json.results;
+                                    return Object.assign({}, json, normalizedData);
+                                },
+                            );
+                        },
+                       
+                    },
+
+                ERROR_REQUEST_DELETING],
         },
     };
 };

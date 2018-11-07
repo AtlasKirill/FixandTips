@@ -16,7 +16,8 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import GetPrintAndStatistics from './GetPrintAndStatistic'
 import { connect } from 'react-redux';
-
+import { logout } from '../actions/auth';
+import { bindActionCreators } from 'redux';
 
 const styles = {
     root: {
@@ -65,9 +66,19 @@ class NavBar extends React.Component {
         {
             return(<div></div>)
         }
+
+        if(!this.props.isAuthenticated)
+        {
+            return <Redirect push to="/login"/>
+        }
         else if(this.props.user.role == 2)
         {
-            buttons  = <GetPrintAndStatistics/>
+            buttons  = <div>
+                    <GetPrintAndStatistics/>
+                        <Button color="inherit" onClick={this.props.logout}>
+                            Выйти
+                        </Button> 
+                        </div>
         }
         else if(this.props.user.role == 1)
         {
@@ -105,12 +116,9 @@ const mapStateToProps = ({ auth }) => {
         isLoading: auth.isLoading,
     }
 }
-const mapDispatchToProps = dispatch => {
-    return {
-      loadUser: () => {
-        return dispatch(loadUser());
-      }
-    }
-  }
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ logout }, dispatch)
+}
 
 export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(NavBar));

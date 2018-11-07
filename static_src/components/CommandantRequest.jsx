@@ -23,7 +23,10 @@ import Icon from '@material-ui/core/Icon';
 import DoneIcon from '@material-ui/icons/Done';
 import TextField from '@material-ui/core/TextField';
 import { connect } from 'react-redux';
-import apiUrls from './../constants/apiUrls.js';
+import { bindActionCreators } from 'redux';
+import { deleteRequest } from '../actions/requests';
+import apiUrls from './../constants/apiUrls';
+import store from './../index.jsx';
 
 const styles = theme => ({
     card: {
@@ -135,11 +138,17 @@ class CommandantRequest extends React.Component {
         });
     };
 
+    onClick=(e)=> {
+        console.log(apiUrls.requestDetail(this.props.id))
+        this.props.deleteRequest(apiUrls.requestDetail(this.props.id),{is_deleted:true}, store.getState().auth.token);
+    }
+
     render() {
         // const {anchorEl} = this.state;
         // const open = Boolean(anchorEl);
         const {classes} = this.props;
         if(this.props.is_deleted){
+            console.log('Deleted');
             return(<div></div>);
         }
         return (
@@ -247,7 +256,10 @@ class CommandantRequest extends React.Component {
                         <Grid item md={6}>
                             <CardContent classes={{root: classes.delete}}>
                                 <Tooltip title="Delete 'position: absolute;'">
-                                    <CommandantRequestWarning/>
+                                    <IconButton aria-label="Delete"
+                                        onClick={this.onClick}>
+                                        <DeleteIcon/>
+                                    </IconButton>
                                 </Tooltip>
                             </CardContent>
                         </Grid>
@@ -267,4 +279,7 @@ const mapStateToProps = ({ requests }, ownProps ) => {
     }
 }
 
-export default connect(mapStateToProps,null)(withStyles(styles)(CommandantRequest));
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ deleteRequest }, dispatch)
+  }
+export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(CommandantRequest));
