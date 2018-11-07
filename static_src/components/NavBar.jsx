@@ -66,11 +66,12 @@ class NavBar extends React.Component {
         {
             return(<div></div>)
         }
+
         if(!this.props.isAuthenticated)
         {
             return <Redirect push to="/login"/>
         }
-        else if(this.props.user.role == 4)
+        else if(this.props.user.role == 2)
         {
             buttons  = <div>
                     <GetPrintAndStatistics/>
@@ -79,7 +80,7 @@ class NavBar extends React.Component {
                         </Button> 
                         </div>
         }
-        else if(this.props.user.role == 2)
+        else if(this.props.user.role == 1)
         {
             buttons  = <ListItemLink className={classes.button} to="/profile" primary="Profile" icon={<AccountCircle/>} />
         }
