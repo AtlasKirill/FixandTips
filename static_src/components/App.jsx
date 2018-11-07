@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import MainPage from './MainPage.jsx';
-import Login from './LoginPage';
+import Login from './Login';
 import Profile from './Profile.jsx';
 import Chart from './Chart.jsx';
 import CommandantPage from './CommandantPage';

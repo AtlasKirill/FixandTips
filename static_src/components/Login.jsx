@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -12,6 +12,12 @@ import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { renderByOrder } from 'recharts/lib/util/ReactUtils';
+import {connect} from "react-redux";
+import {Link, Redirect} from "react-router-dom";
+import { login } from '../actions/auth';
+import RegButton from './Registration';
+
 
 const styles = theme => ({
   layout: {
@@ -45,21 +51,25 @@ const styles = theme => ({
   },
 });
 
-function Login(props) {
-  const { classes } = props;
+class Login extends Component {
+  
   state = {
-    email: '',
+    username: '',
     password:'',
   };
-
   onChange = name => event => {
     this.setState({ [name]: event.target.value });
   };
 
-  onClick = () => {
-    console.log('want to Login')
-  };
-
+  onSubmit = e => {
+    e.preventDefault();
+    this.props.login(this.state.username, this.state.password);
+  }
+render(){
+  const { classes } = this.props;
+  if (this.props.isAuthenticated) {
+    return <Redirect to="/" />
+  }
   return (
     <React.Fragment>
       <CssBaseline />
@@ -73,10 +83,10 @@ function Login(props) {
           </Typography>
           <form className={classes.form}>
             <FormControl margin="normal" required fullWidth>
-              <InputLabel htmlFor="email">Email Address</InputLabel>
-              <Input id="email" name="email" autoComplete="email" autoFocus
-                    onChange={this.onChange('email')}
-                    value={this.state.email} />
+              <InputLabel htmlFor="username">Username</InputLabel>
+              <Input id="username" name="username" autoComplete="username" autoFocus
+                    onChange={this.onChange('username')}
+                    value={this.state.username} />
             </FormControl>
             <FormControl margin="normal" required fullWidth>
               <InputLabel htmlFor="password">Password</InputLabel>
@@ -99,19 +109,44 @@ function Login(props) {
               variant="contained"
               color="primary"
               className={classes.submit}
-              onClick={this.onClick}
+              onClick={this.onSubmit}
             >
               Login
             </Button>
           </form>
+          <RegButton/>
         </Paper>
+         
       </main>
+      
     </React.Fragment>
   );
+}
+ 
 }
 
 Login.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Login);
+const mapStateToProps = state => {
+  let errors = [];
+  if (state.auth.errors) {
+    errors = Object.keys(state.auth.errors).map(field => {
+      return {field, message: state.auth.errors[field]};
+    });
+  }
+  return {
+    errors,
+    isAuthenticated: state.auth.isAuthenticated
+  };
+}
+
+const mapDispatchToProps = dispatch => {
+  return {
+    login: (username, password) => {
+      return dispatch(login(username, password));
+    }
+  };
+}
+export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(Login));

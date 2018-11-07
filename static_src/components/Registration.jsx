@@ -9,6 +9,9 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
+import {connect} from "react-redux";
+import {Link, Redirect} from "react-router-dom";
+import { register } from '../actions/auth';
 
 
 
@@ -33,6 +36,8 @@ const styles = theme => ({
 class RegButton extends React.Component {
   state = {
     open: false,
+    username: "",
+    password: "",
   };
 
   handleClickOpen = () => {
@@ -43,9 +48,21 @@ class RegButton extends React.Component {
     this.setState({ open: false });
   };
 
+  onChange = name => event => {
+    this.setState({ [name]: event.target.value });
+  };
+
+  onSubmit = e => {
+    e.preventDefault();
+    this.props.register(this.state.username, this.state.password);
+  }
+
 
   render() {
     const { classes } = this.props;
+    if (this.props.isAuthenticated) {
+      return <Redirect to="/" />
+    }
     return (
       <div>
         <Button onClick={this.handleClickOpen} className={classes.root} >Регистрация</Button>
@@ -64,13 +81,15 @@ class RegButton extends React.Component {
               <Grid item md={12}>
                 <TextField
                   id="outlined-email-input"
-                  label="Email"
+                  label="Username"
                   className={classes.textField}
-                  type="email"
-                  name="email"
-                  autoComplete="email"
+                  type="username"
+                  name="username"
+                  autoComplete="username"
                   margin="normal"
                   variant="outlined"
+                  onChange={this.onChange('username')}
+                  value={this.state.username}
                 />
               </Grid>
               <Grid item md={12}>
@@ -82,6 +101,8 @@ class RegButton extends React.Component {
                   autoComplete="current-password"
                   margin="normal"
                   variant="outlined"
+                  onChange={this.onChange('password')}
+                  value={this.state.password}
                 />
               </Grid>
             </Grid>
@@ -90,7 +111,7 @@ class RegButton extends React.Component {
             <Button onClick={this.handleClose} color="primary">
               Отмена
             </Button>
-            <Button onClick={this.handleClose} color="primary">
+            <Button onClick={this.onSubmit} color="primary">
               Зарегистрироваться
             </Button>
           </DialogActions>
@@ -105,4 +126,22 @@ RegButton.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(RegButton);
+const mapStateToProps = ({ auth }) => {
+  let errors = [];
+  if (auth.errors) {
+    errors = Object.keys(auth.errors).map(field => {
+      return {field, message: auth.errors[field]};
+    });
+  }
+  return {
+    errors,
+    isAuthenticated: auth.isAuthenticated
+  };
+}
+const mapDispatchToProps = dispatch => {
+return {
+  register: (username, password) => dispatch(register(username, password)),
+};
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(RegButton));
