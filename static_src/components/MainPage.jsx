@@ -41,7 +41,7 @@ class MainPage extends React.Component{
         }
         else if(this.props.user.role == 4){
         page =  
-        <Grid container spacing={8}>
+        <Grid container spacing={10}>
             <Grid item md={6}>
                 <Typography variant="h5" gutterBottom className={classes.headline}>
                     Заявки(Коменда)

@@ -8,7 +8,7 @@ const initialState = {
     isLoading: false,
 };
 
-export default function posts(store = initialState, action){
+export default function requests(store = initialState, action){
 
     let newStore = store;
     if (action.payload && action.payload.entities && action.payload.entities.requests) {
@@ -69,8 +69,11 @@ export default function posts(store = initialState, action){
         }
 
         case 'SUCCESS_REQUEST_DELETING':{
+            console.log(action.payload);
             return update(newStore, {
                 isLoading: { $set: false },
+                // requestList: { $push: action.payload.result },
+
             });
         }
 

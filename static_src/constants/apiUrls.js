@@ -29,7 +29,7 @@ function myNews(author_id='')
 }
 
 export default {
-    requests: '/api/requests',
+    requests: '/api/requests/',
     news: '/api/news/',
     session: '/api/session/',
     filter,

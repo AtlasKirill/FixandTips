@@ -86,9 +86,23 @@ export const deleteNews = (url,data, token) => {
                 'X-CSRFToken': Cookies.get("csrftoken"),
                 'Authorization': `Token ${token}`,
               },
-            types: [START_NEWS_DELETING, 
-                    SUCCESS_NEWS_DELETING,
-                    ERROR_NEWS_DELETING],
+              types: [START_NEWS_DELETING, 
+                {
+                    type: SUCCESS_NEWS_DELETING,
+                    payload: (action, state, res) =>{
+                        return getJSON(res).then(
+                            (json) => {
+                                json = {news: json};
+                                const normalizedData = normalize(json, [news]);
+                                delete json.results;
+                                return Object.assign({}, json, normalizedData);
+                            },
+                        );
+                    },
+                   
+                },
+
+            ERROR_NEWS_DELETING],
         },
     };
 };

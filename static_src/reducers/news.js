@@ -8,7 +8,7 @@ const initialState = {
     isLoading: false,
 };
 
-export default function posts(store = initialState, action){
+export default function news(store = initialState, action){
     let newStore = store;
     if (action.payload && action.payload.entities && action.payload.entities.news) {
         newStore = update(store, {
@@ -43,6 +43,7 @@ export default function posts(store = initialState, action){
         }
 
         case 'SUCCESS_NEWS_SENDING':{
+            console.log(action.payload);
             return update(newStore, {
                 isLoading: { $set: false },
                 newsList: { $push: action.payload.result },

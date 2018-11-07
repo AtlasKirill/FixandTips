@@ -11,6 +11,12 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import Grid from '@material-ui/core/Grid';
 import CommandantNewsWarning from "./CommandantNewsWarning.jsx"
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { deleteNews } from '../actions/news';
+import { loadNews } from '../actions/news';
+import IconButton from '@material-ui/core/IconButton';
+import apiUrls from './../constants/apiUrls';
+import store from './../index.jsx';
 
 const styles = theme => ({
     card: {
@@ -50,9 +56,15 @@ class CommandantNews extends React.Component {
         author: PropTypes.number,
         is_deleted: PropTypes.bool,
     }
-    onClick=(e)=> {
-        console.log(apiUrls.newsDetail(this.props.id))
-        this.props.deleteNews(apiUrls.newsDetail(this.props.id),{is_deleted:true});
+    // onClick=(e)=> {
+    //     console.log(apiUrls.newsDetail(this.props.id))
+    //     this.props.deleteNews(apiUrls.newsDetail(this.props.id),{is_deleted:true});
+    // }
+    onDelete=(e)=> {
+        console.log(apiUrls.requestDetail(this.props.id))
+        this.props.deleteNews(apiUrls.newsDetail(this.props.id),{is_deleted:true},store.getState().auth.token);
+        // this.props.loadNews(apiUrls.news,store.getState().auth.token);
+        // this.setState({ open: false });
     }
     render() {
         const {classes} = this.props;
@@ -82,7 +94,11 @@ class CommandantNews extends React.Component {
                     </Grid>
                     <Grid item md={12}>
                         <CardContent classes={{root: classes.delete}}>
-                            <CommandantNewsWarning/>
+                        <IconButton aria-label="Delete"
+                                    onClick={this.onDelete}>
+                                    <DeleteIcon/>
+                        </IconButton>
+                            {/* <CommandantNewsWarning/> */}
                         </CardContent>
                     </Grid>
                 </Card>
@@ -99,4 +115,7 @@ const mapStateToProps = ({ news }, ownProps ) => {
         ...news.news[ownProps.id],
     }
 }
-export default connect(mapStateToProps, null)(withStyles(styles)(CommandantNews));
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ deleteNews,loadNews }, dispatch)
+  }
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(CommandantNews));

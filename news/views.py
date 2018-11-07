@@ -16,7 +16,7 @@ class NewsViewSet(viewsets.ModelViewSet):
     # queryset = Post.objects.select_related(
     #     'author', 'blog__author',
     # ).order_by('-created_at')
-    permission_classes = (permissions.IsAuthenticated, IsOwnerOrReadOnly)
+    permission_classes = (permissions.IsAuthenticated,)
     filter_backends = (DjangoFilterBackend,)
     filter_fields = ('author', )
 

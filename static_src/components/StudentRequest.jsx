@@ -24,6 +24,10 @@ import ErrorOutline from '@material-ui/icons/ErrorOutline'
 import RegButton from "./Registration";
 import StudentRequestWarning from "./StudentRequestWarning.jsx"
 import { connect } from 'react-redux';
+import apiUrls from './../constants/apiUrls.js';
+import { bindActionCreators } from 'redux';
+import { deleteRequest } from '../actions/requests';
+import store from './../index.jsx';
 
 const styles = theme => ({
     card: {
@@ -94,7 +98,12 @@ class StudentRequest extends React.Component {
     //     this.props.deleteRequest(apiUrls.requestDetail(this.props.id),{is_deleted:true});
     // }
 
-
+    onClick=(e)=> {
+        console.log(apiUrls.requestDetail(this.props.id))
+        this.props.deleteRequest(apiUrls.requestDetail(this.props.id),{is_deleted:true},store.getState().auth.token);
+        // this.setState({ open: false });
+        // this.props.loadRequests(apiUrls.requests,store.getState().auth.token);
+    };
     render() {
         const {classes} = this.props;
         const urgent = false;
@@ -166,7 +175,11 @@ class StudentRequest extends React.Component {
                         </Grid>
                         <Grid item md={6}>
                             <CardContent classes={{root: classes.content}}>
-                                <StudentRequestWarning/>
+                            <Button variant="contained"
+                                    color="secondary"
+                                    onClick={this.onClick}>
+                                        ОТМЕНИТЬ
+                            </Button>
                             </CardContent>
                         </Grid>
                     </Grid>
@@ -187,8 +200,8 @@ const mapStateToProps = ({ requests }, ownProps ) => {
     }
 }
 
-// const mapDispatchToProps = (dispatch) => {
-//   return bindActionCreators({ deleteRequest }, dispatch)
-// }
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ deleteRequest }, dispatch)
+  }
 
-export default connect(mapStateToProps,null)(withStyles(styles)(StudentRequest));
+export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(StudentRequest));
