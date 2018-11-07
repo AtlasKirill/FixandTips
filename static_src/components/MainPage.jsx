@@ -39,7 +39,7 @@ class MainPage extends React.Component{
         {
             return <Redirect push to='/login'/>
         }
-        else if(this.props.user.role == 4){
+        else if(this.props.user.role == 2){
         page =  
         <Grid container spacing={8}>
             <Grid item md={6}>
@@ -64,7 +64,7 @@ class MainPage extends React.Component{
         </Grid>
         }
 
-        else if(this.props.user.role == 2){
+        else if(this.props.user.role == 1){
             page =
                 <Grid container spacing={10} justify="center">
                     <Grid item md={6}>

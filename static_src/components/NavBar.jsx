@@ -65,11 +65,11 @@ class NavBar extends React.Component {
         {
             return(<div></div>)
         }
-        else if(this.props.user.role == 4)
+        else if(this.props.user.role == 2)
         {
             buttons  = <GetPrintAndStatistics/>
         }
-        else if(this.props.user.role == 2)
+        else if(this.props.user.role == 1)
         {
             buttons  = <ListItemLink className={classes.button} to="/profile" primary="Profile" icon={<AccountCircle/>} />
         }
