@@ -9,6 +9,7 @@ import PropTypes from 'prop-types';
 import Typography from "@material-ui/core/Typography/Typography";
 import NavBar from './NavBar';
 
+
 const styles = theme => ({
     root: {
         padding: 20,
