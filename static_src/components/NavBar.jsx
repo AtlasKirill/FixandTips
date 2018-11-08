@@ -10,7 +10,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import RegButton from './Registration'
 import Icon from '@material-ui/core/Icon';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
