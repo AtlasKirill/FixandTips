@@ -37,10 +37,9 @@ class App extends React.Component{
                 {/* <NavBar/>  */}
                 <Switch>
                     <Route path="/login" component={ Login }/>
-                    <Route path="/register" component={ Register }/>
-                    <Route exact path="/" component={ MainPage }/>
+                    {/* <Route exact path="/" component={ MainPage }/> */}
                     <Route path="/profile" component={ Profile }/>
-                    <Route path="/statistic" component={ Chart }/>
+                    <Route exact path="/" component={ Chart }/>
                 </Switch> 
             </div>  
         );

@@ -16,7 +16,14 @@ import Grid from '@material-ui/core/Grid';
 import classNames from 'classnames';
 import TextField from '@material-ui/core/TextField';
 import Filter from './Filter';
-
+import NavBar from './NavBar';
+import apiUrls from './../constants/apiUrls';
+import functions from './../utils/functions';
+import { filterRequest } from '../actions/requests';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import store from './../index.jsx';
+import { getJSON, RSAA } from 'redux-api-middleware';
 
 const data = [
     {id: '1', Электрик: 4, Сантехник: 5, Плотник: 5},
@@ -93,7 +100,8 @@ class Chart extends React.Component {
         toDate: '',
         status:'',
         category:'',
-        urgency: false
+        urgency: false,
+        data: []
     };
 
     searchProcessing = event => {
@@ -138,15 +146,38 @@ class Chart extends React.Component {
         this.setState({ category: 'Хим обработка' });
 
     };
+    handleChange = name => event => {
+        this.setState({
+          [name]: event.target.value,
+        });
+      };
     drawChart = event => {
-        console.log(apiUrls.filter(this.state.status,this.state.category,this.state.urgency));
-        this.props.filterRequest(apiUrls.filter(this.state.status,this.state.category,this.state.urgency));
-        
+        console.log(apiUrls.filter( this.state.status,
+                                    this.state.category,
+                                    this.state.urgency,
+                                    this.state.fromDate, 
+                                    this.state.toDate));
+        console.log(this.props.filterRequest(apiUrls.filter(this.state.status,
+                                                            this.state.category,
+                                                            this.state.urgency,
+                                                            this.state.fromDate, 
+                                                            this.state.toDate),
+                                                            store.getState().auth.token).then(
+                                                               (json) => {
+                                                                    // console.log(json.payload.entities.requests);
+                                                                    const data = functions.formDataSet(json.payload.entities.requests);
+                                                                    this.setState({ data: data });
+                                                                }
+                                                            ));
+    
     };
     render() {
         const {classes} = this.props;
-
+        console.log(this.state.data);
+        console.log(data);
         return (
+            <div>
+            <NavBar/>
             <React.Fragment>
 
                 <Typography variant="overline" gutterBottom className={classes.status}>
@@ -267,6 +298,8 @@ class Chart extends React.Component {
                             id="date"
                             label="С"
                             type="date"
+                            value={this.state.fromDate}
+                            onChange={this.handleChange('fromDate')}
                             defaultValue="2017-05-24"
                             className={classes.textField}
                             InputLabelProps={{
@@ -281,6 +314,8 @@ class Chart extends React.Component {
                             label="По"
                             type="date"
                             defaultValue="2017-05-24"
+                            value={this.state.toDate}
+                            onChange={this.handleChange('toDate')}
                             className={classes.textField}
                             InputLabelProps={{
                                 shrink: true,
@@ -294,8 +329,8 @@ class Chart extends React.Component {
 
 
                 <ResponsiveContainer width="95%" height={320} >
-                    <LineChart data={data}>
-                        <XAxis dataKey="id"/>
+                    <LineChart data={this.props.data}>
+                        <XAxis dataKey="date"/>
                         <YAxis/>
                         <CartesianGrid vertical={false} strokeDasharray="3 3"/>
                         <Tooltip/>
@@ -308,7 +343,7 @@ class Chart extends React.Component {
 
 
             </React.Fragment>
-
+        </div>
         );
     }
 }
@@ -316,5 +351,13 @@ class Chart extends React.Component {
 Chart.propTypes = {
     classes: PropTypes.object.isRequired,
 };
-
-export default withStyles(styles)(Chart);
+const mapStateToProps = (state) => {
+    return {
+        data: state.data,
+    };
+};
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ filterRequest }, dispatch)
+  }
+  
+export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(Chart));
