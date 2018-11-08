@@ -6,7 +6,7 @@ function formDataSet(requests = {}) {
     for (let i in requests) {
     
         var date = new Date(requests[i].created_at);
-        var resultDate = String(date.getFullYear)+"."+ date.getMonth.toString+"."+date.getDate.toString+".";//new Date(date.getFullYear(), date.getMonth(), date.getDate());
+        var resultDate = date.getFullYear.toString()+"."+ date.getMonth.toString()+"."+date.getDate.toString()+".";//new Date(date.getFullYear(), date.getMonth(), date.getDate());
         tmp.push([resultDate, requests[i].category]);
     
     }
