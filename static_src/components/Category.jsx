@@ -23,4 +23,7 @@ const mapStateToProps = ({ categories }, ownProps ) => {
     }
 }
 
+
+
+
 export default connect(mapStateToProps)(Category);
