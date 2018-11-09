@@ -132,7 +132,7 @@ class CommandantRequest extends React.Component {
     }
 
 
-    handleChangeMaterials = name => event => {
+    handleChange = name => event => {
         this.setState({
             [name]: event.target.value,
         });
@@ -198,8 +198,10 @@ class CommandantRequest extends React.Component {
                                     id="standard-name"
                                     label="Использованные материалы"
                                     className={classes.textField}
-                                    value={ this.props.materials }
-                                    onChange={this.handleChangeMaterials('materials')}
+                                    value={this.state.materials}
+                                    onChange={this.handleChange('materials')}
+                                    // value={ this.props.materials }
+                                    // onChange={this.handleChangeMaterials('materials')}
                                     margin="normal"
                                 />
                                 <IconButton className={classes.button} aria-label="Done">
