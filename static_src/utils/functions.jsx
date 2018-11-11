@@ -23,8 +23,6 @@ function formDataSet(requests = {}) {
                             Другое: 0
                         }) :
                         result.set(tmp[i][0], {Электрик: 0, Плотник: 0, Сантехник: 0, Другое: 1});
-            console.log("hello");
-            console.log(result);
         } else {
             if (tmp[i][1] === 'Электрик') {
                 result.forEach((value, key, map) => {
