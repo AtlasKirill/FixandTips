@@ -19,14 +19,16 @@ import Filter from './Filter';
 import NavBar from './NavBar';
 import apiUrls from './../constants/apiUrls';
 import functions from './../utils/functions';
-import { prepareData } from '../actions/requests';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import {prepareData} from '../actions/requests';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 import store from './../index.jsx';
-import { getJSON, RSAA } from 'redux-api-middleware';
+import {getJSON, RSAA} from 'redux-api-middleware';
 
 const styles = theme => ({
     button: {
+        font: "Roboto",
+        fontSize: '1.2em',
         maxHeight: 20,
         minWidth: 150,
         marginLeft: 0,
@@ -37,6 +39,8 @@ const styles = theme => ({
         backgroundColor: 'var(--background-start)',
     },
     button_show: {
+        font: "Roboto",
+        fontSize: '1.2em',
         position: 'relative',
         top: '10px',
         maxHeight: 20,
@@ -70,7 +74,7 @@ const styles = theme => ({
 });
 
 class Chart extends React.Component {
-    
+
     state = {
         color: 'default',
         clickedUrgent: false,
@@ -91,255 +95,256 @@ class Chart extends React.Component {
         colorOther: 'default',
         fromDate: '',
         toDate: '',
-        status:'',
-        category:'',
+        status: '',
+        category: '',
         urgency: false,
         Data: [],
     };
 
     searchProcessing = event => {
-        this.setState({ clickedProcessing: ! this.state.clickedProcessing });
-        this.setState({ colorProcessing: this.state.clickedProcessing ? 'default' : 'secondary' });
-        this.setState({ urgency: ! this.state.urgency });
+        this.setState({clickedProcessing: !this.state.clickedProcessing});
+        this.setState({colorProcessing: this.state.clickedProcessing ? 'default' : 'secondary'});
+        this.setState({urgency: !this.state.urgency});
 
     };
     searchSent = event => {
-        this.setState({ clickedSent: ! this.state.clickedSent });
-        this.setState({ colorSent: this.state.clickedSent ? 'default' : 'secondary' });
-        this.setState({ urgency: ! this.state.urgency });
+        this.setState({clickedSent: !this.state.clickedSent});
+        this.setState({colorSent: this.state.clickedSent ? 'default' : 'secondary'});
+        this.setState({urgency: !this.state.urgency});
 
     };
     searchUrgent = event => {
-        this.setState({ clickedUrgent: ! this.state.clickedUrgent });
-        this.setState({ colorUrgent: this.state.clickedUrgent ? 'default' : 'secondary' });
-        this.setState({ urgency: ! this.state.urgency });
+        this.setState({clickedUrgent: !this.state.clickedUrgent});
+        this.setState({colorUrgent: this.state.clickedUrgent ? 'default' : 'secondary'});
+        this.setState({urgency: !this.state.urgency});
 
     };
     searchСarpenter = event => {
-        this.setState({ clickedCarpenter: ! this.state.clickedCarpenter });
-        this.setState({ colorCarpenter: this.state.clickedCarpenter ? 'default' : 'secondary' });
-        this.setState({ category: 'Плотник' });
+        this.setState({clickedCarpenter: !this.state.clickedCarpenter});
+        this.setState({colorCarpenter: this.state.clickedCarpenter ? 'default' : 'secondary'});
+        this.setState({category: 'Плотник'});
 
     };
     searchPlumber = event => {
-        this.setState({ clickedPlumber: ! this.state.clickedPlumber });
-        this.setState({ colorPlumber: this.state.clickedPlumber ? 'default' : 'secondary' });
-        this.setState({ category: 'Сантехник' });
+        this.setState({clickedPlumber: !this.state.clickedPlumber});
+        this.setState({colorPlumber: this.state.clickedPlumber ? 'default' : 'secondary'});
+        this.setState({category: 'Сантехник'});
 
     };
     searchElectrician = event => {
-        this.setState({ clickedElictrician: ! this.state.clickedElictrician });
-        this.setState({ colorElictrician: this.state.clickedElictrician ? 'default' : 'secondary' });
-        this.setState({ category: 'Электрик' });
+        this.setState({clickedElictrician: !this.state.clickedElictrician});
+        this.setState({colorElictrician: this.state.clickedElictrician ? 'default' : 'secondary'});
+        this.setState({category: 'Электрик'});
 
     };
     searchChemistry = event => {
-        this.setState({ clickedChemistry: ! this.state.clickedChemistry });
-        this.setState({ colorChemistry: this.state.clickedChemistry ? 'default' : 'secondary' });
-        this.setState({ category: 'Хим обработка' });
+        this.setState({clickedChemistry: !this.state.clickedChemistry});
+        this.setState({colorChemistry: this.state.clickedChemistry ? 'default' : 'secondary'});
+        this.setState({category: 'Хим обработка'});
     };
 
     searchOther = event => {
-        this.setState({ clickedOther: ! this.state.clickedOther });
-        this.setState({ colorOther: this.state.clickedOther ? 'default' : 'secondary' });
-        this.setState({ category: 'Другое' });
+        this.setState({clickedOther: !this.state.clickedOther});
+        this.setState({colorOther: this.state.clickedOther ? 'default' : 'secondary'});
+        this.setState({category: 'Другое'});
 
     };
     handleChange = name => event => {
         this.setState({
-          [name]: event.target.value,
+            [name]: event.target.value,
         });
-      };
+    };
 
     drawChart = event => {
-        this.props.prepareData(apiUrls.filter(  this.state.status,
-                                                this.state.category,
-                                                this.state.urgency,
-                                                this.state.fromDate, 
-                                                this.state.toDate),
-                                                store.getState().auth.token);
+        this.props.prepareData(apiUrls.filter(this.state.status,
+            this.state.category,
+            this.state.urgency,
+            this.state.fromDate,
+            this.state.toDate),
+            store.getState().auth.token);
     };
+
     render() {
         const {classes} = this.props;
         return (
             <div>
-            <NavBar/>
-            <React.Fragment>
+                <NavBar/>
+                <React.Fragment>
 
-                <Typography variant="overline" gutterBottom className={classes.status}>
-                    Статус:
-                </Typography>
-                <Button
-                    className={classes.button}
-                    style={
-                        this.state.colorProcessing === 'secondary'
-                        ? {
-                            '--background-start': '#ec407a',
+                    <Typography variant="overline" gutterBottom className={classes.status}>
+                        Статус:
+                    </Typography>
+                    <Button
+                        className={classes.button}
+                        style={
+                            this.state.colorProcessing === 'secondary'
+                                ? {
+                                    '--background-start': '#ec407a',
+                                }
+                                : {
+                                    '--background-end': '#ffffff',
+                                }
                         }
-                        : {
-                            '--background-end': '#ffffff',
-                        }
-                    }
-                    onClick={this.searchProcessing}
+                        onClick={this.searchProcessing}
                     >
-                    В ПРОЦЕССЕ
-                </Button>
-                <Button variant="contained"  className={classes.button} 
-                    style={
-                        this.state.colorSent === 'secondary'
-                        ? {
-                            '--background-start': '#ec407a',
-                        }
-                        : {
-                            '--background-end': '#ffffff',
-                        }
-                        }
-                        onClick={this.searchSent}
-                    >
-                    НОВЫЕ
-                </Button>
-                <Button variant="contained" className={classes.button} 
-                    style={
-                    this.state.colorUrgent === 'secondary'
-                        ? {
-                        '--background-start': '#ec407a',
-                        }
-                        : {
-                        '--background-end': '#ffffff',
-                        }
-                    }
-                    onClick={this.searchUrgent}
-                    >
-                    СРОЧНО
-                </Button>
-                <Typography variant="overline" gutterBottom className={classes.status}>
-                    Тип заявок:
-                </Typography>
-                <Button variant="contained" className={classes.button} 
-                    style={
-                    this.state.colorCarpenter === 'secondary'
-                        ? {
-                        '--background-start': '#ec407a',
-                        }
-                        : {
-                        '--background-end': '#ffffff',
-                        }
-                    }
-                    onClick={this.searchСarpenter}
-                    >
-                    ПЛОТНИК
-                </Button>
-                <Button variant="contained" className={classes.button} 
-                    style={
-                    this.state.colorPlumber === 'secondary'
-                        ? {
-                        '--background-start': '#ec407a',
-                        }
-                        : {
-                        '--background-end': '#ffffff',
-                        }
-                    }
-                    onClick={this.searchPlumber}
-                    >
-                    САНТЕХНИК
-                </Button>
-                <Button variant="contained" className={classes.button} 
-                    style={
-                    this.state.colorElictrician === 'secondary'
-                        ? {
-                        '--background-start': '#ec407a',
-                        }
-                        : {
-                        '--background-end': '#ffffff',
-                        }
-                    }
-                    onClick={this.searchElectrician}
-                    >
-                    ЭЛЕКТРИК
-                </Button>
-                <Button variant="contained" className={classes.button} 
-                    style={
-                    this.state.colorChemistry === 'secondary'
-                        ? {
-                        '--background-start': '#ec407a',
-                        }
-                        : {
-                        '--background-end': '#ffffff',
-                        }
-                    }
-                    onClick={this.searchChemistry}
-                    >
-                    ХИМ ОБРАБОТКА
-                </Button>
-                <Button variant="contained" className={classes.button}
-                    style={
-                        this.state.colorOther === 'secondary'
-                            ? {
-                            '--background-start': '#ec407a',
-                            }
-                            : {
-                            '--background-end': '#ffffff',
-                            }
-                        }
-                        onClick={this.searchOther} 
-                        >
-                    ДРУГОЕ
-                </Button>
-                <Typography
-                    variant="overline" gutterBottom className={classes.status}>
-                    Димнамика зарегистрированных и решенных заявок
-                </Typography>
-                <Grid container spacing={5}>
-                    <form className={classes.container} noValidate>
-                        <TextField
-                            id="date"
-                            label="С"
-                            type="date"
-                            value={this.state.fromDate}
-                            onChange={this.handleChange('fromDate')}
-                            defaultValue="2017-05-24"
-                            className={classes.textField}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                        />
-                    </form>
-
-                    <form className={classes.container} noValidate>
-                        <TextField
-                            id="date"
-                            label="По"
-                            type="date"
-                            defaultValue="2017-05-24"
-                            value={this.state.toDate}
-                            onChange={this.handleChange('toDate')}
-                            className={classes.textField}
-                            InputLabelProps={{
-                                shrink: true,
-                            }}
-                        />
-                    </form>
-                    <Button variant="contained" className={classes.button_show} onClick={this.drawChart}>
-                        Показать
+                        В ПРОЦЕССЕ
                     </Button>
-                </Grid>
-                <ResponsiveContainer width="95%" height={320} >
-                    <LineChart data={this.props.data}>
-                        <XAxis dataKey="id"/>
-                        <YAxis/>
-                        <CartesianGrid vertical={false} strokeDasharray="3 3"/>
-                        <Tooltip/>
-                        <Legend/>
-                        <Line type="monotone" dataKey="Электрик" stroke="#82ca9d"/>
-                        <Line type="monotone" dataKey="Сантехник" stroke="#ff1744"/>
-                        <Line type="monotone" dataKey="Другое" stroke="#ff8000"/>
-                        <Line type="monotone" dataKey="Плотник" stroke="#8884d8" activeDot={{r: 8}}/>
-                    </LineChart>
-                </ResponsiveContainer>
+                    <Button variant="contained" className={classes.button}
+                            style={
+                                this.state.colorSent === 'secondary'
+                                    ? {
+                                        '--background-start': '#ec407a',
+                                    }
+                                    : {
+                                        '--background-end': '#ffffff',
+                                    }
+                            }
+                            onClick={this.searchSent}
+                    >
+                        НОВЫЕ
+                    </Button>
+                    <Button variant="contained" className={classes.button}
+                            style={
+                                this.state.colorUrgent === 'secondary'
+                                    ? {
+                                        '--background-start': '#ec407a',
+                                    }
+                                    : {
+                                        '--background-end': '#ffffff',
+                                    }
+                            }
+                            onClick={this.searchUrgent}
+                    >
+                        СРОЧНО
+                    </Button>
+                    <Typography variant="overline" gutterBottom className={classes.status}>
+                        Тип заявок:
+                    </Typography>
+                    <Button variant="contained" className={classes.button}
+                            style={
+                                this.state.colorCarpenter === 'secondary'
+                                    ? {
+                                        '--background-start': '#ec407a',
+                                    }
+                                    : {
+                                        '--background-end': '#ffffff',
+                                    }
+                            }
+                            onClick={this.searchСarpenter}
+                    >
+                        ПЛОТНИК
+                    </Button>
+                    <Button variant="contained" className={classes.button}
+                            style={
+                                this.state.colorPlumber === 'secondary'
+                                    ? {
+                                        '--background-start': '#ec407a',
+                                    }
+                                    : {
+                                        '--background-end': '#ffffff',
+                                    }
+                            }
+                            onClick={this.searchPlumber}
+                    >
+                        САНТЕХНИК
+                    </Button>
+                    <Button variant="contained" className={classes.button}
+                            style={
+                                this.state.colorElictrician === 'secondary'
+                                    ? {
+                                        '--background-start': '#ec407a',
+                                    }
+                                    : {
+                                        '--background-end': '#ffffff',
+                                    }
+                            }
+                            onClick={this.searchElectrician}
+                    >
+                        ЭЛЕКТРИК
+                    </Button>
+                    <Button variant="contained" className={classes.button}
+                            style={
+                                this.state.colorChemistry === 'secondary'
+                                    ? {
+                                        '--background-start': '#ec407a',
+                                    }
+                                    : {
+                                        '--background-end': '#ffffff',
+                                    }
+                            }
+                            onClick={this.searchChemistry}
+                    >
+                        ХИМ ОБРАБОТКА
+                    </Button>
+                    <Button variant="contained" className={classes.button}
+                            style={
+                                this.state.colorOther === 'secondary'
+                                    ? {
+                                        '--background-start': '#ec407a',
+                                    }
+                                    : {
+                                        '--background-end': '#ffffff',
+                                    }
+                            }
+                            onClick={this.searchOther}
+                    >
+                        ДРУГОЕ
+                    </Button>
+                    <Typography
+                        variant="overline" gutterBottom className={classes.status}>
+                        Димнамика зарегистрированных и решенных заявок
+                    </Typography>
+                    <Grid container spacing={5}>
+                        <form className={classes.container} noValidate>
+                            <TextField
+                                id="date"
+                                label="С"
+                                type="date"
+                                value={this.state.fromDate}
+                                onChange={this.handleChange('fromDate')}
+                                defaultValue="2017-05-24"
+                                className={classes.textField}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                            />
+                        </form>
+
+                        <form className={classes.container} noValidate>
+                            <TextField
+                                id="date"
+                                label="По"
+                                type="date"
+                                defaultValue="2017-05-24"
+                                value={this.state.toDate}
+                                onChange={this.handleChange('toDate')}
+                                className={classes.textField}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                            />
+                        </form>
+                        <Button variant="contained" className={classes.button_show} onClick={this.drawChart}>
+                            Показать
+                        </Button>
+                    </Grid>
+                    <ResponsiveContainer width="95%" height={320}>
+                        <LineChart data={this.props.data}>
+                            <XAxis dataKey="id"/>
+                            <YAxis/>
+                            <CartesianGrid vertical={false} strokeDasharray="3 3"/>
+                            <Tooltip/>
+                            <Legend/>
+                            <Line type="monotone" dataKey="Электрик" stroke="#82ca9d"/>
+                            <Line type="monotone" dataKey="Сантехник" stroke="#ff1744"/>
+                            <Line type="monotone" dataKey="Другое" stroke="#ff8000"/>
+                            <Line type="monotone" dataKey="Плотник" stroke="#8884d8" activeDot={{r: 8}}/>
+                        </LineChart>
+                    </ResponsiveContainer>
 
 
-            </React.Fragment>
-        </div>
+                </React.Fragment>
+            </div>
         );
     }
 }
@@ -348,16 +353,16 @@ Chart.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-function mapStateToProps (state) {
+function mapStateToProps(state) {
     console.log('State:');
     console.log(state);
     return {
-      data: state.requests.Data
+        data: state.requests.Data
     }
-  }
-  
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ prepareData }, dispatch)
 }
-  
-export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(Chart));
+
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({prepareData}, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Chart));
