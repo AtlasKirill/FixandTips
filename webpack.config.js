@@ -9,6 +9,8 @@ module.exports = {
     },
     context: `${__dirname}/static_src`,
     output: {
+
+        // imgPath: `${__dirname}/media/images`,
         path: `${__dirname}/staticfiles/build`,
         filename: NODE_ENV === 'development' ? '[name].js' : '[name]-[hash].js',
         publicPath: '/staticfiles/build/',
@@ -36,7 +38,12 @@ module.exports = {
             },
             {
                 test: /\.(png|jpg|gif|svg|ttf|eot|woff|woff2)$/,
-                loader: 'url-loader?limit=4096&name=[path][name].[ext]',
+                loader: 'url-loader?limit=4096',
+                options: {
+                    imgPath:`${__dirname}/media/images`,
+                    name: '[imgPath][name].[ext]',
+                    // outputPath: 'images/'
+                  }
             },
         ],
     },

@@ -132,7 +132,7 @@ class CommandantRequest extends React.Component {
     }
 
 
-    handleChangeMaterials = name => event => {
+    handleChange = name => event => {
         this.setState({
             [name]: event.target.value,
         });
@@ -141,7 +141,12 @@ class CommandantRequest extends React.Component {
     onClick=(e)=> {
         console.log(apiUrls.requestDetail(this.props.id))
         this.props.deleteRequest(apiUrls.requestDetail(this.props.id),{is_deleted:true}, store.getState().auth.token);
-    }
+    };
+
+    onSubmit=(e)=> {
+        //console.log(apiUrls.requestDetail(this.props.id))
+        this.props.updateRequest(apiUrls.requestDetail(this.props.id),{materials:this.state.materials}, store.getState().auth.token);
+    };
 
     render() {
         // const {anchorEl} = this.state;
@@ -198,11 +203,13 @@ class CommandantRequest extends React.Component {
                                     id="standard-name"
                                     label="Использованные материалы"
                                     className={classes.textField}
-                                    value={ this.props.materials }
-                                    onChange={this.handleChangeMaterials('materials')}
+                                    value={this.state.materials}
+                                    onChange={this.handleChange('materials')}
+                                    // value={ this.props.materials }
+                                    // onChange={this.handleChangeMaterials('materials')}
                                     margin="normal"
                                 />
-                                <IconButton className={classes.button} aria-label="Done">
+                                <IconButton className={classes.button} aria-label="Done" onClick={this.onSubmit}>
                                     <DoneIcon/>
                                 </IconButton>
                             </CardContent>

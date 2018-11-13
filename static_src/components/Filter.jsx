@@ -66,6 +66,7 @@ class Filter extends React.Component {
     clickedElictrician: false,
     clickedPlumber: false,
     clickedChemistry: false,
+    clickedOther: false,
     colorProcessing: 'default',
     colorSent: 'default',
     colorUrgent: 'default',
@@ -73,6 +74,7 @@ class Filter extends React.Component {
     colorElictrician: 'default',
     colorPlumber: 'default',
     colorChemistry: 'default',
+    colorOther: 'default',
     status:'',
     category:'',
     urgency: false
@@ -118,6 +120,12 @@ class Filter extends React.Component {
     this.setState({ clickedChemistry: ! this.state.clickedChemistry });
     this.setState({ colorChemistry: this.state.clickedChemistry ? 'default' : 'secondary' });
     this.setState({ category: 'Хим обработка' });
+
+  };
+  searchOther = event => {
+    this.setState({ clickedOther: ! this.state.clickedOther });
+    this.setState({ colorOther: this.state.clickedOther ? 'default' : 'secondary' });
+    this.setState({ category: 'Другое' });
 
   };
   handleChange = name => event => {
@@ -241,8 +249,19 @@ class Filter extends React.Component {
         >
           ХИМ ОБРАБОТКА
         </Button>
-        <Button variant="contained" className={classes.button} >
-          ДРУГОЕ
+        <Button variant="contained" className={classes.button}
+                    style={
+                        this.state.colorOther === 'secondary'
+                            ? {
+                            '--background-start': '#ec407a',
+                            }
+                            : {
+                            '--background-end': '#ffffff',
+                            }
+                        }
+                        onClick={this.searchOther} 
+                        >
+                    ДРУГОЕ
         </Button>
         <Typography variant="overline" gutterBottom className={classes.status}>
           По дате:

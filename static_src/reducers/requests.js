@@ -6,6 +6,7 @@ const initialState = {
     requestList: [],
     requests: {},
     isLoading: false,
+    Data: [],
 };
 
 export default function requests(store = initialState, action){
@@ -99,6 +100,29 @@ export default function requests(store = initialState, action){
         }
 
         case 'ERROR_REQUEST_FILTERING':{
+            return update(newStore, {
+                isLoading: { $set: false },
+            });
+        }
+
+        case 'START_DATA_PREPARING':{
+            return update(newStore, {
+                isLoading: { $set: true },
+            });
+            
+        }
+
+        case 'SUCCESS_DATA_PREPARING':{
+            console.log('payload');
+            console.log(action.payload);
+            return update(newStore, {
+                isLoading: { $set: false },
+                Data: { $set: action.payload },
+                // requests: { $merge: action.payload.entities.requests }
+            });
+        }
+
+        case 'ERROR_DATA_PREPARING':{
             return update(newStore, {
                 isLoading: { $set: false },
             });

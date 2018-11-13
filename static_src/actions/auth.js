@@ -1,3 +1,11 @@
+import { getJSON, RSAA } from 'redux-api-middleware';
+import { normalize } from 'normalizr';
+import { user } from './../utils/schemas.jsx';
+import Cookies from 'js-cookie';
+export const START_USER_UPDATING = 'START_USER_UPDATING';
+export const SUCCESS_USER_UPDATING = 'SUCCESS_USER_UPDATING';
+export const ERROR_USER_UPDATING = 'ERROR_USER_UPDATING';
+
 export const loadUser = () => {
     return (dispatch, getState) => {
       dispatch({type: "USER_LOADING"});
@@ -126,3 +134,37 @@ export const loadUser = () => {
     }
   }
   
+  export const updateUser = (url, data, token) => {
+    console.log('Update')
+    return {
+        [RSAA]: {
+            credentials: 'include',
+            endpoint: url,
+            method: 'PATCH',
+            body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRFToken': Cookies.get("csrftoken"),
+                'Authorization': `Token ${token}`,
+              },
+            types: [START_USER_UPDATING, 
+                    {
+                        type: SUCCESS_USER_UPDATING,
+                        payload: (action, state, res) =>{
+                            return getJSON(res).then(
+                                (json) => {
+                                    json = {users: json};
+                                    const normalizedData = normalize(json, [user]);
+                                    delete json.results;
+                                    return Object.assign({}, json, normalizedData);
+                                },
+                            );
+                        },
+                       
+                    },
+
+                ERROR_USER_UPDATING],
+        },
+    };
+};

@@ -12,7 +12,7 @@ from rest_framework.response import Response
 class UserViewSet(viewsets.ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
-    permission_classes = (permissions.IsAuthenticated, IsOwnerOrReadOnly)
+    permission_classes = (permissions.IsAuthenticated,)
 
 class SessionUserViewSet(viewsets.ViewSet):
     permission_classes = (permissions.IsAuthenticated, IsOwnerOrReadOnly)

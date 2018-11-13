@@ -17,7 +17,7 @@ import {connect} from "react-redux";
 import {Link, Redirect} from "react-router-dom";
 import { login } from '../actions/auth';
 import RegButton from './Registration';
-
+import NavBar from './NavBar';
 
 const styles = theme => ({
   layout: {
@@ -71,9 +71,13 @@ render(){
     return <Redirect to="/" />
   }
   return (
+    <div>
+    
     <React.Fragment>
+      
       <CssBaseline />
       <main className={classes.layout}>
+          <NavBar/>
         <Paper className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockIcon />
@@ -99,10 +103,7 @@ render(){
                 value={this.state.password}
               />
             </FormControl>
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
-            />
+            
             <Button
               type="submit"
               fullWidth
@@ -120,6 +121,7 @@ render(){
       </main>
       
     </React.Fragment>
+  </div>
   );
 }
  
