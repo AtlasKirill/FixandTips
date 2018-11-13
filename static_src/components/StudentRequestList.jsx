@@ -5,7 +5,26 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import React from 'react';
+import Button from '@material-ui/core/Button';
 import store from './../index.jsx';
+import { json2csv }from "json2csv";
+
+//var json2csv = require('json2csv');
+var json = [
+    {
+      "car": "Audi",
+      "price": 40000,
+      "color": "blue"
+    }, {
+      "car": "BMW",
+      "price": 35000,
+      "color": "black"
+    }, {
+      "car": "Porsche",
+      "price": 60000,
+      "color": "green"
+    }
+  ];
 
 
 
@@ -23,7 +42,15 @@ class StudentRequestList extends React.Component{
 
         this.props.loadRequests(apiUrls.myRequests(this.props.user.id),store.getState().auth.token);
     }
-
+    onClick=(e)=> {
+        json2csv({data: json, fields: ['car', 'price', 'color']}, function(err, csv) {
+            if (err) console.log(err);
+            fs.writeFile('file.csv', csv, function(err) {
+              if (err) throw err;
+              console.log('file saved');
+            });
+          });
+    };
     render(){
         
         if(this.props.isLoading) {
@@ -37,6 +64,9 @@ class StudentRequestList extends React.Component{
         console.log(requests);
         return( 
             <div>
+                <Button onClick={ this.onClick }>
+                    СКАЧАЙ!!!!!1!!
+                </Button>
                { requests } 
             </div>
         );

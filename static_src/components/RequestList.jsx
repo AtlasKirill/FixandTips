@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import React from 'react';
-
+import Button from '@material-ui/core/Button';
 
 
 class RequestList extends React.Component{
@@ -14,10 +14,20 @@ class RequestList extends React.Component{
         isLoading: PropTypes.bool,
         requestList: PropTypes.arrayOf(PropTypes.number),
     }
+
+    
     componentDidMount() {
         this.props.myRequests(apiUrls.requests(this.props.user.id));
     }
-
+    onClick=(e)=> {
+        json2csv({data: json, fields: ['car', 'price', 'color']}, function(err, csv) {
+            if (err) console.log(err);
+            fs.writeFile('file.csv', csv, function(err) {
+              if (err) throw err;
+              console.log('file saved');
+            });
+          });
+    };
     render(){
         if(this.props.isLoading) {
             return (<div>Loading...</div>);
@@ -27,6 +37,9 @@ class RequestList extends React.Component{
         );
         return( 
             <div>
+                <Button onClick={ this.onClick }>
+                    СКАЧАЙ!!!!!1!!
+                </Button>
                { requests } 
             </div>
         );

@@ -39,7 +39,7 @@ class App extends React.Component{
                     <Route path="/login" component={ Login }/>
                     <Route exact path="/" component={ MainPage }/>
                     <Route path="/profile" component={ Profile }/>
-                    {/* <Route exact path="/" component={ Chart }/> */}
+                    <Route exact path="/statistic" component={ Chart }/>
                 </Switch> 
             </div>  
         );

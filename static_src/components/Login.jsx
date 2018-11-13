@@ -77,7 +77,7 @@ render(){
       
       <CssBaseline />
       <main className={classes.layout}>
-      <NavBar/>
+          <NavBar/>
         <Paper className={classes.paper}>
           <Avatar className={classes.avatar}>
             <LockIcon />

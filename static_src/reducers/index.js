@@ -6,6 +6,7 @@ import session from './session';
 import categories from './categories';
 import auth from './auth';
 
+
 export default combineReducers({
     routing:routerReducer,
     requests,

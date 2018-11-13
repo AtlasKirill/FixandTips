@@ -1,3 +1,7 @@
+import update from 'react-addons-update';
+import {} from './../actions/auth.js';
+
+
 const initialState = {
     token: localStorage.getItem("token"),
     isAuthenticated: false,
@@ -20,7 +24,26 @@ const initialState = {
     case 'LOGIN_SUCCESSFUL':
         localStorage.setItem("token", action.data.token);
         return {...state, ...action.data, isAuthenticated: true, isLoading: false, errors: null};
-  
+
+    case 'START_USER_UPDATING':{
+        return update(state, {
+            isLoading: { $set: true },
+        });
+    }
+
+    case 'SUCCESS_USER_UPDATING':{
+        console.log(action.payload.users)
+        return update(state, {
+            isLoading: { $set: false },
+            user: { $set: action.payload.users },
+        });
+    }
+
+    case 'ERROR_USER_UPDATING':{
+        return update(state, {
+            isLoading: { $set: false },
+        });
+    }
     case 'AUTHENTICATION_ERROR':
     case 'LOGIN_FAILED':
     case 'LOGOUT_SUCCESSFUL':

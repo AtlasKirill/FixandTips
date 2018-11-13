@@ -2,6 +2,7 @@ import { getJSON, RSAA } from 'redux-api-middleware';
 import { normalize } from 'normalizr';
 import { request } from './../utils/schemas.jsx';
 import Cookies from 'js-cookie';
+import functions from './../utils/functions';
 export const START_REQUEST_LOADING = 'START_REQUEST_LOADING';
 export const SUCCESS_REQUEST_LOADING = 'SUCCESS_REQUEST_LOADING';
 export const ERROR_REQUEST_LOADING = 'ERROR_REQUEST_LOADING';
@@ -14,6 +15,10 @@ export const ERROR_REQUEST_DELETING = 'ERROR_REQUEST_DELETING';
 export const START_REQUEST_FILTERING = 'START_REQUEST_FILTERING';
 export const SUCCESS_REQUEST_FILTERING = 'SUCCESS_REQUEST_FILTERING';
 export const ERROR_REQUEST_FILTERING = 'ERROR_REQUEST_FILTERING';
+export const START_DATA_PREPARING = 'START_DATA_PREPARING';
+export const SUCCESS_DATA_PREPARING = 'SUCCESS_DATA_PREPARING';
+export const ERROR_DATA_PREPARING = 'ERROR_DATA_PREPARING';
+
 
 export const loadRequests = (url, token) => {
     return {
@@ -127,12 +132,42 @@ export const filterRequest = (url, token) => {
                         return getJSON(res).then(
                             (json) => {
                                 const normalizedData = normalize(json, [request]);
+                                console.log(normalizedData);
                                 return Object.assign({}, json, normalizedData);
                             },
                         );
                     },
                 }, 
                     ERROR_REQUEST_FILTERING],
+        },
+    };
+};
+
+export const prepareData = (url, token) => {
+    console.log('FILTER')
+    return {
+        [RSAA]: {
+            credentials: 'include',
+            endpoint: url,
+            method: 'GET',
+            headers: {
+                'Authorization': `Token ${token}`,
+            },
+            types: [START_DATA_PREPARING, 
+                {
+                    type: SUCCESS_DATA_PREPARING,
+                    payload: (action, state, res) =>{
+                        return getJSON(res).then(
+                            (json) => {
+                                const normalizedData = normalize(json, [request]);
+                                const preparedData = functions.formDataSet(normalizedData.entities.requests);
+                                // return Object.assign({}, preparedData);
+                                return preparedData;
+                            },
+                        );
+                    },
+                }, 
+                    ERROR_DATA_PREPARING],
         },
     };
 };

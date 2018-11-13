@@ -19,19 +19,19 @@ import Filter from './Filter';
 import NavBar from './NavBar';
 import apiUrls from './../constants/apiUrls';
 import functions from './../utils/functions';
-import { filterRequest } from '../actions/requests';
+import { prepareData } from '../actions/requests';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import store from './../index.jsx';
 import { getJSON, RSAA } from 'redux-api-middleware';
 
-const data = [
-    {id: '1', Электрик: 4, Сантехник: 5, Плотник: 5},
-    {id: '2', Электрик: 2, Сантехник: 1, Плотник: 8},
-    {id: '3', Электрик: 6, Сантехник: 8, Плотник: 13},
-    {id: '4', Электрик: 9, Сантехник: 9, Плотник: 9},
-    {id: '5', Электрик: 3, Сантехник: 12, Плотник: 6},
-];
+// const data = [
+//     {id: '1', Электрик: 4, Сантехник: 5, Плотник: 5},
+//     {id: '2', Электрик: 2, Сантехник: 1, Плотник: 8},
+//     {id: '3', Электрик: 6, Сантехник: 8, Плотник: 13},
+//     {id: '4', Электрик: 9, Сантехник: 9, Плотник: 9},
+//     {id: '5', Электрик: 3, Сантехник: 12, Плотник: 6},
+// ];
 
 
 const styles = theme => ({
@@ -101,7 +101,7 @@ class Chart extends React.Component {
         status:'',
         category:'',
         urgency: false,
-        data: []
+        Data: [],
     };
 
     searchProcessing = event => {
@@ -151,30 +151,39 @@ class Chart extends React.Component {
           [name]: event.target.value,
         });
       };
-    drawChart = event => {
-        console.log(apiUrls.filter( this.state.status,
-                                    this.state.category,
-                                    this.state.urgency,
-                                    this.state.fromDate, 
-                                    this.state.toDate));
-        console.log(this.props.filterRequest(apiUrls.filter(this.state.status,
-                                                            this.state.category,
-                                                            this.state.urgency,
-                                                            this.state.fromDate, 
-                                                            this.state.toDate),
-                                                            store.getState().auth.token).then(
-                                                               (json) => {
-                                                                    // console.log(json.payload.entities.requests);
-                                                                    const data = functions.formDataSet(json.payload.entities.requests);
-                                                                    this.setState({ data: data });
-                                                                }
-                                                            ));
+    // drawChart = event => {
+    //     console.log(apiUrls.filter( this.state.status,
+    //                                 this.state.category,
+    //                                 this.state.urgency,
+    //                                 this.state.fromDate, 
+    //                                 this.state.toDate));
+    //     this.props.filterRequest(apiUrls.filter(this.state.status,
+    //                                                         this.state.category,
+    //                                                         this.state.urgency,
+    //                                                         this.state.fromDate, 
+    //                                                         this.state.toDate),
+    //                                                         store.getState().auth.token).then(
+    //                                                            (json) => {
+    //                                                                 // console.log(json.payload.entities.requests);
+    //                                                                 const data = functions.formDataSet(json.payload.entities.requests);
+    //                                                                 this.setState({ Data: data });
+    //                                                             }
+    //                                                         );
     
+    // };
+
+    drawChart = event => {
+        this.props.prepareData(apiUrls.filter(  this.state.status,
+                                                this.state.category,
+                                                this.state.urgency,
+                                                this.state.fromDate, 
+                                                this.state.toDate),
+                                                store.getState().auth.token);
     };
     render() {
         const {classes} = this.props;
-        console.log(this.state.data);
-        console.log(data);
+        console.log(this.state.Data);
+        //console.log(data);
         return (
             <div>
             <NavBar/>
@@ -326,18 +335,16 @@ class Chart extends React.Component {
                         Показать
                     </Button>
                 </Grid>
-
-
                 <ResponsiveContainer width="95%" height={320} >
                     <LineChart data={this.props.data}>
-                        <XAxis dataKey="date"/>
+                        <XAxis dataKey="id"/>
                         <YAxis/>
                         <CartesianGrid vertical={false} strokeDasharray="3 3"/>
                         <Tooltip/>
                         <Legend/>
                         <Line type="monotone" dataKey="Электрик" stroke="#82ca9d"/>
-                        <Line type="monotone" dataKey="Плотник" stroke="#ff1744"/>
-                        <Line type="monotone" dataKey="Сантехник" stroke="#8884d8" activeDot={{r: 8}}/>
+                        <Line type="monotone" dataKey="Сантехник" stroke="#ff1744"/>
+                        <Line type="monotone" dataKey="Плотник" stroke="#8884d8" activeDot={{r: 8}}/>
                     </LineChart>
                 </ResponsiveContainer>
 
@@ -351,13 +358,22 @@ class Chart extends React.Component {
 Chart.propTypes = {
     classes: PropTypes.object.isRequired,
 };
-const mapStateToProps = (state) => {
+
+// const mapStateToProps = (state) => {
+//     return {
+//         data: state.data,
+//     }
+// }
+function mapStateToProps (state) {
+    console.log('State:');
+    console.log(state);
     return {
-        data: state.data,
-    };
-};
-const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ filterRequest }, dispatch)
+      data: state.requests.Data
+    }
   }
+  
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({ prepareData }, dispatch)
+}
   
 export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(Chart));
