@@ -27,10 +27,10 @@ class GetPrintAndStatistics extends React.Component {
       const {classes} = this.props;
       return (
          <div>
-              <Button variant="extendedFab" aria-label="Delete" className={classes.button}>
-                 <PrintIcon className={classes.extendedIcon}/>
-                 ПЕЧАТЬ
-             </Button>
+              {/*<Button variant="extendedFab" aria-label="Delete" className={classes.button}>*/}
+                 {/*<PrintIcon className={classes.extendedIcon}/>*/}
+                 {/*ПЕЧАТЬ*/}
+             {/*</Button>*/}
              {/* <ListItemLink className={classes.button} to="/statistic" primary="Статистика" icon={<BarChart className={classes.extendedIcon}/>}/> */}
             <Button variant="extendedFab" href='/statistic/' aria-label="Delete" className={classes.button}>    
                 Статистика

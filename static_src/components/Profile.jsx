@@ -14,11 +14,11 @@ import Button from '@material-ui/core/Button';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import { connect } from 'react-redux';
-import { logout, loadUser, updateUser } from '../actions/auth';
+import {connect} from 'react-redux';
+import {logout, loadUser, updateUser} from '../actions/auth';
 import NavBar from './NavBar';
 import TextField from '@material-ui/core/TextField';
-import { bindActionCreators } from 'redux';
+import {bindActionCreators} from 'redux';
 import store from './../index.jsx';
 import apiUrls from './../constants/apiUrls.js';
 
@@ -29,20 +29,20 @@ const styles = theme => ({
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'row',
-      },
-      card: {
+    },
+    card: {
         // maxWidth: 700,
         margin: 20,
-        maxWidth: 800,
-      },
-    
-      main_info: {
+        minWidth: 800,
+    },
+
+    main_info: {
         margin: 15,
         padding: 15,
         // minHeight: 200,
-    
-      },
-      avatar: {
+
+    },
+    avatar: {
         margin: 10,
         background: red[500],
         // justifyItems: 'center',
@@ -52,22 +52,22 @@ const styles = theme => ({
         // objectPosition: 50,
         // width: 180,
         // height: 180,
-      },
-      input: {
+    },
+    input: {
         display: 'none',
-      },
-      button_upload: {
+    },
+    button_upload: {
         margin: theme.spacing.unit,
         padding: 5,
         objectPosition: '50% 50%',
         // flex: 1,
-      },
-      button_password: {
+    },
+    button_password: {
         background: red[500],
         marginLeft: 20,
         marginTop: 8,
-      },
-      content: {
+    },
+    content: {
         // borderRadius:0,
         // borderColor: 'white',
         // borderShadow:'white',
@@ -85,210 +85,226 @@ const styles = theme => ({
         //     paddingRight: 5,
         //     margin: 5,
         // },
-      },
-      grid: {
+    },
+    grid: {
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',
-      },
-      container: {
+    },
+    container: {
         display: 'flex',
         flexWrap: 'wrap',
         alignItems: 'center',
         flexDirection: 'column',
-      },
-      button: {
+    },
+    button: {
         marginTop: 8,
-      },
-      textField: {
+    },
+    textField: {
         width: '100%',
-      },
-    });
-    
+    },
+    listItem:{
+        paddingBottom:0,
+        paddingTop:0,
+    },
+});
+
 class Profile extends React.Component {
 
     state = {
         edited: false,
-        avatar:"/static/build/pic.jpg",
+        avatar: "/static/build/pic.jpg",
         group_num: '',
         flat: '',
         phone: '',
         field: '',
-      }
+    }
 
     handleChange = name => event => {
         this.setState({
-          [name]: event.target.value,
+            [name]: event.target.value,
         });
     };
 
     handleClickEdit = (e) => {
         this.setState(state => ({
-          edited: !state.edited,
+            edited: !state.edited,
         }));
-      };
+    };
 
     handleClickSubmit = () => {
-        this.props.updateUser(apiUrls.userDetail(this.props.user.id),{group_num:this.state.group_num, flat: this.state.flat, phone: this.state.phone},store.getState().auth.token)
+        this.props.updateUser(apiUrls.userDetail(this.props.user.id), {
+            group_num: this.state.group_num,
+            flat: this.state.flat,
+            phone: this.state.phone
+        }, store.getState().auth.token)
         this.setState(state => ({
             edited: !state.edited,
         }));
-       // this.props.loadUser()
+        // this.props.loadUser()
     };
     handleClickSubmit = () => {
-        this.props.updateUser(apiUrls.userDetail(this.props.user.id),{group_num:this.state.group_num, flat: this.state.flat, phone: this.state.phone},store.getState().auth.token)
+        this.props.updateUser(apiUrls.userDetail(this.props.user.id), {
+            group_num: this.state.group_num,
+            flat: this.state.flat,
+            phone: this.state.phone
+        }, store.getState().auth.token)
         this.setState(state => ({
             edited: !state.edited,
         }));
-       // this.props.loadUser()
+        // this.props.loadUser()
     };
 
     render() {
         const {classes} = this.props;
         // const info = this.props.sessionInfo.data;
-        if(this.props.isLoading)
-        {
-            return(<div>Loading...</div>)
+        if (this.props.isLoading) {
+            return (<div>Loading...</div>)
         }
-        if(!this.props.isAuthenticated)
-        {
+        if (!this.props.isAuthenticated) {
             return <Redirect push to="/login"/>
         }
-        
+
         return (
-                 <div>
-        <Grid container spacing={8}>
-          <Grid item md={12}>
-            <Paper className={classes.card}>
-              <Grid container spacing={8}>
-                <Grid item md={4}>
-                  <Paper classes={{ root: classes.content }}>
-                    <Avatar
-                      src={ this.props.user.avatar }
-                      className={classNames(classes.avatar)}
-                    />
+            <div>
+                <NavBar/>
+                <Grid container spacing={8} className={classes.grid}>
+                    <Grid item md={12}>
+                        <Paper className={classes.card}>
+                            <Grid container spacing={8}>
+                                <Grid item md={4}>
+                                    <Paper classes={{root: classes.content}}>
+                                        <Avatar
+                                            src={this.props.user.avatar}
+                                            className={classNames(classes.avatar)}
+                                        />
 
-                    <Typography component="h2" variant="title" align="center">
+                                        <Typography component="h2" variant="title" align="center">
 
-                      Lena
-                    </Typography>
-                    <input
-                      accept="image/*"
-                      className={classes.input}
-                      id="contained-button-file"
-                      multiple
-                      type="file"
-                    />
-                    <label htmlFor="contained-button-file">
-                      <Button
-                        variant="outlined"
-                        size="mdall"
-                        component="span"
-                        align={'center'}
-                        onClick={this.onPictureLoading}
-                        className={classes.button_upload}>
-                        Изменить аватар
-                      </Button>
-                    </label>
-                  </Paper>
-
-
-                </Grid>
-                <Grid item sm={8}>
-                  <Paper className={classes.main_info}>
-                    <Typography variant="subtitle1" gutterBottom>
-                      Основная информация
+                                            Lena
                                         </Typography>
-                    <Typography variant="subtitle2" gutterBottom>
+                                        <input
+                                            accept="image/*"
+                                            className={classes.input}
+                                            id="contained-button-file"
+                                            multiple
+                                            type="file"
+                                        />
+                                        <label htmlFor="contained-button-file">
+                                            <Button
+                                                variant="outlined"
+                                                size="mdall"
+                                                component="span"
+                                                align={'center'}
+                                                onClick={this.onPictureLoading}
+                                                className={classes.button_upload}>
+                                                Изменить аватар
+                                            </Button>
+                                        </label>
+                                    </Paper>
 
-                      { this.props.user.email }
+
+                                </Grid>
+                                <Grid item sm={8}>
+                                    <Paper className={classes.main_info}>
+                                        <Typography variant="h5" gutterBottom>
+                                            Основная информация
                                         </Typography>
-                    <Typography variant="subtitle2" gutterBottom>
-                      студент
-                    </Typography>
-                  </Paper>
-                  <Paper className={classes.main_info}>
-                    <Typography variant="subtitle1" gutterBottom>
-                      Контактная информация
-                    </Typography>
+                                        <Typography variant="subtitle2" gutterBottom>
 
-                    <List>
-                      {!this.state.edited && (
-                        <div>
-                          <ListItem>
-                            <ListItemText primary="Группа" secondary={ this.props.user.group_num } />
-                          </ListItem>
-                          <ListItem>
-                            <ListItemText primary="Квартира" secondary={ this.props.user.flat } />
-                          </ListItem>
-                          <ListItem>
-                            <ListItemText primary="Телефон" secondary={ this.props.user.phone } />
-                          </ListItem>
-                        </div>
-                      )}
-                      {this.state.edited && (
-                        <div>
-                          <ListItem>
-                            <TextField
-                              id="outlined-name"
-                              label="Группа"
-                              className={classes.textField}
-                              value={this.state.group_num}
-                              onChange={this.handleChange('group_num')}
-                              margin="normal"
-                              variant="outlined"
-                            />
-                          </ListItem>
-                          <ListItem>
-                            <TextField
-                              id="outlined-name"
-                              label="Квартира"
-                              className={classes.textField}
-                              value={this.state.flat}
-                              onChange={this.handleChange('flat')}
-                              margin="normal"
-                              variant="outlined"
-                            />
-                          </ListItem>
-                          <ListItem>
-                            <TextField
-                              id="outlined-name"
-                              label="Телефон"
-                              className={classes.textField}
-                              value={this.state.phone}
-                              onChange={this.handleChange('phone')}
-                              margin="normal"
-                              variant="outlined"
-                            />
-                          </ListItem>
-                        </div>
-                      )}
+                                            {this.props.user.email}
+                                        </Typography>
+                                        <Typography variant="subtitle1" gutterBottom>
+                                            студент
+                                        </Typography>
+                                    </Paper>
+                                    <Paper className={classes.main_info}>
+                                        <Typography variant="h5" gutterBottom>
+                                            Контактная информация
+                                        </Typography>
 
-                    </List>
-                    {!this.state.edited && (
-                      <Button variant="outlined" className={classes.button} onClick={this.handleClickEdit}>
-                        ИЗМЕНИТЬ
-                        </Button>
-                    )}
-                    {this.state.edited && (
-                      <Button variant="outlined" className={classes.button} onClick={this.handleClickSubmit}>
-                        Сохранить
-                        </Button>
-                    )}
+                                        <List>
+                                            {!this.state.edited && (
+                                                <div>
+                                                    <ListItem>
+                                                        <ListItemText primary="Группа"
+                                                                      secondary={this.props.user.group_num}/>
+                                                    </ListItem>
+                                                    <ListItem>
+                                                        <ListItemText primary="Квартира"
+                                                                      secondary={this.props.user.flat}/>
+                                                    </ListItem>
+                                                    <ListItem>
+                                                        <ListItemText primary="Телефон"
+                                                                      secondary={this.props.user.phone}/>
+                                                    </ListItem>
+                                                </div>
+                                            )}
+                                            {this.state.edited && (
+                                                <div>
+                                                    <ListItem className={classes.listItem}>
+                                                        <TextField
+                                                            id="outlined-name"
+                                                            label="Группа"
+                                                            className={classes.textField}
+                                                            value={this.state.group_num}
+                                                            onChange={this.handleChange('group_num')}
+                                                            margin="normal"
+                                                            variant="outlined"
+                                                        />
+                                                    </ListItem>
+                                                    <ListItem>
+                                                        <TextField
+                                                            id="outlined-name"
+                                                            label="Квартира"
+                                                            className={classes.textField}
+                                                            value={this.state.flat}
+                                                            onChange={this.handleChange('flat')}
+                                                            margin="normal"
+                                                            variant="outlined"
+                                                        />
+                                                    </ListItem>
+                                                    <ListItem>
+                                                        <TextField
+                                                            id="outlined-name"
+                                                            label="Телефон"
+                                                            className={classes.textField}
+                                                            value={this.state.phone}
+                                                            onChange={this.handleChange('phone')}
+                                                            margin="normal"
+                                                            variant="outlined"
+                                                        />
+                                                    </ListItem>
+                                                </div>
+                                            )}
 
-                    <Button variant="contained" color="secondary"
-                      className={classes.button_password} onClick={this.props.logout}
-                      href='/login'>
-                      Выйти
-                    </Button>
-                  </Paper>
+                                        </List>
+                                        {!this.state.edited && (
+                                            <Button variant="outlined" className={classes.button}
+                                                    onClick={this.handleClickEdit}>
+                                                ИЗМЕНИТЬ
+                                            </Button>
+                                        )}
+                                        {this.state.edited && (
+                                            <Button variant="outlined" className={classes.button}
+                                                    onClick={this.handleClickSubmit}>
+                                                Сохранить
+                                            </Button>
+                                        )}
+
+                                        <Button variant="contained" color="secondary"
+                                                className={classes.button_password} onClick={this.props.logout}
+                                                href='/login'>
+                                            Выйти
+                                        </Button>
+                                    </Paper>
+                                </Grid>
+                            </Grid>
+                        </Paper>
+                    </Grid>
                 </Grid>
-              </Grid>
-            </Paper>
-          </Grid>
-        </Grid>
 
-      </div>
+            </div>
         );
     }
 }
@@ -297,7 +313,7 @@ Profile.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = ({ auth }, state) => {
+const mapStateToProps = ({auth}, state) => {
     return {
         user: auth.user,
         // avatar: auth.user.avatar,
@@ -308,6 +324,6 @@ const mapStateToProps = ({ auth }, state) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ logout, updateUser, loadUser }, dispatch)
+    return bindActionCreators({logout, updateUser, loadUser}, dispatch)
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Profile));

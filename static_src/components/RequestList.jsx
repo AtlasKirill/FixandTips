@@ -37,9 +37,6 @@ class RequestList extends React.Component{
         );
         return( 
             <div>
-                <Button onClick={ this.onClick }>
-                    СКАЧАЙ!!!!!1!!
-                </Button>
                { requests } 
             </div>
         );
