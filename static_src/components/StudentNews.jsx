@@ -53,7 +53,7 @@ class StudentNews extends React.Component {
                 />
 
                 <CardContent>
-                    <Typography component="p">
+                    <Typography component="p" variant="h6">
                         { this.props.text }
                     </Typography>
                     <Divider className={classes.devider}/>
