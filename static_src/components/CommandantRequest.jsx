@@ -22,6 +22,8 @@ import CommandantRequestWarning from "./CommandantRequestWarning.jsx"
 import Icon from '@material-ui/core/Icon';
 import DoneIcon from '@material-ui/icons/Done';
 import TextField from '@material-ui/core/TextField';
+import Menu from '@material-ui/core/Menu';
+import MenuItem from '@material-ui/core/MenuItem';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { deleteRequest } from '../actions/requests';
@@ -123,6 +125,9 @@ class CommandantRequest extends React.Component {
 
     state = {
         materials: '',
+        status: '',
+        type: '',
+        edited: false,
     };
 
     static propTypes = {
@@ -143,14 +148,26 @@ class CommandantRequest extends React.Component {
         this.props.deleteRequest(apiUrls.requestDetail(this.props.id),{is_deleted:true}, store.getState().auth.token);
     };
 
+    onClickChange=(e)=> {
+        this.setState(state => ({
+            edited: !state.edited,
+        }));
+    };
+
     onSubmit=(e)=> {
         //console.log(apiUrls.requestDetail(this.props.id))
-        this.props.updateRequest(apiUrls.requestDetail(this.props.id),{materials:this.state.materials}, store.getState().auth.token);
+        this.props.deleteRequest(apiUrls.requestDetail(this.props.id),{materials:this.state.materials}, store.getState().auth.token);
+        this.setState(state => ({
+            edited: !state.edited,
+        }));
     };
 
     render() {
         // const {anchorEl} = this.state;
         // const open = Boolean(anchorEl);
+        const {status} = this.state;
+        const {type} = this.state;
+        const {edited} = this.state;
         const {classes} = this.props;
         if(this.props.is_deleted){
             console.log('Deleted');
@@ -176,10 +193,21 @@ class CommandantRequest extends React.Component {
                         </Grid>
                         <Grid item md={3}>
                             <CardContent classes={{root: classes.content}}>
-                                <Typography variant="subtitle2" classes={{root: classes.urgently_button}}>
-                                    Срочно
-                                </Typography>
-                                <ErrorOutline className={classes.alert}/>
+                            {this.props.urgency && (
+                                    <div>
+                                        <Typography variant="subtitle2" classes={{root: classes.urgently_button}}>
+                                            Срочно
+                                        </Typography>
+                                        <ErrorOutline className={classes.alert}/>
+                                    </div>
+                                )}
+                                {!this.props.urgency && (
+                                    <div>
+                                        <Typography variant="subtitle2" classes={{root: classes.urgently_button}}>
+                                            Не срочно
+                                        </Typography>
+                                    </div>
+                                )}
                             </CardContent>
                         </Grid>
                         <Grid item md={3}>
@@ -190,76 +218,85 @@ class CommandantRequest extends React.Component {
                             </CardContent>
                         </Grid>
                         <Grid item md={6}>
-                            <CardContent classes={{root: classes.content}}>
-                                {/*<Typography variant="subtitle2">*/}
-                                    {/*Использованные материалы:*/}
-                                {/*</Typography>*/}
-                                {/*<Typography variant="body1">*/}
-                                {/*2 патрубка*/}
-                                {/*</Typography>*/}
+                        <CardContent classes={{root: classes.content}}>
+                            {!this.state.edited && (
+                                    <div>
+                                        <Typography variant="subtitle2">
+                                            Использованные материалы:
+                                        </Typography>
+                                        <Typography variant="body1" onClick={this.onClickChange}>
+                                            { this.props.materials }
+                                        </Typography>
+                                    </div>)}
 
-
-                                <TextField
-                                    id="standard-name"
-                                    label="Использованные материалы"
-                                    className={classes.textField}
-                                    value={this.state.materials}
-                                    onChange={this.handleChange('materials')}
-                                    // value={ this.props.materials }
-                                    // onChange={this.handleChangeMaterials('materials')}
-                                    margin="normal"
-                                />
+                                {this.state.edited && (
+                                    <div>
+                                        <TextField
+                                            id="standard-name"
+                                            label="Использованные материалы"
+                                            className={classes.textField}
+                                            value={ this.state.materials }
+                                            onChange={this.handleChange('materials')}
+                                            margin="normal"
+                                        />
                                 <IconButton className={classes.button} aria-label="Done" onClick={this.onSubmit}>
                                     <DoneIcon/>
                                 </IconButton>
+                                </div>
+                            )}
                             </CardContent>
                         </Grid>
-                        <Grid item md={6}>
-                            <CardContent classes={{root: classes.content}}>
-                                <Typography variant="subtitle2">
-                                    Tип заявки (тех персонал)
-                                </Typography>
-                                <Typography variant="body1">
-                                    { this.props.category }
-                                </Typography>
-
-                                {/*<div>*/}
-                                {/*<Button*/}
-
-                                {/*aria-owns={open ? 'fade-menu' : undefined}*/}
-                                {/*aria-haspopup="true"*/}
-                                {/*onClick={this.handleClick}*/}
-                                {/*>*/}
-                                {/*sdsfdf*/}
-                                {/*</Button>*/}
-                                {/*<Menu*/}
-                                {/*id="fade-menu"*/}
-                                {/*anchorEl={anchorEl}*/}
-                                {/*open={open}*/}
-                                {/*onClose={this.handleClose}*/}
-                                {/*TransitionComponent={Fade}*/}
-                                {/*>*/}
-                                {/*<MenuItem onClick={this.handleClose}>Profile</MenuItem>*/}
-                                {/*<MenuItem onClick={this.handleClose}>My account</MenuItem>*/}
-                                {/*<MenuItem onClick={this.handleClose}>Logout</MenuItem>*/}
-                                {/*</Menu>*/}
-                                {/*</div>*/}
-                            </CardContent>
-                        </Grid>
-
                         <Grid item md={12}>
                             <Divider/>
                         </Grid>
-
-                        <Grid item md={6} className={classes.content}>
+                            
+                        <Grid item md={3} className={classes.content}>
                             <CardContent classes={{root: classes.content}}>
-                                <Done/>
-                                <Typography>
-                                    { this.props.status }
-                                </Typography>
+                                <Button
+                                    aria-owns={status ? 'simple-menu' : undefined}
+                                    aria-haspopup="true"
+                                    onClick={this.handleClick}
+                                >
+                                    СТАТУС
+                                </Button>
+                                <Menu
+                                    id="simple-menu"
+                                    anchorEl={status}
+                                    open={Boolean(status)}
+                                    onClose={this.handleClose}
+                                    value={ this.state.status }
+                                    onChange={this.handleChange('category')}
+                                >
+                                    <MenuItem onClick={this.handleClose}>НОВАЯ</MenuItem>
+                                    <MenuItem onClick={this.handleClose}>В ПРОЦЕССЕ</MenuItem>
+                                    <MenuItem onClick={this.handleClose}>ВЫПОЛНЕНА</MenuItem>
+                                </Menu>
+
                             </CardContent>
                         </Grid>
+                        <Grid item md={3} className={classes.content}>
+                            <CardContent classes={{root: classes.content}}>
+                                <Button
+                                    aria-owns={type ? 'simple-menu' : undefined}
+                                    aria-haspopup="true"
+                                    onClick={this.handleClickType}
+                                >
+                                    ТИП ЗАЯВКИ
+                                </Button>
+                                <Menu
+                                    id="simple-menu"
+                                    anchorEl={type}
+                                    open={Boolean(type)}
+                                    onClose={this.handleCloseType}
+                                >
+                                    <MenuItem onClick={this.handleCloseType}>ЭЛЕКТРИК</MenuItem>
+                                    <MenuItem onClick={this.handleCloseType}>ПЛОТНИК</MenuItem>
+                                    <MenuItem onClick={this.handleCloseType}>САНТЕХНИК</MenuItem>
+                                    <MenuItem onClick={this.handleCloseType}>ДРУГОЕ</MenuItem>
+                                </Menu>
 
+                            </CardContent>
+                        </Grid>
                         <Grid item md={6}>
                             <CardContent classes={{root: classes.delete}}>
                                 <Tooltip title="Delete 'position: absolute;'">

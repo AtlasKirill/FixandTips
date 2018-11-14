@@ -11,12 +11,19 @@ from django_filters import rest_framework as filters
 import django_filters
 
 
+CATEGORY_CHOICES = (
+    ('Плотник','Плотник'),
+    ('Сантехник','Сантехник'),
+    ('Электрик','Электрик'),
+    ('Хим обработка','Хим обработка'),
+    ('Другое','Другое'),
+)
 
 class RequestFilter(filters.FilterSet):
 
     from_date = django_filters.DateTimeFilter(input_formats=['%Y-%m-%dT%H:%M:%S.%fZ',],field_name="created_at", lookup_expr='gte')
     to_date = django_filters.DateTimeFilter(input_formats=['%Y-%m-%dT%H:%M:%S.%fZ',],field_name="created_at", lookup_expr='lte')
-    # category = django_filters.LookupChoiceFilter(lookup_choices=['Плотник','Сантехник','Хим обработка',])
+    category = django_filters.MultipleChoiceFilter(choices= CATEGORY_CHOICES)
 
     class Meta:
         model = Request
