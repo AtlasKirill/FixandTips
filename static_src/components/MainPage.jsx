@@ -3,8 +3,6 @@ import CommandantRequestList from './CommandantRequestList.jsx';
 import CommandantNewsList from './CommandantNewsList.jsx';
 import StudentRequestList from './StudentRequestList.jsx';
 import StudentNewsList from './StudentNewsList.jsx';
-import CommandantPage from './CommandantPage';
-import StudentPage from './StudentPage';
 import CreationModal from './CreationModal';
 import Grid from '@material-ui/core/Grid';
 import NewsCreationModal from './NewsCreationModal'
@@ -12,71 +10,99 @@ import Filter from './Filter';
 import {withStyles} from "@material-ui/core";
 import PropTypes from 'prop-types';
 import Typography from "@material-ui/core/Typography/Typography";
-import GetPrintAndStatistics from './GetPrintAndStatistic';
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import Redirect from 'react-router-dom/es/Redirect';
 import NavBar from './NavBar.jsx';
+import Paper from '@material-ui/core/Paper';
+
 
 const styles = theme => ({
     root: {
         padding: 20,
     },
     headline: {
+        marginTop:0,
         margin: 20,
+        fontSize: 'xx-large',
     },
+    headAndButton: {
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'column',
+        flexWrap: 'wrap',
+        maxWidth: 600,
+        maxHeight: 200,
+        marginTop: 'auto',
+        marginBottom: 'auto',
+        boxShadow: 'none',
+    },
+    headAndButtonStud: {
+        position:'relative',
+        top:8,
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'column',
+        flexWrap: 'wrap',
+        marginTop: 'auto',
+        marginBottom: 'auto',
+        boxShadow: 'none',
+    }
 });
 
-class MainPage extends React.Component{
-  
-    render(){
+class MainPage extends React.Component {
+
+    render() {
         let page;
         const {classes} = this.props;
-        if(this.props.isLoading)
-        {
-            return(<div>Loading...</div>);
+        if (this.props.isLoading) {
+            return (<div>Loading...</div>);
         }
-        if(!this.props.isAuthenticated)
-        {
+        if (!this.props.isAuthenticated) {
             return <Redirect push to='/login'/>
         }
-        else if(this.props.user.role == 2){
-        page =  
-        <Grid container spacing={10}>
-            <Grid item md={6}>
-                <Typography variant="h5" gutterBottom className={classes.headline}>
-                    Заявки(Коменда)
-                </Typography>
-                <Filter/> 
-            </Grid>
-            <Grid item md={6}>
-                <Typography variant="h5" gutterBottom className={classes.headline}>
-                    Объявления общежития
-                </Typography>
-                <NewsCreationModal/>
-                    
-            </Grid>
-            <Grid item md={6} >
-                <CommandantRequestList/>
-            </Grid>
-            <Grid item md={6} >
-                <CommandantNewsList/>
-            </Grid>
-        </Grid>
-        }
-
-        else if(this.props.user.role == 1){
+        else if (this.props.user.role == 2) {
             page =
-                <Grid container spacing={10} justify="center">
+                <Grid container spacing={8}>
                     <Grid item md={6}>
-                        <Typography variant="h5" gutterBottom className={classes.headline}>
-                            Мои запросы(Студент)
+                        <Typography gutterBottom className={classes.headline}>
+                            Заявки
                         </Typography>
-                        <CreationModal/>
+                        <Filter/>
+                    </Grid>
+                    <Grid item md={6} container justify="center">
+                        <Paper className={classes.headAndButton}>
+                            <Typography gutterBottom className={classes.headline}>
+                                Объявления общежития
+                            </Typography>
+                            <NewsCreationModal/>
+                        </Paper>
                     </Grid>
                     <Grid item md={6}>
-                        <Typography variant="h5" gutterBottom className={classes.headline}>
-                            Объявления общежития
-                        </Typography>
+                        <CommandantRequestList/>
+                    </Grid>
+                    <Grid item md={6}>
+                        <CommandantNewsList/>
+                    </Grid>
+                </Grid>
+        }
+
+        else if (this.props.user.role == 1) {
+            page =
+                <Grid container spacing={8}>
+                    <Grid item md={6} container justify="center">
+                        <Paper className={classes.headAndButtonStud}>
+                            <Typography gutterBottom className={classes.headline}>
+                                Мои запросы
+                            </Typography>
+                            <CreationModal/>
+                        </Paper>
+                    </Grid>
+                    <Grid item md={6} container justify="center">
+                        <Paper className={classes.headAndButtonStud}>
+                            <Typography gutterBottom className={classes.headline}>
+                                Объявления общежития
+                            </Typography>
+                        </Paper>
                     </Grid>
                     <Grid item md={6}>
                         <StudentRequestList/>
@@ -87,20 +113,21 @@ class MainPage extends React.Component{
                 </Grid>
         }
 
-      
-        return( 
+
+        return (
             <div>
                 <NavBar/>
-                { page }
+                {page}
             </div>
         );
     }
 }
+
 MainPage.propTypes = {
     classes: PropTypes.object.isRequired,
 };
- 
-const mapStateToProps = ({ auth }) => {
+
+const mapStateToProps = ({auth}) => {
     return {
         user: auth.user,
         isAuthenticated: auth.isAuthenticated,
@@ -109,10 +136,10 @@ const mapStateToProps = ({ auth }) => {
 }
 const mapDispatchToProps = dispatch => {
     return {
-      loadUser: () => {
-        return dispatch(loadUser());
-      }
+        loadUser: () => {
+            return dispatch(loadUser());
+        }
     }
-  }
+}
 
-export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(MainPage));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(MainPage));

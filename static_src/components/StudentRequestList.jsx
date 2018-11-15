@@ -64,9 +64,6 @@ class StudentRequestList extends React.Component{
         console.log(requests);
         return( 
             <div>
-                <Button onClick={ this.onClick }>
-                    СКАЧАЙ!!!!!1!!
-                </Button>
                { requests } 
             </div>
         );
