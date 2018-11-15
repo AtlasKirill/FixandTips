@@ -20,13 +20,12 @@ import store from './../index.jsx';
 
 const styles = theme => ({
     card: {
-        // width: '90%',
         margin: 10,
         marginTop: 10,
-        // padding:10,
+        border:'solid 1px',
     },
     devider: {
-        marginTop: 15,
+        marginTop: 5,
         // width: '90%',
     },
     content: {
@@ -48,6 +47,12 @@ const styles = theme => ({
             margin: 0,
         },
     },
+    font:{
+        fontSize:'x-large',
+    },
+    date:{
+        fontSize:'1em',
+    }
 });
 
 class CommandantNews extends React.Component {
@@ -75,14 +80,14 @@ class CommandantNews extends React.Component {
         }
         return (
             <div>
-                <Card className={classes.card}>
+                <Card classes={{root: classes.card}} elevation={3}>
                     <Grid container spacing={8}>
                             <Grid item md={12}>
                                 <CardContent classes={{root: classes.content}}>
-                                    <Typography variant="h5" gutterBottom>
+                                    <Typography variant="h5" gutterBottom className={classes.font} align={"center"}>
                                         {this.props.title}
                                     </Typography>
-                                    <Typography>
+                                    <Typography align={"center"} className={classes.date}>
                                         {new Date(this.props.created_at).toDateString()}
                                     </Typography>
                                 </CardContent>

@@ -31,7 +31,7 @@ import store from './../index.jsx';
 
 const styles = theme => ({
     card: {
-        // maxHeight: 200,
+        border:'solid 1px',
         margin: 10,
     },
     urgently_button: {
