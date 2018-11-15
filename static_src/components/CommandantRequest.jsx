@@ -32,6 +32,7 @@ const styles = theme => ({
     card: {
         // maxHeight: 200,
         margin: 10,
+        border:'solid 1px',
     },
     urgently_button: {
         float: 'left',

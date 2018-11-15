@@ -120,9 +120,9 @@ WSGI_APPLICATION = 'fixandtips.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'FT_DB',
-        'USER': 'lizanoskova',
-        'PASSWORD': 'qwert2',
+        'NAME': 'FTdb',
+        'USER': 'kirill',
+        'PASSWORD': ' ',
         'HOST': 'localhost',
     }
 }

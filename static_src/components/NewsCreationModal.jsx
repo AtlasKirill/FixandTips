@@ -14,6 +14,9 @@ import {createNews, loadNews} from '../actions/news';
 import {bindActionCreators} from 'redux';
 import AddIcon from '@material-ui/icons/Add';
 import store from './../index.jsx';
+import 'typeface-roboto';
+import Typography from '@material-ui/core/Typography';
+
 
 const styles = theme => ({
     root: {
@@ -24,10 +27,8 @@ const styles = theme => ({
         boxShadow: 'white',
         border: 'solid',
         borderWidth: 1,
-        margin: 0,
-        // display: 'flex',
-        // alignItems: 'center',
-        // flexDirection: 'column',
+        margin: 10,
+        marginBottom: 20,
     },
     textField: {
         marginLeft: 5,
@@ -81,9 +82,11 @@ class NewRequest extends React.Component {
 
         return (
             <div>
-                <Button onClick={this.handleClickOpen} className={classes.root}>
+                <Button onClick={this.handleClickOpen} className={classes.root} size="large">
                     <AddIcon/>
-                    СОЗДАТЬ
+                    <Typography variant={"h6"}>
+                        СОЗДАТЬ
+                    </Typography>
                 </Button>
                 <Dialog
                     open={this.state.open}
