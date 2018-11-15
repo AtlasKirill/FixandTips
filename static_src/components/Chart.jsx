@@ -156,6 +156,7 @@ class Chart extends React.Component {
       };
 
     drawChart = event => {
+        console.log(apiUrls.filter(this.state.status,this.state.category1,this.state.category2,this.state.category3,this.state.category4,this.state.category5,this.state.urgency,this.state.fromDate, this.state.toDate));
         this.props.prepareData(apiUrls.filter(  this.state.status,
                                                 this.state.category1,
                                                 this.state.category2,
