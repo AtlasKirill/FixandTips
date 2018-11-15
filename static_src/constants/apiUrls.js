@@ -1,6 +1,28 @@
-function filter(status='',category='',urgency='',fromDate='',toDate='')
+function filter(status='',category1='',category2='',category3='',category4='',category5='',urgency='',fromDate='',toDate='')
 {
-    var url = '/api/requests/?status='+status+'&category='+category+'&urgency='+urgency+'&from_date='+fromDate+'T00:00:00.000000Z&to_date='+toDate+'T23:59:59.000000Z'
+    if( category1 != '')
+    {
+        category1 = '&category=Плотник';
+    }
+    if( category2 != '')
+    {
+        category2 = '&category=Сантехник';
+    }
+    if( category3 != '')
+    {
+        category3 = '&category=Электрик';
+    }
+    if( category4 != '')
+    {
+        category4 = '&category=Хим обработка';
+    }
+    if( category5 != '')
+    {
+        category5 = '&category=Другое';
+    }
+
+    var url = '/api/requests/?status='+status+category1+category2+category3+category4+category5+'&urgency='+urgency+'&from_date='+fromDate+'T00:00:00.000000Z&to_date='+toDate+'T23:59:59.000000Z'
+    
     return url
 }
 

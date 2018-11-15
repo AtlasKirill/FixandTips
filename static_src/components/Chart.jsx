@@ -96,7 +96,11 @@ class Chart extends React.Component {
         fromDate: '',
         toDate: '',
         status: '',
-        category: '',
+        category1: '',
+        category2: '',
+        category3: '',
+        category4: '',
+        category5: '',
         urgency: false,
         Data: [],
     };
@@ -122,31 +126,31 @@ class Chart extends React.Component {
     searchСarpenter = event => {
         this.setState({clickedCarpenter: !this.state.clickedCarpenter});
         this.setState({colorCarpenter: this.state.clickedCarpenter ? 'default' : 'secondary'});
-        this.setState({category: 'Плотник'});
+        this.setState({category1: 'Плотник'});
 
     };
     searchPlumber = event => {
         this.setState({clickedPlumber: !this.state.clickedPlumber});
         this.setState({colorPlumber: this.state.clickedPlumber ? 'default' : 'secondary'});
-        this.setState({category: 'Сантехник'});
+        this.setState({category2: 'Сантехник'});
 
     };
     searchElectrician = event => {
         this.setState({clickedElictrician: !this.state.clickedElictrician});
         this.setState({colorElictrician: this.state.clickedElictrician ? 'default' : 'secondary'});
-        this.setState({category: 'Электрик'});
+        this.setState({category3: 'Электрик'});
 
     };
     searchChemistry = event => {
         this.setState({clickedChemistry: !this.state.clickedChemistry});
         this.setState({colorChemistry: this.state.clickedChemistry ? 'default' : 'secondary'});
-        this.setState({category: 'Хим обработка'});
+        this.setState({category4: 'Хим обработка'});
     };
 
     searchOther = event => {
         this.setState({clickedOther: !this.state.clickedOther});
         this.setState({colorOther: this.state.clickedOther ? 'default' : 'secondary'});
-        this.setState({category: 'Другое'});
+        this.setState({category5: 'Другое'});
 
     };
     handleChange = name => event => {
@@ -156,8 +160,13 @@ class Chart extends React.Component {
     };
 
     drawChart = event => {
+        console.log(apiUrls.filter(this.state.status, this.state.category1, this.state.category2, this.state.category3, this.state.category4, this.state.category5, this.state.urgency, this.state.fromDate, this.state.toDate));
         this.props.prepareData(apiUrls.filter(this.state.status,
-            this.state.category,
+            this.state.category1,
+            this.state.category2,
+            this.state.category3,
+            this.state.category4,
+            this.state.category5,
             this.state.urgency,
             this.state.fromDate,
             this.state.toDate),
@@ -290,6 +299,7 @@ class Chart extends React.Component {
                     >
                         ДРУГОЕ
                     </Button>
+
                     <Typography
                         variant="overline" gutterBottom className={classes.status}>
                         Димнамика зарегистрированных и решенных заявок
@@ -302,20 +312,17 @@ class Chart extends React.Component {
                                 type="date"
                                 value={this.state.fromDate}
                                 onChange={this.handleChange('fromDate')}
-                                defaultValue="2017-05-24"
                                 className={classes.textField}
                                 InputLabelProps={{
                                     shrink: true,
                                 }}
                             />
                         </form>
-
                         <form className={classes.container} noValidate>
                             <TextField
                                 id="date"
                                 label="По"
                                 type="date"
-                                defaultValue="2017-05-24"
                                 value={this.state.toDate}
                                 onChange={this.handleChange('toDate')}
                                 className={classes.textField}
@@ -338,11 +345,10 @@ class Chart extends React.Component {
                             <Line type="monotone" dataKey="Электрик" stroke="#82ca9d"/>
                             <Line type="monotone" dataKey="Сантехник" stroke="#ff1744"/>
                             <Line type="monotone" dataKey="Другое" stroke="#ff8000"/>
+                            <Line type="monotone" dataKey="Хим обработка" stroke="#ff8000"/>
                             <Line type="monotone" dataKey="Плотник" stroke="#8884d8" activeDot={{r: 8}}/>
                         </LineChart>
                     </ResponsiveContainer>
-
-
                 </React.Fragment>
             </div>
         );
