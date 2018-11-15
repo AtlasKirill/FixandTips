@@ -2,4 +2,4 @@ env
 *.pyc
 .idea/
 node_modules
-static/build
+staticfiles
