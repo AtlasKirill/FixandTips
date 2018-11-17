@@ -62,11 +62,11 @@ const styles = theme => ({
         objectPosition: '50% 50%',
         // flex: 1,
     },
-    button_password: {
-        background: red[500],
-        marginLeft: 20,
-        marginTop: 8,
-    },
+    // button_password: {
+    //     background: red[500],
+    //     marginLeft: 20,
+    //     marginTop: 8,
+    // },
     content: {
         // borderRadius:0,
         // borderColor: 'white',
@@ -174,14 +174,16 @@ class Profile extends React.Component {
                             <Grid container spacing={8}>
                                 <Grid item md={4}>
                                     <Paper classes={{root: classes.content}}>
-                                        <Avatar
-                                            src={this.props.user.avatar}
-                                            className={classNames(classes.avatar)}
-                                        />
+                                        {/*<Avatar*/}
+                                            {/*src={this.props.user.avatar}*/}
+                                            {/*className={classNames(classes.avatar)}*/}
+                                        {/*/>*/}
 
                                         <Typography component="h2" variant="title" align="center">
-
-                                            Lena
+                                            {this.props.user.name}
+                                        </Typography>
+                                        <Typography component="h2" variant="title" align="center">
+                                            {this.props.user.surname}
                                         </Typography>
                                         <input
                                             accept="image/*"
@@ -291,12 +293,6 @@ class Profile extends React.Component {
                                                 Сохранить
                                             </Button>
                                         )}
-
-                                        <Button variant="contained" color="secondary"
-                                                className={classes.button_password} onClick={this.props.logout}
-                                                href='/login'>
-                                            Выйти
-                                        </Button>
                                     </Paper>
                                 </Grid>
                             </Grid>

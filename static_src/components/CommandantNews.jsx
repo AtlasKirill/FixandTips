@@ -23,6 +23,7 @@ const styles = theme => ({
         margin: 10,
         marginTop: 10,
         border:'solid 1px',
+        minHeight: 213,
     },
     devider: {
         marginTop: 5,

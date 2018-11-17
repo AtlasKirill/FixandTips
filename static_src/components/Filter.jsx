@@ -20,7 +20,7 @@ const styles = theme => ({
         fontSize: '1.2em',
         maxHeight: 20,
         minWidth: 150,
-        marginLeft: 0,
+        marginLeft: 8,
         marginRight: 8,
         marginTop: 8,
         marginBottom: 8,
@@ -45,6 +45,7 @@ const styles = theme => ({
         padding: 0,
         marginTop: 20,
         marginBottom: 0,
+        marginLeft: 20,
     },
     container: {
         display: 'flex',
@@ -157,7 +158,7 @@ class Filter extends React.Component {
 
         return (
             <React.Fragment>
-                <Typography variant="overline" gutterBottom className={classes.status}>
+                <Typography variant="h6" gutterBottom className={classes.status}>
                     Статус:
                 </Typography>
                 <Button
@@ -203,7 +204,7 @@ class Filter extends React.Component {
                 >
                     СРОЧНО
                 </Button>
-                <Typography variant="overline" gutterBottom className={classes.status}>
+                <Typography variant="h6" gutterBottom className={classes.status}>
                     Тип заявок:
                 </Typography>
                 <Button variant="contained" className={classes.button}
@@ -276,7 +277,7 @@ class Filter extends React.Component {
                 >
                     ДРУГОЕ
                 </Button>
-                <Typography variant="overline" gutterBottom className={classes.status}>
+                <Typography variant="h6" gutterBottom className={classes.status}>
                     По дате:
                 </Typography>
                 <Grid container spacing={5}>

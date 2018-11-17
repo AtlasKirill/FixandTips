@@ -69,6 +69,9 @@ class NewRequest extends React.Component {
 
     handleClickOpen = () => {
         this.setState({open: true});
+        this.setState({description:''});
+        this.setState({category:'No category'});
+        this.setState({urgency:false});
     };
 
     handleClose = () => {

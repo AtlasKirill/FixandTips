@@ -23,15 +23,15 @@ import PropTypes from 'prop-types';
 import ErrorOutline from '@material-ui/icons/ErrorOutline'
 import RegButton from "./Registration";
 import StudentRequestWarning from "./StudentRequestWarning.jsx"
-import { connect } from 'react-redux';
+import {connect} from 'react-redux';
 import apiUrls from './../constants/apiUrls.js';
-import { bindActionCreators } from 'redux';
-import { deleteRequest } from '../actions/requests';
+import {bindActionCreators} from 'redux';
+import {deleteRequest} from '../actions/requests';
 import store from './../index.jsx';
 
 const styles = theme => ({
     card: {
-        border:'solid 1px',
+        border: 'solid 1px',
         margin: 10,
     },
     urgently_button: {
@@ -71,7 +71,7 @@ const styles = theme => ({
         maxWidth: 100,
         minWidth: 100,
         textAlign: 'center',
-        backgroundColor: '#ff7043',
+        backgroundColor: '#4fc3f7',
     },
     absolute_delete: {
         // position: 'relative',
@@ -91,117 +91,119 @@ class StudentRequest extends React.Component {
         id: PropTypes.number,
         author: PropTypes.number,
         is_deleted: PropTypes.bool,
-      }
+    }
 
     // onClick=(e)=> {
     //     console.log(apiUrls.requestDetail(this.props.id))
     //     this.props.deleteRequest(apiUrls.requestDetail(this.props.id),{is_deleted:true});
     // }
 
-    onClick=(e)=> {
+    onClick = (e) => {
         console.log(apiUrls.requestDetail(this.props.id))
-        this.props.deleteRequest(apiUrls.requestDetail(this.props.id),{is_deleted:true},store.getState().auth.token);
+        this.props.deleteRequest(apiUrls.requestDetail(this.props.id), {is_deleted: true}, store.getState().auth.token);
         // this.setState({ open: false });
         // this.props.loadRequests(apiUrls.requests,store.getState().auth.token);
     };
+
     render() {
         const {classes} = this.props;
         const urgent = false;
-        if(this.props.is_deleted){
-            return(<div></div>);
+        if (this.props.is_deleted) {
+            return (<div></div>);
         }
         else
-        return (
-            <div>
-                <Card className={classes.card}>
-                    <Grid container spacing={8}>
-                        <Grid md={6}>
-                            <CardContent classes={{root: classes.content}}>
-                                <Typography variant="subtitle1">
-                                { this.props.author.username }
-                                </Typography>
-                                <Typography variant="body1">
-                                { this.props.description }
-                                </Typography>
+            return (
+                <div>
+                    <Card className={classes.card}>
+                        <Grid container spacing={8}>
+                            <Grid item md={6}>
+                                <CardContent classes={{root: classes.content}}>
+                                    <Typography variant="subtitle1">
+                                        {this.props.author.username}
+                                    </Typography>
+                                    <Typography variant="body1">
+                                        {this.props.description}
+                                    </Typography>
 
-                            </CardContent>
-                        </Grid>
-                        <Grid item md={3}>
-                            <CardContent classes={{root: classes.content}}>
-                                {this.props.urgency && (
-                                    <div>
-                                        <Typography variant="subtitle2" classes={{root: classes.urgently_button}}>
-                                            Срочно
-                                        </Typography>
-                                        <ErrorOutline className={classes.alert}/>
-                                    </div>
-                                )}
-                                {!this.props.urgency && (
-                                    <div>
-                                        <Typography variant="subtitle2" classes={{root: classes.urgently_button}}>
-                                            Не срочно
-                                        </Typography>
-                                    </div>
-                                )}
-                            </CardContent>
-                        </Grid>
-                        <Grid item md={3}>
-                            <CardContent classes={{root: classes.content}}>
-                                <Typography variant="subtitle2" align="right">
-                                    { new Date(this.props.created_at).toDateString() }
-                                </Typography>
-                            </CardContent>
-                        </Grid>
-                        <Grid item md={6}>
-                            <CardContent classes={{root: classes.content}}>
-                                <Typography variant="subtitle2">
-                                    Tип заявки (тех персонал)
-                                </Typography>
-                                <Typography variant="body1">
-                                    { this.props.category }
-                                </Typography>
-                            </CardContent>
-                        </Grid>
-                        <Grid item md={12}>
-                            <Divider/>
-                        </Grid>
-                        <Grid item md={6} className={classes.content}>
-                            <CardContent classes={{root: classes.content}}>
-                                <Done/>
-                                <Typography>
-                                    { this.props.status.title }
-                                </Typography>
-                            </CardContent>
-                        </Grid>
-                        <Grid item md={6}>
-                            <CardContent classes={{root: classes.content}}>
-                            <Button variant="contained"
-                                    color="secondary"
-                                    onClick={this.onClick}>
+                                </CardContent>
+                            </Grid>
+                            <Grid item md={3}>
+                                <CardContent classes={{root: classes.content}}>
+                                    {this.props.urgency && (
+                                        <div>
+                                            <Typography variant="subtitle2" classes={{root: classes.urgently_button}}>
+                                                Срочно
+                                            </Typography>
+                                            <ErrorOutline className={classes.alert}/>
+                                        </div>
+                                    )}
+                                    {!this.props.urgency && (
+                                        <div>
+                                            <Typography variant="subtitle2" classes={{root: classes.urgently_button}}>
+                                                Не срочно
+                                            </Typography>
+                                        </div>
+                                    )}
+                                </CardContent>
+                            </Grid>
+                            <Grid item md={3}>
+                                <CardContent classes={{root: classes.content}}>
+                                    <Typography variant="subtitle2" align="right">
+                                        {new Date(this.props.created_at).toDateString()}
+                                    </Typography>
+                                </CardContent>
+                            </Grid>
+                            <Grid item md={6}>
+                                <CardContent classes={{root: classes.content}}>
+                                    <Typography variant="subtitle2">
+                                        Tип заявки (тех персонал)
+                                    </Typography>
+                                    <Typography variant="body1">
+                                        {this.props.category}
+                                    </Typography>
+                                </CardContent>
+                            </Grid>
+                            <Grid item md={12}>
+                                <Divider/>
+                            </Grid>
+                            <Grid item md={6} className={classes.content}>
+                                <CardContent classes={{root: classes.content}}>
+                                    <Done/>
+                                    <Typography>
+                                        {this.props.status.title}
+                                    </Typography>
+                                </CardContent>
+                            </Grid>
+                            <Grid item md={6}>
+                                <CardContent classes={{root: classes.content}}>
+                                    <Button variant="contained"
+                                            color="secondary"
+                                            onClick={this.onClick}
+                                            className={classes.Cancel}>
                                         ОТМЕНИТЬ
-                            </Button>
-                            </CardContent>
+                                    </Button>
+                                </CardContent>
+                            </Grid>
                         </Grid>
-                    </Grid>
 
-                </Card>
+                    </Card>
 
-            </div>
-        );
+                </div>
+            );
     }
 }
 
 StudentRequest.propTypes = {
     classes: PropTypes.object.isRequired,
 };
-const mapStateToProps = ({ requests }, ownProps ) => {
+const mapStateToProps = ({requests}, ownProps) => {
     return {
         ...requests.requests[ownProps.id],
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ deleteRequest }, dispatch)
-  }
+    return bindActionCreators({deleteRequest}, dispatch)
+}
 
-export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(StudentRequest));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(StudentRequest));
