@@ -101,8 +101,7 @@ class StudentRequest extends React.Component {
     onClick = (e) => {
         console.log(apiUrls.requestDetail(this.props.id))
         this.props.deleteRequest(apiUrls.requestDetail(this.props.id), {is_deleted: true}, store.getState().auth.token);
-        // this.setState({ open: false });
-        // this.props.loadRequests(apiUrls.requests,store.getState().auth.token);
+
     };
 
     render() {

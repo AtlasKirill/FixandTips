@@ -77,7 +77,6 @@ class Login extends Component {
             <div>
 
                 <React.Fragment>
-
                     <CssBaseline/>
                     <main className={classes.layout}>
                         <NavBar/>

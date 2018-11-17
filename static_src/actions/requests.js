@@ -18,7 +18,9 @@ export const ERROR_REQUEST_FILTERING = 'ERROR_REQUEST_FILTERING';
 export const START_DATA_PREPARING = 'START_DATA_PREPARING';
 export const SUCCESS_DATA_PREPARING = 'SUCCESS_DATA_PREPARING';
 export const ERROR_DATA_PREPARING = 'ERROR_DATA_PREPARING';
-
+export const START_REQUEST_UPDATING = 'START_REQUEST_UPDATING';
+export const SUCCESS_REQUEST_UPDATING = 'SUCCESS_REQUEST_UPDATING';
+export const ERROR_REQUEST_UPDATING = 'ERROR_REQUEST_UPDATING';
 
 export const loadRequests = (url, token) => {
     return {
@@ -48,7 +50,7 @@ export const loadRequests = (url, token) => {
 
 
 export const deleteRequest = (url, data, token) => {
-    console.log('Delete')
+    
     return {
         [RSAA]: {
             credentials: 'include',
@@ -82,8 +84,41 @@ export const deleteRequest = (url, data, token) => {
     };
 };
 
+export const updateRequest = (url, data, token) => {
+    return {
+        [RSAA]: {
+            credentials: 'include',
+            endpoint: url,
+            method: 'PATCH',
+            body: JSON.stringify(data),
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'X-CSRFToken': Cookies.get("csrftoken"),
+                'Authorization': `Token ${token}`,
+              },
+            types: [START_REQUEST_UPDATING, 
+                    {
+                        type: SUCCESS_REQUEST_UPDATING,
+                        payload: (action, state, res) =>{
+                            return getJSON(res).then(
+                                (json) => {
+                                    json = {requests: json};
+                                    const normalizedData = normalize(json, [request]);
+                                    delete json.results;
+                                    return Object.assign({}, json, normalizedData);
+                                },
+                            );
+                        },
+                       
+                    },
+
+                ERROR_REQUEST_UPDATING],
+        },
+    };
+};
+
 export const createRequest = (url,data, token) => {
-    console.log('SEND')
     return {
         [RSAA]: {
             credentials: 'include',
@@ -116,7 +151,6 @@ export const createRequest = (url,data, token) => {
 };
 
 export const filterRequest = (url, token) => {
-    console.log('FILTER')
     return {
         [RSAA]: {
             credentials: 'include',
@@ -144,7 +178,6 @@ export const filterRequest = (url, token) => {
 };
 
 export const prepareData = (url, token) => {
-    console.log('FILTER')
     return {
         [RSAA]: {
             credentials: 'include',
@@ -161,7 +194,6 @@ export const prepareData = (url, token) => {
                             (json) => {
                                 const normalizedData = normalize(json, [request]);
                                 const preparedData = functions.formDataSet(normalizedData.entities.requests);
-                                // return Object.assign({}, preparedData);
                                 return preparedData;
                             },
                         );

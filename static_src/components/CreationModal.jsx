@@ -21,9 +21,8 @@ import {bindActionCreators} from 'redux';
 import {createRequest} from '../actions/requests';
 import {connect} from 'react-redux';
 import AddIcon from '@material-ui/icons/Add';
-import CategoryList from './CategoryList';
-import {loadRequests} from './../actions/requests.js';
-import {loadNews} from './../actions/news.js';
+import { loadRequests } from './../actions/requests.js';
+import { loadNews } from './../actions/news.js';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormGroup from '@material-ui/core/FormGroup';
 import store from './../index.jsx';
@@ -104,7 +103,7 @@ class NewRequest extends React.Component {
             },
             store.getState().auth.token);
         this.setState({open: false});
-        this.props.loadRequests(apiUrls.myRequests(this.props.user.id), store.getState().auth.token);
+        // this.props.loadRequests(apiUrls.myRequests(this.props.user.id), store.getState().auth.token);
     }
 
     render() {
