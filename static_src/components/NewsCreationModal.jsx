@@ -65,8 +65,8 @@ class NewRequest extends React.Component {
   handleClickSubmit = (e) => {
     console.log('onClick')
     this.props.createNews(apiUrls.news,{text:this.state.text,title:this.state.title },store.getState().auth.token);
-    this.setState({ open: false });
-    this.props.loadNews(apiUrls.news, store.getState().auth.token);
+    this.setState({ open: false, text: '', title: ''});
+    // this.props.loadNews(apiUrls.news, store.getState().auth.token);
   };
 
 
