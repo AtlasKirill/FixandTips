@@ -189,7 +189,7 @@ class Filter extends React.Component {
               '--background-start': '#ffffff',
             }
           }
-          onClick={this.searchUrgent}
+          onClick={this.searchComplete}
         >
           ВЫПОЛНЕНО
         </Button>

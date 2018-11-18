@@ -220,7 +220,7 @@ class Chart extends React.Component {
                         '--background-end': '#ffffff',
                         }
                     }
-                    onClick={this.searchUrgent}
+                    onClick={this.searchComplete}
                     >
                     ВЫПОЛНЕНО
                 </Button>
