@@ -61,7 +61,6 @@ const styles = theme => ({
 });
 
 class Filter extends React.Component {
-
     state = {
         color: 'default',
         clickedUrgent: false,

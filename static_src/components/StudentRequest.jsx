@@ -44,21 +44,20 @@ const styles = theme => ({
             padding: 10,
             paddingRight: 5,
             margin: 5,
-            marginBottom:0,
-            paddingBottom:0,
-            paddingTop:0,
+            marginBottom: 0,
+            paddingBottom: 0,
+            paddingTop: 0,
         },
     },
     Status: {
         // ...theme.typography.button,
         padding: 5,
-        marginLeft: 10,
-        marginTop: 0,
-        marginBottom: 10,
-        minWidth: 100,
-        maxWidth: 100,
-        textAlign: 'center',
-        backgroundColor: '#ffc400',
+        margin: 10,
+        marginLeft: 0,
+        paddingLeft: 0,
+        // marginLeft: 10,
+        // marginTop: 0,
+        // marginBottom: 10,
     },
     Cancel: {
         // ...theme.typography.button,
@@ -81,12 +80,12 @@ const styles = theme => ({
         color: 'red',
         margin: 4,
     },
-    cancelgrid:{
+    cancelgrid: {
         '&:last-child': {
             padding: 5,
             paddingRight: 5,
-            margin: 5,
-            marginBottom:8,
+            margin: 0,
+            marginBottom: 12,
         },
     },
 });
@@ -100,15 +99,10 @@ class StudentRequest extends React.Component {
         is_deleted: PropTypes.bool,
     }
 
-    // onClick=(e)=> {
-    //     console.log(apiUrls.requestDetail(this.props.id))
-    //     this.props.deleteRequest(apiUrls.requestDetail(this.props.id),{is_deleted:true});
-    // }
 
     onClick = (e) => {
         console.log(apiUrls.requestDetail(this.props.id))
         this.props.deleteRequest(apiUrls.requestDetail(this.props.id), {is_deleted: true}, store.getState().auth.token);
-
     };
 
     render() {
@@ -124,9 +118,6 @@ class StudentRequest extends React.Component {
                         <Grid container spacing={8}>
                             <Grid item md={6}>
                                 <CardContent classes={{root: classes.content}}>
-                                    <Typography variant="subtitle1">
-                                        {this.props.author.username}
-                                    </Typography>
                                     <Typography variant="body1">
                                         {this.props.description}
                                     </Typography>
@@ -174,9 +165,8 @@ class StudentRequest extends React.Component {
                             </Grid>
                             <Grid item md={6} className={classes.content}>
                                 <CardContent classes={{root: classes.content}}>
-                                    <Done/>
-                                    <Typography>
-                                        {this.props.status.title}
+                                    <Typography className={classes.Status}>
+                                        {this.props.status}
                                     </Typography>
                                 </CardContent>
                             </Grid>
@@ -186,7 +176,7 @@ class StudentRequest extends React.Component {
                                             color="secondary"
                                             onClick={this.onClick}
                                             className={classes.Cancel}
-                                    align={"right"}>
+                                            align={"right"}>
                                         ОТМЕНИТЬ
                                     </Button>
                                 </CardContent>

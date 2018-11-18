@@ -175,7 +175,6 @@ class Chart extends React.Component {
             this.state.toDate),
             store.getState().auth.token);
     };
-
     render() {
         const {classes} = this.props;
         return (

@@ -100,18 +100,14 @@ class NewRequest extends React.Component {
     onClick = (e) => {
         console.log('onClick')
         this.props.createRequest(apiUrls.requests,
-            {
-                description: this.state.description,
+            {   description: this.state.description,
                 category: this.state.category,
                 materials: this.state.materials,
                 status: this.state.status,
-                urgency: this.state.urgency
-            },
+                urgency: this.state.urgency},
             store.getState().auth.token);
-        this.setState({open: false});
-        // this.props.loadRequests(apiUrls.myRequests(this.props.user.id), store.getState().auth.token);
+        this.setState({ open: false, description: 'No description' });
     }
-
     render() {
         const {classes} = this.props;
         return (

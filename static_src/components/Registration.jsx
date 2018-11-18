@@ -19,7 +19,6 @@ const styles = theme => ({
         background: 'primary',
         borderRadius: 3,
         border: 0,
-        // color: 'white',
         padding: '0 30px',
         boxShadow: 'gray',
         marginTop: 0,
@@ -54,9 +53,8 @@ class RegButton extends React.Component {
 
     onSubmit = e => {
         e.preventDefault();
-        this.props.register(this.state.username, this.state.password);
+        this.props.register(this.state.username, this.state.password, this.state.name, this.state.surname, this.state.flat);
     }
-
 
     render() {
         const {classes} = this.props;
@@ -112,39 +110,39 @@ class RegButton extends React.Component {
                         <Grid Grid container spacing={8}>
                             <Grid item md={12}>
                                 <TextField
-                                    id="outlined-password-input"
+                                    id="outlined-name-input"
                                     label="Имя"
                                     className={classes.textField}
                                     type="name"
                                     autoComplete="name"
                                     margin="normal"
                                     variant="outlined"
-                                    onChange={this.onChange('password')}
-                                    value={this.state.password}
+                                    onChange={this.onChange('name')}
+                                    value={this.state.name}
                                 />
                             </Grid>
                             <Grid item md={12}>
                                 <TextField
-                                    id="outlined-password-input"
+                                    id="outlined-surname-input"
                                     label="Фамилия"
                                     className={classes.textField}
                                     type="family-name"
                                     autoComplete="family-name"
                                     margin="normal"
                                     variant="outlined"
-                                    onChange={this.onChange('password')}
-                                    value={this.state.password}
+                                    onChange={this.onChange('surname')}
+                                    value={this.state.surname}
                                 />
                             </Grid>
                             <Grid item md={12}>
                                 <TextField
-                                    id="outlined-password-input"
+                                    id="outlined-flat-input"
                                     label="Квартира"
                                     className={classes.textField}
                                     margin="normal"
                                     variant="outlined"
-                                    onChange={this.onChange('password')}
-                                    value={this.state.password}
+                                    onChange={this.onChange('flat')}
+                                    value={this.state.flat}
                                 />
                             </Grid>
                         </Grid>
@@ -182,7 +180,7 @@ const mapStateToProps = ({auth}) => {
 }
 const mapDispatchToProps = dispatch => {
     return {
-        register: (username, password) => dispatch(register(username, password)),
+        register: (username, password, name, surname, flat) => dispatch(register(username, password, name, surname, flat)),
     };
 }
 
