@@ -51,6 +51,10 @@ const styles = theme => ({
         font: "Roboto",
         fontSize: '1.2em',
     },
+    accaunt: {
+        marginTop: 20,
+        marginBottom: 0,
+    },
 });
 
 class Login extends Component {
@@ -90,10 +94,14 @@ class Login extends Component {
                             <form className={classes.form}>
                                 <FormControl margin="normal" required fullWidth>
                                     <InputLabel htmlFor="username">Имя пользователя</InputLabel>
-                                    <Input id="username" name="username" autoComplete="username" autoFocus
+                                    <Input id="username"
+                                           name="username"
+                                           autoComplete="username"
+                                           autoFocus
                                            onChange={this.onChange('username')}
                                            value={this.state.username}/>
                                 </FormControl>
+
                                 <FormControl margin="normal" required fullWidth>
                                     <InputLabel htmlFor="password">Пароль</InputLabel>
                                     <Input
@@ -117,6 +125,9 @@ class Login extends Component {
                                     Войти
                                 </Button>
                             </form>
+                            <Typography variant="body1" gutterBottom className={classes.accaunt}>
+                                Еще нет аккаунта?
+                            </Typography>
                             <RegButton/>
                         </Paper>
 

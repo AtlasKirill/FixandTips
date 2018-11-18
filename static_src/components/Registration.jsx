@@ -22,7 +22,7 @@ const styles = theme => ({
         // color: 'white',
         padding: '0 30px',
         boxShadow: 'gray',
-        marginTop: 15,
+        marginTop: 0,
     },
     textField: {
         margin: 5,
@@ -70,7 +70,7 @@ class RegButton extends React.Component {
                     open={this.state.open}
                     onClose={this.handleClose}
                     aria-labelledby="registration-dialog-title"
-                    maxWidth={"md"}
+                    maxWidth={"sm"}
                 >
                     <DialogTitle id="registration-dialog-title" align="center">Регистрация</DialogTitle>
                     <DialogContent>
@@ -81,11 +81,11 @@ class RegButton extends React.Component {
                             <Grid item md={12}>
                                 <TextField
                                     id="outlined-email-input"
-                                    label="Username"
+                                    label="email"
                                     className={classes.textField}
-                                    type="username"
+                                    type="email"
                                     name="username"
-                                    autoComplete="username"
+                                    autoComplete="email"
                                     margin="normal"
                                     variant="outlined"
                                     onChange={this.onChange('username')}
@@ -95,10 +95,52 @@ class RegButton extends React.Component {
                             <Grid item md={12}>
                                 <TextField
                                     id="outlined-password-input"
-                                    label="Password"
+                                    label="Пароль"
                                     className={classes.textField}
                                     type="password"
-                                    autoComplete="current-password"
+                                    autoComplete="new-password"
+                                    margin="normal"
+                                    variant="outlined"
+                                    onChange={this.onChange('password')}
+                                    value={this.state.password}
+                                />
+                            </Grid>
+                        </Grid>
+                        <DialogContentText align="center">
+                            Укажите Ваше ФИО и номер комнаты
+                        </DialogContentText>
+                        <Grid Grid container spacing={8}>
+                            <Grid item md={12}>
+                                <TextField
+                                    id="outlined-password-input"
+                                    label="Имя"
+                                    className={classes.textField}
+                                    type="name"
+                                    autoComplete="name"
+                                    margin="normal"
+                                    variant="outlined"
+                                    onChange={this.onChange('password')}
+                                    value={this.state.password}
+                                />
+                            </Grid>
+                            <Grid item md={12}>
+                                <TextField
+                                    id="outlined-password-input"
+                                    label="Фамилия"
+                                    className={classes.textField}
+                                    type="family-name"
+                                    autoComplete="family-name"
+                                    margin="normal"
+                                    variant="outlined"
+                                    onChange={this.onChange('password')}
+                                    value={this.state.password}
+                                />
+                            </Grid>
+                            <Grid item md={12}>
+                                <TextField
+                                    id="outlined-password-input"
+                                    label="Квартира"
+                                    className={classes.textField}
                                     margin="normal"
                                     variant="outlined"
                                     onChange={this.onChange('password')}
