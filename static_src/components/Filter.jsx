@@ -185,7 +185,7 @@ class Filter extends React.Component {
                 </Button>
                 <Button variant="contained" className={classes.button}
                         style={
-                            this.state.colorUrgent === 'secondary'
+                            this.state.colorСomplete === 'secondary'
                                 ? {
                                     '--background-start': '#ec407a',
                                 }
@@ -193,7 +193,7 @@ class Filter extends React.Component {
                                     '--background-start': '#ffffff',
                                 }
                         }
-                        onClick={this.searchUrgent}
+                        onClick={this.searchСomplete}
                 >
                     ВЫПОЛНЕНО
                 </Button>

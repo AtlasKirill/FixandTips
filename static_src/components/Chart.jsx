@@ -87,7 +87,7 @@ class Chart extends React.Component {
         clickedOther: false,
         colorProcessing: 'default',
         colorSent: 'default',
-        colorUrgent: 'default',
+        colorСomplete: 'default',
         colorCarpenter: 'default',
         colorElictrician: 'default',
         colorPlumber: 'default',
@@ -213,14 +213,11 @@ class Chart extends React.Component {
                             }
                             onClick={this.searchSent}
                     >
-                    ВЫПОЛНЕНО
+                    НОВЫЕ
                 </Button>
-                <Typography variant="overline" gutterBottom className={classes.status}>
-                    Тип заявок:
-                </Typography>
                 <Button variant="contained" className={classes.button} 
                     style={
-                    this.state.colorCarpenter === 'secondary'
+                    this.state.colorComplete === 'secondary'
                         ? {
                         '--background-start': '#ec407a',
                         }
@@ -228,8 +225,8 @@ class Chart extends React.Component {
                         '--background-end': '#ffffff',
                         }
                     }
-                    onClick={this.searchСarpenter}>
-                        СРОЧНО
+                    onClick={this.searchСomplete}>
+                        ВЫПОЛНЕНО
                     </Button>
                     <Typography variant="overline" gutterBottom className={classes.status}>
                         Тип заявок:
@@ -304,7 +301,6 @@ class Chart extends React.Component {
                     >
                         ДРУГОЕ
                     </Button>
-
                     <Typography
                         variant="overline" gutterBottom className={classes.status}>
                         Димнамика зарегистрированных и решенных заявок

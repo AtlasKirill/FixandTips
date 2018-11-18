@@ -40,14 +40,13 @@ const styles = theme => ({
         minHeight: '100%',
     },
     content: {
-        // borderRadius:0,
-        // borderColor: 'white',
-        // borderShadow:'white',
-        // color:'white',
         '&:last-child': {
             padding: 10,
             paddingRight: 5,
             margin: 5,
+            marginBottom:0,
+            paddingBottom:0,
+            paddingTop:0,
         },
     },
     Status: {
@@ -81,6 +80,14 @@ const styles = theme => ({
     alert: {
         color: 'red',
         margin: 4,
+    },
+    cancelgrid:{
+        '&:last-child': {
+            padding: 5,
+            paddingRight: 5,
+            margin: 5,
+            marginBottom:8,
+        },
     },
 });
 
@@ -174,11 +181,12 @@ class StudentRequest extends React.Component {
                                 </CardContent>
                             </Grid>
                             <Grid item md={6}>
-                                <CardContent classes={{root: classes.content}}>
+                                <CardContent classes={{root: classes.cancelgrid}}>
                                     <Button variant="contained"
                                             color="secondary"
                                             onClick={this.onClick}
-                                            className={classes.Cancel}>
+                                            className={classes.Cancel}
+                                    align={"right"}>
                                         ОТМЕНИТЬ
                                     </Button>
                                 </CardContent>

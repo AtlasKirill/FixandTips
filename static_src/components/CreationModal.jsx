@@ -156,10 +156,10 @@ class NewRequest extends React.Component {
                                 value={this.state.category}
                                 onChange={this.handleChange('category')}
                             >
-                                <FormControlLabel value="Сантехник" control={<Radio/>}
-                                                  label="Сантехник"/>
+                                <FormControlLabel value="Сантехник" control={<Radio/>} label="Сантехник"/>
                                 <FormControlLabel value="Плотник" control={<Radio/>} label="Плотник"/>
                                 <FormControlLabel value="Электрик" control={<Radio/>} label="Электрик"/>
+                                <FormControlLabel value="Хим обработка" control={<Radio/>} label="Хим обработка"/>
                                 <FormControlLabel value="Другое" control={<Radio/>} label="Другое"/>
                             </RadioGroup>
                         </FormControl>
