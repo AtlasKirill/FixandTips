@@ -133,19 +133,16 @@ class Profile extends React.Component {
         this.setState(state => ({
             edited: !state.edited,
         }));
-       // this.props.loadUser()
     };
     handleClickSubmit = () => {
         this.props.updateUser(apiUrls.userDetail(this.props.user.id),{group_num:this.state.group_num, flat: this.state.flat, phone: this.state.phone},store.getState().auth.token)
         this.setState(state => ({
             edited: !state.edited,
         }));
-       // this.props.loadUser()
     };
 
     render() {
         const {classes} = this.props;
-        // const info = this.props.sessionInfo.data;
         if(this.props.isLoading)
         {
             return(<div>Loading...</div>)
@@ -170,7 +167,7 @@ class Profile extends React.Component {
 
                     <Typography component="h2" variant="title" align="center">
 
-                      Lena
+                      { this.props.user.username }
                     </Typography>
                     <input
                       accept="image/*"

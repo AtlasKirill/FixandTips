@@ -8,7 +8,6 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import RegButton from './Registration'
-import Icon from '@material-ui/core/Icon';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import { Link, Redirect } from 'react-router-dom';
 import ListItem from '@material-ui/core/ListItem';
