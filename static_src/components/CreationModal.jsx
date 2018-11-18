@@ -95,7 +95,6 @@ class NewRequest extends React.Component {
                             urgency: this.state.urgency},
                             store.getState().auth.token);
     this.setState({ open: false, description: 'No description' });
-    // this.props.loadRequests(apiUrls.myRequests(this.props.user.id), store.getState().auth.token);
 }
   render() {
     const { classes } = this.props;
@@ -141,6 +140,7 @@ class NewRequest extends React.Component {
                 <FormControlLabel value="Сантехник" control={<Radio />} label="Сантехник" />
                 <FormControlLabel value="Плотник" control={<Radio />} label="Плотник" />
                 <FormControlLabel value="Электрик" control={<Radio />} label="Электрик" />
+                <FormControlLabel value="Хим обработка" control={<Radio />} label="Хим обработка" />
                 <FormControlLabel value="Другое" control={<Radio />} label="Другое" />
               </RadioGroup>
             </FormControl>

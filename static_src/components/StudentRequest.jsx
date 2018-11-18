@@ -93,10 +93,6 @@ class StudentRequest extends React.Component {
         is_deleted: PropTypes.bool,
       }
 
-    // onClick=(e)=> {
-    //     console.log(apiUrls.requestDetail(this.props.id))
-    //     this.props.deleteRequest(apiUrls.requestDetail(this.props.id),{is_deleted:true});
-    // }
 
     onClick=(e)=> {
         console.log(apiUrls.requestDetail(this.props.id))
@@ -115,9 +111,6 @@ class StudentRequest extends React.Component {
                     <Grid container spacing={8}>
                         <Grid md={6}>
                             <CardContent classes={{root: classes.content}}>
-                                <Typography variant="subtitle1">
-                                { this.props.author.username }
-                                </Typography>
                                 <Typography variant="body1">
                                 { this.props.description }
                                 </Typography>
@@ -165,9 +158,8 @@ class StudentRequest extends React.Component {
                         </Grid>
                         <Grid item md={6} className={classes.content}>
                             <CardContent classes={{root: classes.content}}>
-                                <Done/>
                                 <Typography>
-                                    { this.props.status.title }
+                                    { this.props.status }
                                 </Typography>
                             </CardContent>
                         </Grid>

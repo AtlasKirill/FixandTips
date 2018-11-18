@@ -198,6 +198,7 @@ class CommandantRequest extends React.Component {
         const { anchorEl1 } = this.state;
         const open = Boolean(anchorEl);
         const open1 = Boolean(anchorEl1);
+        var requestStatus = this.props.status === 'Отправлена' ? 'Новая' : this.props.status;
 
         if(this.props.is_deleted){
             console.log('Deleted');
@@ -284,7 +285,7 @@ class CommandantRequest extends React.Component {
                                     aria-haspopup="true"
                                     onClick={this.handleClickStatus}
                                 >
-                                    {this.props.status}
+                                    { requestStatus }
                                 </Button>
                                 <Menu
                                     id="simple-menu"
