@@ -103,9 +103,9 @@ const styles = theme => ({
     textField: {
         width: '100%',
     },
-    listItem:{
-        paddingBottom:0,
-        paddingTop:0,
+    listItem: {
+        paddingBottom: 0,
+        paddingTop: 0,
     },
 });
 
@@ -141,7 +141,7 @@ class Profile extends React.Component {
         this.setState(state => ({
             edited: !state.edited,
         }));
-        // this.props.loadUser()
+
     };
     handleClickSubmit = () => {
         this.props.updateUser(apiUrls.userDetail(this.props.user.id), {
@@ -152,12 +152,11 @@ class Profile extends React.Component {
         this.setState(state => ({
             edited: !state.edited,
         }));
-        // this.props.loadUser()
     };
 
     render() {
         const {classes} = this.props;
-        // const info = this.props.sessionInfo.data;
+
         if (this.props.isLoading) {
             return (<div>Loading...</div>)
         }
@@ -175,15 +174,11 @@ class Profile extends React.Component {
                                 <Grid item md={4}>
                                     <Paper classes={{root: classes.content}}>
                                         {/*<Avatar*/}
-                                            {/*src={this.props.user.avatar}*/}
-                                            {/*className={classNames(classes.avatar)}*/}
+                                        {/*src={this.props.user.avatar}*/}
+                                        {/*className={classNames(classes.avatar)}*/}
                                         {/*/>*/}
-
                                         <Typography component="h2" variant="title" align="center">
-                                            {this.props.user.name}
-                                        </Typography>
-                                        <Typography component="h2" variant="title" align="center">
-                                            {this.props.user.surname}
+                                            {this.props.user.username}
                                         </Typography>
                                         <input
                                             accept="image/*"
@@ -204,8 +199,6 @@ class Profile extends React.Component {
                                             </Button>
                                         </label>
                                     </Paper>
-
-
                                 </Grid>
                                 <Grid item sm={8}>
                                     <Paper className={classes.main_info}>

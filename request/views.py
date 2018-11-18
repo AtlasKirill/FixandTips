@@ -35,7 +35,7 @@ class RequestViewSet(viewsets.ModelViewSet):
     serializer_class = RequestSerializer
     authentication_classes = (TokenAuthentication,)
     queryset = Request.objects.all().order_by('-created_at')
-    permission_classes = (permissions.IsAuthenticated,)
+    # permission_classes = (permissions.IsAuthenticated,)
     filter_backends = (DjangoFilterBackend,)
     filter_class = RequestFilter
 

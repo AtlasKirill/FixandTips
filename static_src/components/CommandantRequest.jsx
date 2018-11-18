@@ -71,11 +71,6 @@ const styles = theme => ({
         textAlign: 'center',
         backgroundColor: '#ff7043',
     },
-    absolute_delete: {
-        // position: 'relative',
-        // bottom: theme.spacing.unit * 1,
-        // left: theme.spacing.unit * 25
-    },
     delete: {
         float: 'right',
         '&:last-child': {
@@ -110,6 +105,7 @@ class CommandantRequest extends React.Component {
 
     state = {
         anchorEl: null,
+        anchorEl1: null,
         materials: '',
         status: '',
         type: '',
@@ -141,23 +137,23 @@ class CommandantRequest extends React.Component {
         this.props.updateRequest(apiUrls.requestDetail(this.props.id),{status:'Выполнена'}, store.getState().auth.token); 
     };
     handleCarpenter=(e)=> {
-        this.setState({ anchorEl: null });
+        this.setState({ anchorEl1: null });
         this.props.updateRequest(apiUrls.requestDetail(this.props.id),{category:'Плотник'}, store.getState().auth.token);
     };
     handleChemistry=(e)=> {
-        this.setState({ anchorEl: null });
+        this.setState({ anchorEl1: null });
         this.props.updateRequest(apiUrls.requestDetail(this.props.id),{category:'Хим обработка'}, store.getState().auth.token);
     };
     handlePlumber=(e)=> {
-        this.setState({ anchorEl: null });
+        this.setState({ anchorEl1: null });
         this.props.updateRequest(apiUrls.requestDetail(this.props.id),{category:'Сантехник'}, store.getState().auth.token); 
     };
     handleElictrician=(e)=> {
-        this.setState({ anchorEl: null });
+        this.setState({ anchorEl1: null });
         this.props.updateRequest(apiUrls.requestDetail(this.props.id),{category:'Электрик'}, store.getState().auth.token); 
     };
     handleOther=(e)=> {
-        this.setState({ anchorEl: null });
+        this.setState({ anchorEl1: null });
         this.props.updateRequest(apiUrls.requestDetail(this.props.id),{category:'Другое'}, store.getState().auth.token); 
     };
     onClick=(e)=> {
@@ -178,13 +174,21 @@ class CommandantRequest extends React.Component {
         }));
     };
 
-    handleClick = event => {
+    handleClickStatus = event => {
         this.setState({ anchorEl: event.currentTarget });
     };
 
-    handleClose = () => {
+    handleClickCategory = event => {
+        this.setState({ anchorEl1: event.currentTarget });
+    }
+
+    handleCloseStatus = () => {
         this.setState({ anchorEl: null });
-      };
+    };
+
+    handleCloseCategory = () => {
+        this.setState({ anchorEl1: null });
+    };
 
     render() {
         const {status} = this.state;
@@ -192,8 +196,10 @@ class CommandantRequest extends React.Component {
         const {edited} = this.state;
         const {classes} = this.props;
         const { anchorEl } = this.state;
+        const { anchorEl1 } = this.state;
         const open = Boolean(anchorEl);
-    
+        const open1 = Boolean(anchorEl1);
+
         if(this.props.is_deleted){
             console.log('Deleted');
             return(<div></div>);
@@ -208,7 +214,7 @@ class CommandantRequest extends React.Component {
                                     { this.props.author.username }
                                 </Typography>
                                 <Typography variant="subtitle2">
-                                    { this.props.group_num }
+                                    { this.props.flat }
                                 </Typography>
                                 <Typography variant="body1">
                                     { this.props.description }
@@ -278,9 +284,9 @@ class CommandantRequest extends React.Component {
                         <Grid item md={3} className={classes.content}>
                             <CardContent classes={{root: classes.content}}>
                                 <Button
-                                    aria-owns={status ? 'simple-menu' : undefined}
+                                    aria-owns={anchorEl ? 'simple-menu' : undefined}
                                     aria-haspopup="true"
-                                    onClick={this.handleClick}
+                                    onClick={this.handleClickStatus}
                                 >
                                     {this.props.status}
                                 </Button>
@@ -288,11 +294,11 @@ class CommandantRequest extends React.Component {
                                     id="simple-menu"
                                     anchorEl={anchorEl}
                                     open={open}
-                                    onClose={this.handleClose}
+                                    onClose={this.handleCloseStatus}
                                 >
-                                    <MenuItem onClick={this.handleNew}>НОВАЯ</MenuItem>
-                                    <MenuItem onClick={this.handleProcessing}>В ПРОЦЕССЕ</MenuItem>
-                                    <MenuItem onClick={this.handleComplete}>ВЫПОЛНЕНА</MenuItem>
+                                    <MenuItem onClick={this.handleNew}>Новая</MenuItem>
+                                    <MenuItem onClick={this.handleProcessing}>В процессе</MenuItem>
+                                    <MenuItem onClick={this.handleComplete}>Выполнена</MenuItem>
                                 </Menu>
 
                             </CardContent>
@@ -300,17 +306,17 @@ class CommandantRequest extends React.Component {
                         <Grid item md={3} className={classes.content}>
                             <CardContent classes={{root: classes.content}}>
                                 <Button
-                                    aria-owns={type ? 'simple-menu' : undefined}
+                                    aria-owns={anchorEl1 ? 'simple-menu' : undefined}
                                     aria-haspopup="true"
-                                    onClick={this.handleClick}
+                                    onClick={this.handleClickCategory}
                                 >
                                     {this.props.category}
                                 </Button>
                                 <Menu
                                     id="simple-menu"
-                                    anchorEl={anchorEl}
-                                    open={open}
-                                    onClose={this.handleClose}
+                                    anchorEl={anchorEl1}
+                                    open={open1}
+                                    onClose={this.handleCloseCategory}
                                 >
                                     <MenuItem onClick={this.handleElectrician}>Электрик</MenuItem>
                                     <MenuItem onClick={this.handleCarpenter}>Плотник</MenuItem>
