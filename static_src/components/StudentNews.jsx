@@ -20,6 +20,7 @@ const styles = theme => ({
         // width: '90%',
         margin: 10,
         border: 'solid 1px',
+        minHeight: 213,
     },
     button: {
         margin: theme.spacing.unit,

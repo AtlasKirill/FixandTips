@@ -51,7 +51,7 @@ export default function requests(store = initialState, action){
             console.log(action.payload);
             return update(newStore, {
                 isLoading: { $set: false },
-                requestList: { $push: action.payload.result },
+                requestList: { $unshift: action.payload.result },
 
             });
         }
@@ -73,12 +73,32 @@ export default function requests(store = initialState, action){
             console.log(action.payload);
             return update(newStore, {
                 isLoading: { $set: false },
-                // requestList: { $push: action.payload.result },
 
             });
         }
 
         case 'ERROR_REQUEST_DELETING':{
+            return update(newStore, {
+                isLoading: { $set: false },
+            });
+        }
+
+        case 'START_REQUEST_UPDATING':{
+            return update(newStore, {
+                isLoading: { $set: true },
+            });
+            
+        }
+
+        case 'SUCCESS_REQUEST_UPDATING':{
+            console.log(action.payload);
+            return update(newStore, {
+                isLoading: { $set: false },
+
+            });
+        }
+
+        case 'ERROR_REQUEST_UPDATING':{
             return update(newStore, {
                 isLoading: { $set: false },
             });
@@ -95,7 +115,6 @@ export default function requests(store = initialState, action){
             return update(newStore, {
                 isLoading: { $set: false },
                 requestList: { $set: action.payload.result },
-                // requests: { $merge: action.payload.entities.requests }
             });
         }
 
@@ -118,7 +137,6 @@ export default function requests(store = initialState, action){
             return update(newStore, {
                 isLoading: { $set: false },
                 Data: { $set: action.payload },
-                // requests: { $merge: action.payload.entities.requests }
             });
         }
 

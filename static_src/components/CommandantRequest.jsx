@@ -27,12 +27,13 @@ import MenuItem from '@material-ui/core/MenuItem';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { deleteRequest } from '../actions/requests';
+import { updateRequest } from '../actions/requests';
 import apiUrls from './../constants/apiUrls';
 import store from './../index.jsx';
 
 const styles = theme => ({
     card: {
-        // maxHeight: 200,
+
         margin: 10,
         border:'solid 1px',
     },
@@ -42,10 +43,6 @@ const styles = theme => ({
         minHeight: '100%',
     },
     content: {
-        // borderRadius:0,
-        // borderColor: 'white',
-        // borderShadow:'white',
-        // color:'white',
         '&:last-child': {
             padding: 5,
             paddingLeft: 15,
@@ -53,7 +50,6 @@ const styles = theme => ({
         },
     },
     Status: {
-        // ...theme.typography.button,
         padding: 5,
         marginLeft: 10,
         marginTop: 0,
@@ -64,7 +60,7 @@ const styles = theme => ({
         backgroundColor: '#ffc400',
     },
     Cancel: {
-        // ...theme.typography.button,
+
         padding: 5,
         marginLeft: 1,
         marginright: 1,
@@ -74,11 +70,6 @@ const styles = theme => ({
         minWidth: 100,
         textAlign: 'center',
         backgroundColor: '#ff7043',
-    },
-    absolute_delete: {
-        // position: 'relative',
-        // bottom: theme.spacing.unit * 1,
-        // left: theme.spacing.unit * 25
     },
     delete: {
         float: 'right',
@@ -92,7 +83,6 @@ const styles = theme => ({
         marginTop: 15,
         marginLeft: 5,
         marginRight: 5,
-        // width: '90%',
     },
     alert: {
         color: 'red',
@@ -112,19 +102,10 @@ const styles = theme => ({
 });
 
 class CommandantRequest extends React.Component {
-    // state = {
-    //     anchorEl: null,
-    // };
-    //
-    // handleClick = event => {
-    //     this.setState({anchorEl: event.currentTarget});
-    // };
-    //
-    // handleClose = () => {
-    //     this.setState({anchorEl: null});
-    // };
 
     state = {
+        anchorEl: null,
+        anchorEl1: null,
         materials: '',
         status: '',
         type: '',
@@ -143,7 +124,38 @@ class CommandantRequest extends React.Component {
             [name]: event.target.value,
         });
     };
-
+    handleNew=(e)=> {
+        this.setState({ anchorEl: null });
+        this.props.updateRequest(apiUrls.requestDetail(this.props.id),{status:'Отправлена'}, store.getState().auth.token);
+    };
+    handleProcessing=(e)=> {
+        this.setState({ anchorEl: null });
+        this.props.updateRequest(apiUrls.requestDetail(this.props.id),{status:'В процессе'}, store.getState().auth.token);
+    };
+    handleComplete=(e)=> {
+        this.setState({ anchorEl: null });
+        this.props.updateRequest(apiUrls.requestDetail(this.props.id),{status:'Выполнена'}, store.getState().auth.token); 
+    };
+    handleCarpenter=(e)=> {
+        this.setState({ anchorEl1: null });
+        this.props.updateRequest(apiUrls.requestDetail(this.props.id),{category:'Плотник'}, store.getState().auth.token);
+    };
+    handleChemistry=(e)=> {
+        this.setState({ anchorEl1: null });
+        this.props.updateRequest(apiUrls.requestDetail(this.props.id),{category:'Хим обработка'}, store.getState().auth.token);
+    };
+    handlePlumber=(e)=> {
+        this.setState({ anchorEl1: null });
+        this.props.updateRequest(apiUrls.requestDetail(this.props.id),{category:'Сантехник'}, store.getState().auth.token); 
+    };
+    handleElictrician=(e)=> {
+        this.setState({ anchorEl1: null });
+        this.props.updateRequest(apiUrls.requestDetail(this.props.id),{category:'Электрик'}, store.getState().auth.token); 
+    };
+    handleOther=(e)=> {
+        this.setState({ anchorEl1: null });
+        this.props.updateRequest(apiUrls.requestDetail(this.props.id),{category:'Другое'}, store.getState().auth.token); 
+    };
     onClick=(e)=> {
         console.log(apiUrls.requestDetail(this.props.id))
         this.props.deleteRequest(apiUrls.requestDetail(this.props.id),{is_deleted:true}, store.getState().auth.token);
@@ -156,20 +168,39 @@ class CommandantRequest extends React.Component {
     };
 
     onSubmit=(e)=> {
-        //console.log(apiUrls.requestDetail(this.props.id))
         this.props.deleteRequest(apiUrls.requestDetail(this.props.id),{materials:this.state.materials}, store.getState().auth.token);
         this.setState(state => ({
             edited: !state.edited,
         }));
     };
 
+    handleClickStatus = event => {
+        this.setState({ anchorEl: event.currentTarget });
+    };
+
+    handleClickCategory = event => {
+        this.setState({ anchorEl1: event.currentTarget });
+    }
+
+    handleCloseStatus = () => {
+        this.setState({ anchorEl: null });
+    };
+
+    handleCloseCategory = () => {
+        this.setState({ anchorEl1: null });
+    };
+
     render() {
-        // const {anchorEl} = this.state;
-        // const open = Boolean(anchorEl);
         const {status} = this.state;
         const {type} = this.state;
         const {edited} = this.state;
         const {classes} = this.props;
+        const { anchorEl } = this.state;
+        const { anchorEl1 } = this.state;
+        const open = Boolean(anchorEl);
+        const open1 = Boolean(anchorEl1);
+        var requestStatus = this.props.status === 'Отправлена' ? 'Новая' : this.props.status;
+
         if(this.props.is_deleted){
             console.log('Deleted');
             return(<div></div>);
@@ -181,10 +212,7 @@ class CommandantRequest extends React.Component {
                         <Grid item md={6}>
                             <CardContent classes={{root: classes.content}}>
                                 <Typography variant="subtitle2">
-                                    { this.props.author.username }
-                                </Typography>
-                                <Typography variant="subtitle2">
-                                    { this.props.group_num }
+                                    { this.props.author.username }, { this.props.author.flat }к.
                                 </Typography>
                                 <Typography variant="body1">
                                     { this.props.description }
@@ -254,23 +282,21 @@ class CommandantRequest extends React.Component {
                         <Grid item md={3} className={classes.content}>
                             <CardContent classes={{root: classes.content}}>
                                 <Button
-                                    aria-owns={status ? 'simple-menu' : undefined}
+                                    aria-owns={anchorEl ? 'simple-menu' : undefined}
                                     aria-haspopup="true"
-                                    onClick={this.handleClick}
+                                    onClick={this.handleClickStatus}
                                 >
-                                    СТАТУС
+                                    { requestStatus }
                                 </Button>
                                 <Menu
                                     id="simple-menu"
-                                    anchorEl={status}
-                                    open={Boolean(status)}
-                                    onClose={this.handleClose}
-                                    value={ this.state.status }
-                                    onChange={this.handleChange('category')}
+                                    anchorEl={anchorEl}
+                                    open={open}
+                                    onClose={this.handleCloseStatus}
                                 >
-                                    <MenuItem onClick={this.handleClose}>НОВАЯ</MenuItem>
-                                    <MenuItem onClick={this.handleClose}>В ПРОЦЕССЕ</MenuItem>
-                                    <MenuItem onClick={this.handleClose}>ВЫПОЛНЕНА</MenuItem>
+                                    <MenuItem onClick={this.handleNew}>Новая</MenuItem>
+                                    <MenuItem onClick={this.handleProcessing}>В процессе</MenuItem>
+                                    <MenuItem onClick={this.handleComplete}>Выполнена</MenuItem>
                                 </Menu>
 
                             </CardContent>
@@ -278,22 +304,23 @@ class CommandantRequest extends React.Component {
                         <Grid item md={3} className={classes.content}>
                             <CardContent classes={{root: classes.content}}>
                                 <Button
-                                    aria-owns={type ? 'simple-menu' : undefined}
+                                    aria-owns={anchorEl1 ? 'simple-menu' : undefined}
                                     aria-haspopup="true"
-                                    onClick={this.handleClickType}
+                                    onClick={this.handleClickCategory}
                                 >
-                                    ТИП ЗАЯВКИ
+                                    {this.props.category}
                                 </Button>
                                 <Menu
                                     id="simple-menu"
-                                    anchorEl={type}
-                                    open={Boolean(type)}
-                                    onClose={this.handleCloseType}
+                                    anchorEl={anchorEl1}
+                                    open={open1}
+                                    onClose={this.handleCloseCategory}
                                 >
-                                    <MenuItem onClick={this.handleCloseType}>ЭЛЕКТРИК</MenuItem>
-                                    <MenuItem onClick={this.handleCloseType}>ПЛОТНИК</MenuItem>
-                                    <MenuItem onClick={this.handleCloseType}>САНТЕХНИК</MenuItem>
-                                    <MenuItem onClick={this.handleCloseType}>ДРУГОЕ</MenuItem>
+                                    <MenuItem onClick={this.handleElectrician}>Электрик</MenuItem>
+                                    <MenuItem onClick={this.handleCarpenter}>Плотник</MenuItem>
+                                    <MenuItem onClick={this.handlePlumber}>Сантехник</MenuItem>
+                                    <MenuItem onClick={this.handleChemistry}>Хим обработка</MenuItem>
+                                    <MenuItem onClick={this.handleOther}>Другое</MenuItem>
                                 </Menu>
 
                             </CardContent>
@@ -325,6 +352,6 @@ const mapStateToProps = ({ requests }, ownProps ) => {
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ deleteRequest }, dispatch)
+    return bindActionCreators({ deleteRequest, updateRequest }, dispatch)
   }
 export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(CommandantRequest));

@@ -87,7 +87,7 @@ class Chart extends React.Component {
         clickedOther: false,
         colorProcessing: 'default',
         colorSent: 'default',
-        colorUrgent: 'default',
+        colorСomplete: 'default',
         colorCarpenter: 'default',
         colorElictrician: 'default',
         colorPlumber: 'default',
@@ -95,64 +95,67 @@ class Chart extends React.Component {
         colorOther: 'default',
         fromDate: '',
         toDate: '',
-        status: '',
-        category1: '',
-        category2: '',
-        category3: '',
-        category4: '',
-        category5: '',
+        status:'',
+        complete:'',
+        processing:'',
+        sent:'',
+        category1:'',
+        category2:'',
+        category3:'',
+        category4:'',
+        category5:'',
         urgency: false,
         Data: [],
     };
 
     searchProcessing = event => {
-        this.setState({clickedProcessing: !this.state.clickedProcessing});
-        this.setState({colorProcessing: this.state.clickedProcessing ? 'default' : 'secondary'});
-        this.setState({urgency: !this.state.urgency});
+        this.setState({ clickedProcessing: ! this.state.clickedProcessing });
+        this.setState({ colorProcessing: this.state.clickedProcessing ? 'default' : 'secondary' });
+        this.setState({ state: this.state.clickedSent ? '' : 'В процессе' });
+      };
 
-    };
     searchSent = event => {
-        this.setState({clickedSent: !this.state.clickedSent});
-        this.setState({colorSent: this.state.clickedSent ? 'default' : 'secondary'});
-        this.setState({urgency: !this.state.urgency});
-
-    };
-    searchUrgent = event => {
-        this.setState({clickedUrgent: !this.state.clickedUrgent});
-        this.setState({colorUrgent: this.state.clickedUrgent ? 'default' : 'secondary'});
-        this.setState({urgency: !this.state.urgency});
-
-    };
+        this.setState({ clickedSent: ! this.state.clickedSent });
+        this.setState({ colorSent: this.state.clickedSent ? 'default' : 'secondary' });
+        this.setState({ state: this.state.clickedSent ? '' : 'Отправлена' });
+    
+      };
+    searchСomplete = event => {
+        this.setState({ clickedComplete: ! this.state.clickedComplete });
+        this.setState({ colorComplete: this.state.clickedComplete ? 'default' : 'secondary' });
+        this.setState({ state: this.state.clickedComplete ? '' : 'Выполнена' });
+    
+      };
     searchСarpenter = event => {
-        this.setState({clickedCarpenter: !this.state.clickedCarpenter});
-        this.setState({colorCarpenter: this.state.clickedCarpenter ? 'default' : 'secondary'});
-        this.setState({category1: 'Плотник'});
-
-    };
+        this.setState({ clickedCarpenter: ! this.state.clickedCarpenter });
+        this.setState({ colorCarpenter: this.state.clickedCarpenter ? 'default' : 'secondary' });
+        this.setState({ category1: this.state.clickedCarpenter ? '' : 'Плотник' });
+    
+      };
     searchPlumber = event => {
-        this.setState({clickedPlumber: !this.state.clickedPlumber});
-        this.setState({colorPlumber: this.state.clickedPlumber ? 'default' : 'secondary'});
-        this.setState({category2: 'Сантехник'});
-
-    };
+        this.setState({ clickedPlumber: ! this.state.clickedPlumber });
+        this.setState({ colorPlumber: this.state.clickedPlumber ? 'default' : 'secondary' });
+        this.setState({ category2: this.state.clickedPlumber ? '' : 'Сантехник' });
+    
+      };
     searchElectrician = event => {
-        this.setState({clickedElictrician: !this.state.clickedElictrician});
-        this.setState({colorElictrician: this.state.clickedElictrician ? 'default' : 'secondary'});
-        this.setState({category3: 'Электрик'});
-
-    };
+        this.setState({ clickedElictrician: ! this.state.clickedElictrician });
+        this.setState({ colorElictrician: this.state.clickedElictrician ? 'default' : 'secondary' });
+        this.setState({ category3: this.state.clickedElictrician ? '' : 'Электрик' });
+    
+      };
     searchChemistry = event => {
-        this.setState({clickedChemistry: !this.state.clickedChemistry});
-        this.setState({colorChemistry: this.state.clickedChemistry ? 'default' : 'secondary'});
-        this.setState({category4: 'Хим обработка'});
-    };
-
+        this.setState({ clickedChemistry: ! this.state.clickedChemistry });
+        this.setState({ colorChemistry: this.state.clickedChemistry ? 'default' : 'secondary' });
+        this.setState({ category4: this.state.clickedChemistry ? '' : 'Хим обработка' });
+    
+      };
     searchOther = event => {
-        this.setState({clickedOther: !this.state.clickedOther});
-        this.setState({colorOther: this.state.clickedOther ? 'default' : 'secondary'});
-        this.setState({category5: 'Другое'});
-
-    };
+        this.setState({ clickedOther: ! this.state.clickedOther });
+        this.setState({ colorOther: this.state.clickedOther ? 'default' : 'secondary' });
+        this.setState({ category5: this.state.clickedOther ? '' : 'Другое' });
+    
+      };
     handleChange = name => event => {
         this.setState({
             [name]: event.target.value,
@@ -172,17 +175,29 @@ class Chart extends React.Component {
             this.state.toDate),
             store.getState().auth.token);
     };
-
     render() {
         const {classes} = this.props;
         return (
             <div>
                 <NavBar/>
                 <React.Fragment>
-
                     <Typography variant="overline" gutterBottom className={classes.status}>
                         Статус:
                     </Typography>
+                    <Button variant="contained" className={classes.button}
+                            style={
+                                this.state.colorSent === 'secondary'
+                                    ? {
+                                        '--background-start': '#ec407a',
+                                    }
+                                    : {
+                                        '--background-end': '#ffffff',
+                                    }
+                            }
+                            onClick={this.searchSent}
+                    >
+                    НОВЫЕ
+                </Button>
                     <Button
                         className={classes.button}
                         style={
@@ -198,33 +213,19 @@ class Chart extends React.Component {
                     >
                         В ПРОЦЕССЕ
                     </Button>
-                    <Button variant="contained" className={classes.button}
-                            style={
-                                this.state.colorSent === 'secondary'
-                                    ? {
-                                        '--background-start': '#ec407a',
-                                    }
-                                    : {
-                                        '--background-end': '#ffffff',
-                                    }
-                            }
-                            onClick={this.searchSent}
-                    >
-                        НОВЫЕ
-                    </Button>
-                    <Button variant="contained" className={classes.button}
-                            style={
-                                this.state.colorUrgent === 'secondary'
-                                    ? {
-                                        '--background-start': '#ec407a',
-                                    }
-                                    : {
-                                        '--background-end': '#ffffff',
-                                    }
-                            }
-                            onClick={this.searchUrgent}
-                    >
-                        СРОЧНО
+
+                <Button variant="contained" className={classes.button} 
+                    style={
+                    this.state.colorComplete === 'secondary'
+                        ? {
+                        '--background-start': '#ec407a',
+                        }
+                        : {
+                        '--background-end': '#ffffff',
+                        }
+                    }
+                    onClick={this.searchСomplete}>
+                        ВЫПОЛНЕНО
                     </Button>
                     <Typography variant="overline" gutterBottom className={classes.status}>
                         Тип заявок:
@@ -299,7 +300,6 @@ class Chart extends React.Component {
                     >
                         ДРУГОЕ
                     </Button>
-
                     <Typography
                         variant="overline" gutterBottom className={classes.status}>
                         Димнамика зарегистрированных и решенных заявок

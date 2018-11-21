@@ -74,10 +74,10 @@ export const loadUser = () => {
   }
 
 
-  export const register = (username, password) => {
+  export const register = (username, password, name, surname, flat) => {
     return (dispatch, getState) => {
       let headers = {"Content-Type": "application/json"};
-      let body = JSON.stringify({username, password});
+      let body = JSON.stringify({username, password, name, surname, flat});
   
       return fetch("/api/auth/register/", {headers, body, method: "POST"})
         .then(res => {

@@ -73,7 +73,7 @@ class NewRequest extends React.Component {
             title: this.state.title
         }, store.getState().auth.token);
         this.setState({open: false});
-        this.props.loadNews(apiUrls.news, store.getState().auth.token);
+        // this.props.loadNews(apiUrls.news, store.getState().auth.token);
     };
 
 

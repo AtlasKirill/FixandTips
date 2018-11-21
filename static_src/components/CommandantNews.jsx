@@ -23,6 +23,7 @@ const styles = theme => ({
         margin: 10,
         marginTop: 10,
         border:'solid 1px',
+        minHeight: 213,
     },
     devider: {
         marginTop: 5,
@@ -62,15 +63,10 @@ class CommandantNews extends React.Component {
         author: PropTypes.number,
         is_deleted: PropTypes.bool,
     }
-    // onClick=(e)=> {
-    //     console.log(apiUrls.newsDetail(this.props.id))
-    //     this.props.deleteNews(apiUrls.newsDetail(this.props.id),{is_deleted:true});
-    // }
-    onDelete = (e) => {
+
+    onDelete=(e)=> {
         console.log(apiUrls.requestDetail(this.props.id))
-        this.props.deleteNews(apiUrls.newsDetail(this.props.id), {is_deleted: true}, store.getState().auth.token);
-        // this.props.loadNews(apiUrls.news,store.getState().auth.token);
-        // this.setState({ open: false });
+        this.props.deleteNews(apiUrls.newsDetail(this.props.id),{is_deleted:true},store.getState().auth.token);
     }
 
     render() {
