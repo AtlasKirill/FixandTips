@@ -62,7 +62,6 @@ const styles = theme => ({
         backgroundColor: '#ffc400',
     },
     Cancel: {
-        // ...theme.typography.button,
         padding: 5,
         marginLeft: 1,
         marginright: 1,
@@ -72,11 +71,6 @@ const styles = theme => ({
         minWidth: 100,
         textAlign: 'center',
         backgroundColor: '#ff7043',
-    },
-    absolute_delete: {
-        // position: 'relative',
-        // bottom: theme.spacing.unit * 1,
-        // left: theme.spacing.unit * 25
     },
     alert: {
         color: 'red',
@@ -92,15 +86,37 @@ class StudentRequest extends React.Component {
         author: PropTypes.number,
         is_deleted: PropTypes.bool,
       }
-
+    state = {
+        confirmation: false,
+    };
 
     onClick=(e)=> {
         console.log(apiUrls.requestDetail(this.props.id))
+        this.setState(state => ({
+            confirmation: true,
+        }));
+    };
+    onDelete=(e)=> {
+        console.log(apiUrls.requestDetail(this.props.id))
+        this.setState(state => ({
+            confirmation: false,
+        }));
         this.props.deleteRequest(apiUrls.requestDetail(this.props.id),{is_deleted:true},store.getState().auth.token);
     };
     render() {
+        var cancel;
         const {classes} = this.props;
-        const urgent = false;
+        if(this.props.status == 'Отправлена')
+        {
+            cancel = <Button variant="contained"
+                        color="secondary"
+                        onClick={this.onClick}>
+                            ОТМЕНИТЬ
+                    </Button>
+        }
+        else
+            cancel = <div></div>
+
         if(this.props.is_deleted){
             return(<div></div>);
         }
@@ -165,11 +181,17 @@ class StudentRequest extends React.Component {
                         </Grid>
                         <Grid item md={6}>
                             <CardContent classes={{root: classes.content}}>
-                            <Button variant="contained"
-                                    color="secondary"
-                                    onClick={this.onClick}>
-                                        ОТМЕНИТЬ
-                            </Button>
+                            {this.state.confirmation && (
+                                <Button onClick={this.onDelete}>
+                                    Подтвердить
+                                </Button>   
+                            )}
+                            {!this.state.confirmation && (
+                                <div>
+                                { cancel }
+                                </div>
+                            )}
+                                
                             </CardContent>
                         </Grid>
                     </Grid>

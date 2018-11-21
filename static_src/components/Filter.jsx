@@ -150,6 +150,20 @@ class Filter extends React.Component {
         <Typography variant="overline" gutterBottom className={classes.status}>
           Статус:
       </Typography>
+      <Button variant="contained"  className={classes.button} 
+          style={
+            this.state.colorSent === 'secondary'
+              ? {
+                '--background-start': '#ec407a',
+              }
+              : {
+                '--background-start': '#ffffff',
+              }
+            }
+            onClick={this.searchSent}
+        >
+          НОВЫЕ
+        </Button>
         <Button
           className={classes.button}
           style={
@@ -164,20 +178,6 @@ class Filter extends React.Component {
           onClick={this.searchProcessing}
         >
           В ПРОЦЕССЕ
-        </Button>
-        <Button variant="contained"  className={classes.button} 
-          style={
-            this.state.colorSent === 'secondary'
-              ? {
-                '--background-start': '#ec407a',
-              }
-              : {
-                '--background-start': '#ffffff',
-              }
-            }
-            onClick={this.searchSent}
-        >
-          НОВЫЕ
         </Button>
         <Button variant="contained" className={classes.button} 
         style={
