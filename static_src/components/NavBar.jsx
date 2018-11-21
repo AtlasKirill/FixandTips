@@ -8,7 +8,6 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import RegButton from './Registration'
-import Icon from '@material-ui/core/Icon';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import {Link, Redirect} from 'react-router-dom';
 import ListItem from '@material-ui/core/ListItem';
@@ -20,6 +19,8 @@ import {connect} from 'react-redux';
 import {logout} from '../actions/auth';
 import {bindActionCreators} from 'redux';
 
+
+
 const styles = {
     root: {
         flexGrow: 1,
@@ -28,10 +29,11 @@ const styles = {
         flexGrow: 1,
     },
     button: {
-        margin: 0,
+        margin: 10,
         color: 'white',
-        font: "Roboto",
+        // font: "Roboto",
         fontSize: '1.2em',
+        flexWrap:'wrap',
     },
     buttonLogo: {
         background: 'inherit',
@@ -42,10 +44,13 @@ const styles = {
         margin: 10,
         background: 'inherit',
         color: 'white',
-        fontSize: '1.5em',
+        fontSize: '1.2em',
+        flexWrap:'wrap',
+        padding:15,
+        marginLeft:30,
     },
-    icon:{
-        padding:8,
+    icon: {
+        padding: 8,
     },
 };
 
@@ -101,10 +106,21 @@ class NavBar extends React.Component {
             </div>
         }
         else if (this.props.user.role == 1) {
-            buttons = <div><Button color={"inherit"} href='/profile' aria-label="Delete" className={classes.button}>
-                <AccountCircle className={classes.icon}/>
-                Профиль
-            </Button></div>
+            buttons = <div>
+                <Grid container spacing={8}>
+                    <Grid item md={6}>
+                        <Button color={"inherit"} component={Link} to="/profile" className={classes.button}>
+                            <AccountCircle className={classes.icon}/>
+                            Профиль
+                        </Button>
+                    </Grid>
+                    <Grid item md={6}>
+                        <Button color="inherit" className={classes.buttonExit} onClick={this.props.logout}>
+                            Выйти
+                        </Button>
+                    </Grid>
+                </Grid>
+            </div>
         }
         return (
             <div className={classes.root}>
@@ -112,7 +128,7 @@ class NavBar extends React.Component {
                     <Toolbar>
                         <Typography variant="h6" color="inherit" className={classes.grow}>
                             {/*<ListItemLink to="/" primary="Fix&Tips"  />*/}
-                            <Button href='/' aria-label="Delete"
+                            <Button component={Link} to="/"
                                     className={classes.buttonLogo}>
                                 Fix&Tips
                             </Button>

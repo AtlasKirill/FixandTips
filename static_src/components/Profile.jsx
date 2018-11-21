@@ -21,6 +21,8 @@ import TextField from '@material-ui/core/TextField';
 import {bindActionCreators} from 'redux';
 import store from './../index.jsx';
 import apiUrls from './../constants/apiUrls.js';
+import AccountCircle from '@material-ui/icons/AccountCircle';
+
 
 
 const styles = theme => ({
@@ -33,7 +35,7 @@ const styles = theme => ({
     card: {
         // maxWidth: 700,
         margin: 20,
-        minWidth: 800,
+        minWidth: 650,
     },
 
     main_info: {
@@ -45,13 +47,10 @@ const styles = theme => ({
     avatar: {
         margin: 10,
         background: red[500],
-        // justifyItems: 'center',
         objectPosition: '50% 50%',
         width: 100,
         height: 100,
-        // objectPosition: 50,
-        // width: 180,
-        // height: 180,
+
     },
     input: {
         display: 'none',
@@ -60,31 +59,17 @@ const styles = theme => ({
         margin: theme.spacing.unit,
         padding: 5,
         objectPosition: '50% 50%',
-        // flex: 1,
     },
-    button_password: {
-        background: red[500],
-        marginLeft: 20,
-        marginTop: 8,
-    },
+
     content: {
-        // borderRadius:0,
-        // borderColor: 'white',
-        // borderShadow:'white',
-        // color:'white',
+
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',
         margin: 15,
         padding: 15,
         float: 'none',
-        // height: '80%',
-        // minWidth: 200,
-        // '&:last-child': {
-        //     padding: 10,
-        //     paddingRight: 5,
-        //     margin: 5,
-        // },
+
     },
     grid: {
         display: 'flex',
@@ -103,9 +88,25 @@ const styles = theme => ({
     textField: {
         width: '100%',
     },
-    listItem:{
-        paddingBottom:0,
-        paddingTop:0,
+    listItem: {
+        paddingBottom: 0,
+        paddingTop: 0,
+    },
+    Name: {
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'column',
+        flexWrap: 'wrap',
+        maxWidth: 600,
+        maxHeight: 200,
+        marginTop: 'auto',
+        marginBottom: 'auto',
+        boxShadow: 'none',
+    },
+    icon: {
+        padding: 8,
+        minWidth: 50,
+        minHeight:50,
     },
 });
 
@@ -141,7 +142,7 @@ class Profile extends React.Component {
         this.setState(state => ({
             edited: !state.edited,
         }));
-        // this.props.loadUser()
+
     };
     handleClickSubmit = () => {
         this.props.updateUser(apiUrls.userDetail(this.props.user.id), {
@@ -152,12 +153,11 @@ class Profile extends React.Component {
         this.setState(state => ({
             edited: !state.edited,
         }));
-        // this.props.loadUser()
     };
 
     render() {
         const {classes} = this.props;
-        // const info = this.props.sessionInfo.data;
+
         if (this.props.isLoading) {
             return (<div>Loading...</div>)
         }
@@ -172,38 +172,13 @@ class Profile extends React.Component {
                     <Grid item md={12}>
                         <Paper className={classes.card}>
                             <Grid container spacing={8}>
-                                <Grid item md={4}>
-                                    <Paper classes={{root: classes.content}}>
-                                        <Avatar
-                                            src={this.props.user.avatar}
-                                            className={classNames(classes.avatar)}
-                                        />
-
-                                        <Typography component="h2" variant="title" align="center">
-
-                                            Lena
+                                <Grid item md={4} container justify="center">
+                                    <Paper className={classes.Name}>
+                                        <AccountCircle className={classes.icon}/>
+                                        <Typography variant="h6" align="center">
+                                            {this.props.user.username}
                                         </Typography>
-                                        <input
-                                            accept="image/*"
-                                            className={classes.input}
-                                            id="contained-button-file"
-                                            multiple
-                                            type="file"
-                                        />
-                                        <label htmlFor="contained-button-file">
-                                            <Button
-                                                variant="outlined"
-                                                size="mdall"
-                                                component="span"
-                                                align={'center'}
-                                                onClick={this.onPictureLoading}
-                                                className={classes.button_upload}>
-                                                Изменить аватар
-                                            </Button>
-                                        </label>
                                     </Paper>
-
-
                                 </Grid>
                                 <Grid item sm={8}>
                                     <Paper className={classes.main_info}>
@@ -291,12 +266,6 @@ class Profile extends React.Component {
                                                 Сохранить
                                             </Button>
                                         )}
-
-                                        <Button variant="contained" color="secondary"
-                                                className={classes.button_password} onClick={this.props.logout}
-                                                href='/login'>
-                                            Выйти
-                                        </Button>
                                     </Paper>
                                 </Grid>
                             </Grid>

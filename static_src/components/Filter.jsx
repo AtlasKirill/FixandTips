@@ -20,7 +20,7 @@ const styles = theme => ({
         fontSize: '1.2em',
         maxHeight: 20,
         minWidth: 150,
-        marginLeft: 0,
+        marginLeft: 8,
         marginRight: 8,
         marginTop: 8,
         marginBottom: 8,
@@ -45,6 +45,7 @@ const styles = theme => ({
         padding: 0,
         marginTop: 20,
         marginBottom: 0,
+        marginLeft: 20,
     },
     container: {
         display: 'flex',
@@ -60,7 +61,6 @@ const styles = theme => ({
 });
 
 class Filter extends React.Component {
-
     state = {
         color: 'default',
         clickedUrgent: false,
@@ -73,72 +73,65 @@ class Filter extends React.Component {
         clickedOther: false,
         colorProcessing: 'default',
         colorSent: 'default',
-        colorUrgent: 'default',
+        colorComplete: 'default',
         colorCarpenter: 'default',
         colorElictrician: 'default',
         colorPlumber: 'default',
         colorChemistry: 'default',
         colorOther: 'default',
         status: '',
-        category: '',
         category1: '',
         category2: '',
         category3: '',
         category4: '',
         category5: '',
-        urgency: false
+        urgency: '',
     };
     searchProcessing = event => {
         this.setState({clickedProcessing: !this.state.clickedProcessing});
         this.setState({colorProcessing: this.state.clickedProcessing ? 'default' : 'secondary'});
-        this.setState({urgency: !this.state.urgency});
+        this.setState({status: this.state.clickedSent ? '' : 'В процессе'});
     };
     searchSent = event => {
         this.setState({clickedSent: !this.state.clickedSent});
         this.setState({colorSent: this.state.clickedSent ? 'default' : 'secondary'});
-        this.setState({urgency: !this.state.urgency});
+        this.setState({status: this.state.clickedSent ? '' : 'Отправлена'});
 
     };
-    searchUrgent = event => {
-        this.setState({clickedUrgent: !this.state.clickedUrgent});
-        this.setState({colorUrgent: this.state.clickedUrgent ? 'default' : 'secondary'});
-        this.setState({urgency: !this.state.urgency});
-
-    };
-    searchСarpenter = event => {
-        this.setState({clickedCarpenter: !this.state.clickedCarpenter});
-        this.setState({colorCarpenter: this.state.clickedCarpenter ? 'default' : 'secondary'});
-        this.setState({category: 'Плотник'});
+    searchСomplete = event => {
+        this.setState({clickedComplete: !this.state.clickedComplete});
+        this.setState({colorComplete: this.state.clickedComplete ? 'default' : 'secondary'});
+        this.setState({status: this.state.clickedComplete ? '' : 'Выполнена'});
 
     };
     searchСarpenter = event => {
         this.setState({clickedCarpenter: !this.state.clickedCarpenter});
         this.setState({colorCarpenter: this.state.clickedCarpenter ? 'default' : 'secondary'});
-        this.setState({category1: 'Плотник'});
+        this.setState({category1: this.state.clickedCarpenter ? '' : 'Плотник'});
 
     };
     searchPlumber = event => {
         this.setState({clickedPlumber: !this.state.clickedPlumber});
         this.setState({colorPlumber: this.state.clickedPlumber ? 'default' : 'secondary'});
-        this.setState({category2: 'Сантехник'});
+        this.setState({category2: this.state.clickedPlumber ? '' : 'Сантехник'});
 
     };
     searchElectrician = event => {
         this.setState({clickedElictrician: !this.state.clickedElictrician});
         this.setState({colorElictrician: this.state.clickedElictrician ? 'default' : 'secondary'});
-        this.setState({category3: 'Электрик'});
+        this.setState({category3: this.state.clickedElictrician ? '' : 'Электрик'});
 
     };
     searchChemistry = event => {
         this.setState({clickedChemistry: !this.state.clickedChemistry});
         this.setState({colorChemistry: this.state.clickedChemistry ? 'default' : 'secondary'});
-        this.setState({category4: 'Хим обработка'});
+        this.setState({category4: this.state.clickedChemistry ? '' : 'Хим обработка'});
 
     };
     searchOther = event => {
         this.setState({clickedOther: !this.state.clickedOther});
         this.setState({colorOther: this.state.clickedOther ? 'default' : 'secondary'});
-        this.setState({category5: 'Другое'});
+        this.setState({category5: this.state.clickedOther ? '' : 'Другое'});
 
     };
     handleChange = name => event => {
@@ -157,9 +150,23 @@ class Filter extends React.Component {
 
         return (
             <React.Fragment>
-                <Typography variant="overline" gutterBottom className={classes.status}>
+                <Typography variant="h6" gutterBottom className={classes.status}>
                     Статус:
                 </Typography>
+                <Button variant="contained" className={classes.button}
+                        style={
+                            this.state.colorSent === 'secondary'
+                                ? {
+                                    '--background-start': '#ec407a',
+                                }
+                                : {
+                                    '--background-start': '#ffffff',
+                                }
+                        }
+                        onClick={this.searchSent}
+                >
+                    НОВЫЕ
+                </Button>
                 <Button
                     className={classes.button}
                     style={
@@ -177,7 +184,7 @@ class Filter extends React.Component {
                 </Button>
                 <Button variant="contained" className={classes.button}
                         style={
-                            this.state.colorSent === 'secondary'
+                            this.state.colorСomplete === 'secondary'
                                 ? {
                                     '--background-start': '#ec407a',
                                 }
@@ -185,25 +192,11 @@ class Filter extends React.Component {
                                     '--background-start': '#ffffff',
                                 }
                         }
-                        onClick={this.searchSent}
+                        onClick={this.searchСomplete}
                 >
-                    НОВЫЕ
+                    ВЫПОЛНЕНО
                 </Button>
-                <Button variant="contained" className={classes.button}
-                        style={
-                            this.state.colorUrgent === 'secondary'
-                                ? {
-                                    '--background-start': '#ec407a',
-                                }
-                                : {
-                                    '--background-start': '#ffffff',
-                                }
-                        }
-                        onClick={this.searchUrgent}
-                >
-                    СРОЧНО
-                </Button>
-                <Typography variant="overline" gutterBottom className={classes.status}>
+                <Typography variant="h6" gutterBottom className={classes.status}>
                     Тип заявок:
                 </Typography>
                 <Button variant="contained" className={classes.button}
@@ -276,7 +269,7 @@ class Filter extends React.Component {
                 >
                     ДРУГОЕ
                 </Button>
-                <Typography variant="overline" gutterBottom className={classes.status}>
+                <Typography variant="h6" gutterBottom className={classes.status}>
                     По дате:
                 </Typography>
                 <Grid container spacing={5}>

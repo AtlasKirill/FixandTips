@@ -15,18 +15,22 @@ class UserShortSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id','username')
+        fields = ('id','username','flat')
 
 class CreateUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ('id', 'username', 'password')
+        fields = ('id', 'username', 'password', 'name', 'surname', 'flat')
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):
         user = User.objects.create_user(validated_data['username'],
                                         None,
-                                        validated_data['password'])
+                                        validated_data['password'],
+                                        name=validated_data['name'],
+                                        surname=validated_data['surname'],
+                                        flat=validated_data['flat']
+                                        )
         return user
 
 

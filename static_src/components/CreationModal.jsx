@@ -21,7 +21,6 @@ import {bindActionCreators} from 'redux';
 import {createRequest} from '../actions/requests';
 import {connect} from 'react-redux';
 import AddIcon from '@material-ui/icons/Add';
-import CategoryList from './CategoryList';
 import {loadRequests} from './../actions/requests.js';
 import {loadNews} from './../actions/news.js';
 import Checkbox from '@material-ui/core/Checkbox';
@@ -54,6 +53,12 @@ const styles = theme => ({
     formGroupControl: {
         margin: theme.spacing.unit * 3,
     },
+    head: {
+        fontSize: '1.2em',
+    },
+    title: {
+        fontSize: '1.5em',
+    },
 });
 
 
@@ -69,6 +74,9 @@ class NewRequest extends React.Component {
 
     handleClickOpen = () => {
         this.setState({open: true});
+        this.setState({description: ''});
+        this.setState({category: 'No category'});
+        this.setState({urgency: false});
     };
 
     handleClose = () => {
@@ -92,18 +100,14 @@ class NewRequest extends React.Component {
     onClick = (e) => {
         console.log('onClick')
         this.props.createRequest(apiUrls.requests,
-            {
-                description: this.state.description,
+            {   description: this.state.description,
                 category: this.state.category,
                 materials: this.state.materials,
                 status: this.state.status,
-                urgency: this.state.urgency
-            },
+                urgency: this.state.urgency},
             store.getState().auth.token);
-        this.setState({open: false});
-        this.props.loadRequests(apiUrls.myRequests(this.props.user.id), store.getState().auth.token);
+        this.setState({ open: false, description: 'No description' });
     }
-
     render() {
         const {classes} = this.props;
         return (
@@ -119,9 +123,10 @@ class NewRequest extends React.Component {
                     onClose={this.handleClose}
                     aria-labelledby="registration-dialog-title"
                 >
-                    <DialogTitle id="registration-dialog-title" align="center">Создание заявки</DialogTitle>
+                    <DialogTitle id="registration-dialog-title" className={classes.title} align="center">Создание
+                        заявки</DialogTitle>
                     <DialogContent>
-                        <DialogContentText align="center">
+                        <DialogContentText align="center" className={classes.head}>
                             Заполните данные формы
                         </DialogContentText>
                         <TextField
@@ -136,7 +141,7 @@ class NewRequest extends React.Component {
                             helperText="Что сломалось"
                             variant="outlined"
                         />
-                        <Typography align="center">
+                        <Typography align="center" className={classes.head}>
                             Выберите тип заявки
                         </Typography>
                         <FormControl component="fieldset" className={classes.formControl}>
@@ -150,10 +155,11 @@ class NewRequest extends React.Component {
                                 <FormControlLabel value="Сантехник" control={<Radio/>} label="Сантехник"/>
                                 <FormControlLabel value="Плотник" control={<Radio/>} label="Плотник"/>
                                 <FormControlLabel value="Электрик" control={<Radio/>} label="Электрик"/>
+                                <FormControlLabel value="Хим обработка" control={<Radio/>} label="Хим обработка"/>
                                 <FormControlLabel value="Другое" control={<Radio/>} label="Другое"/>
                             </RadioGroup>
                         </FormControl>
-                        <Typography align="center">
+                        <Typography align="center" className={classes.head}>
                             Выберите приоритет заявки
                         </Typography>
                         <FormGroup className={classes.formGroupControl}>
