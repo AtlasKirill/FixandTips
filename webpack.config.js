@@ -9,10 +9,11 @@ module.exports = {
     },
     context: `${__dirname}/static_src`,
     output: {
-        path: `${__dirname}/static/build`,
+
         // imgPath: `${__dirname}/media/images`,
+        path: `${__dirname}/staticfiles/build`,
         filename: NODE_ENV === 'development' ? '[name].js' : '[name]-[hash].js',
-        publicPath: '/static/build/',
+        publicPath: '/staticfiles/build/',
         library: '[name]',
     },
 

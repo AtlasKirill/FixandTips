@@ -52,6 +52,7 @@
     "webpack": "^4.20.2"
   },
   "devDependencies": {
-    "webpack-bundle-tracker": "^0.4.2-beta"
+    "webpack-bundle-tracker": "^0.4.2-beta",
+    "webpack-cli": "^3.1.2"
   }
 }

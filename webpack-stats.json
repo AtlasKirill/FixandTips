@@ -1,2 +1,1 @@
-{"status":"done","publicPath":"/static/build/","chunks":{"indexBundle":[{"name":"indexBundle.js","publicPath":"/static/build/indexBundle.js","path":"/home/kirill/programms/final_project_track/FixandTips/static/build/indexBundle.js"}]}}
-
+{"status":"done","publicPath":"/staticfiles/build/","chunks":{"indexBundle":[{"name":"indexBundle.js","publicPath":"/staticfiles/build/indexBundle.js","path":"/home/ubuntu/project/fat/FixandTips/staticfiles/build/indexBundle.js"}]}}
