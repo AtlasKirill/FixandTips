@@ -51,7 +51,7 @@ export default function requests(store = initialState, action){
             console.log(action.payload);
             return update(newStore, {
                 isLoading: { $set: false },
-                requestList: { $merge: action.payload.result },
+                requestList: { $unshift: action.payload.result },
 
             });
         }

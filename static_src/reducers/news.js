@@ -46,7 +46,7 @@ export default function news(store = initialState, action){
             console.log(action.payload);
             return update(newStore, {
                 isLoading: { $set: false },
-                newsList: { $merge: action.payload.result },
+                newsList: { $unshift: action.payload.result },
 
             });
         }

@@ -181,10 +181,23 @@ class Chart extends React.Component {
             <div>
                 <NavBar/>
                 <React.Fragment>
-
                     <Typography variant="overline" gutterBottom className={classes.status}>
                         Статус:
                     </Typography>
+                    <Button variant="contained" className={classes.button}
+                            style={
+                                this.state.colorSent === 'secondary'
+                                    ? {
+                                        '--background-start': '#ec407a',
+                                    }
+                                    : {
+                                        '--background-end': '#ffffff',
+                                    }
+                            }
+                            onClick={this.searchSent}
+                    >
+                    НОВЫЕ
+                </Button>
                     <Button
                         className={classes.button}
                         style={
@@ -200,20 +213,7 @@ class Chart extends React.Component {
                     >
                         В ПРОЦЕССЕ
                     </Button>
-                    <Button variant="contained" className={classes.button}
-                            style={
-                                this.state.colorSent === 'secondary'
-                                    ? {
-                                        '--background-start': '#ec407a',
-                                    }
-                                    : {
-                                        '--background-end': '#ffffff',
-                                    }
-                            }
-                            onClick={this.searchSent}
-                    >
-                    НОВЫЕ
-                </Button>
+
                 <Button variant="contained" className={classes.button} 
                     style={
                     this.state.colorComplete === 'secondary'
