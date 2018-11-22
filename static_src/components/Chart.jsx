@@ -95,10 +95,9 @@ class Chart extends React.Component {
         colorOther: 'default',
         fromDate: '',
         toDate: '',
-        status:'',
-        complete:'',
-        processing:'',
-        sent:'',
+        status1:'',
+        status2:'',
+        status3:'',
         category1:'',
         category2:'',
         category3:'',
@@ -111,19 +110,20 @@ class Chart extends React.Component {
     searchProcessing = event => {
         this.setState({ clickedProcessing: ! this.state.clickedProcessing });
         this.setState({ colorProcessing: this.state.clickedProcessing ? 'default' : 'secondary' });
-        this.setState({ state: this.state.clickedSent ? '' : 'В процессе' });
+        this.setState({ status2: this.state.clickedProcessing ? '' : 'В процессе'});
+
       };
 
     searchSent = event => {
         this.setState({ clickedSent: ! this.state.clickedSent });
         this.setState({ colorSent: this.state.clickedSent ? 'default' : 'secondary' });
-        this.setState({ state: this.state.clickedSent ? '' : 'Отправлена' });
-    
+        this.setState({ status1: this.state.clickedSent ? '' : 'Отправлена'});
+
       };
     searchСomplete = event => {
         this.setState({ clickedComplete: ! this.state.clickedComplete });
         this.setState({ colorComplete: this.state.clickedComplete ? 'default' : 'secondary' });
-        this.setState({ state: this.state.clickedComplete ? '' : 'Выполнена' });
+        this.setState({ status3: this.state.clickedComplete ? '' : 'Выполнена'});
     
       };
     searchСarpenter = event => {
@@ -164,7 +164,10 @@ class Chart extends React.Component {
 
     drawChart = event => {
         console.log(apiUrls.filter(this.state.status, this.state.category1, this.state.category2, this.state.category3, this.state.category4, this.state.category5, this.state.urgency, this.state.fromDate, this.state.toDate));
-        this.props.prepareData(apiUrls.filter(this.state.status,
+        this.props.prepareData(apiUrls.filter(
+            this.state.status1,
+            this.state.status2,
+            this.state.status3,
             this.state.category1,
             this.state.category2,
             this.state.category3,
@@ -213,7 +216,6 @@ class Chart extends React.Component {
                     >
                         В ПРОЦЕССЕ
                     </Button>
-
                 <Button variant="contained" className={classes.button} 
                     style={
                     this.state.colorComplete === 'secondary'
@@ -345,7 +347,7 @@ class Chart extends React.Component {
                             <Line type="monotone" dataKey="Электрик" stroke="#82ca9d"/>
                             <Line type="monotone" dataKey="Сантехник" stroke="#ff1744"/>
                             <Line type="monotone" dataKey="Другое" stroke="#ff8000"/>
-                            <Line type="monotone" dataKey="Хим обработка" stroke="#ff8000"/>
+                            <Line type="monotone" dataKey="Хим обработка" stroke="#9c27b0"/>
                             <Line type="monotone" dataKey="Плотник" stroke="#8884d8" activeDot={{r: 8}}/>
                         </LineChart>
                     </ResponsiveContainer>
