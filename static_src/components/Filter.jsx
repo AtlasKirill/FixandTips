@@ -63,7 +63,7 @@ const styles = theme => ({
 class Filter extends React.Component {
     state = {
         color: 'default',
-        clickedUrgent: false,
+        clickedComplete: false,
         clickedProcessing: false,
         clickedSent: false,
         clickedCarpenter: false,
@@ -79,7 +79,9 @@ class Filter extends React.Component {
         colorPlumber: 'default',
         colorChemistry: 'default',
         colorOther: 'default',
-        status: '',
+        status1: '',
+        status2: '',
+        status3: '',
         category1: '',
         category2: '',
         category3: '',
@@ -88,20 +90,22 @@ class Filter extends React.Component {
         urgency: '',
     };
     searchProcessing = event => {
-        this.setState({clickedProcessing: !this.state.clickedProcessing});
-        this.setState({colorProcessing: this.state.clickedProcessing ? 'default' : 'secondary'});
-        this.setState({status: this.state.clickedSent ? '' : 'В процессе'});
-    };
-    searchSent = event => {
-        this.setState({clickedSent: !this.state.clickedSent});
-        this.setState({colorSent: this.state.clickedSent ? 'default' : 'secondary'});
-        this.setState({status: this.state.clickedSent ? '' : 'Отправлена'});
+        this.setState({ clickedProcessing: ! this.state.clickedProcessing });
+        this.setState({ colorProcessing: this.state.clickedProcessing ? 'default' : 'secondary' });
+        this.setState({ status2: this.state.clickedProcessing ? '' : 'В процессе'});
 
-    };
+      };
+
+    searchSent = event => {
+        this.setState({ clickedSent: ! this.state.clickedSent });
+        this.setState({ colorSent: this.state.clickedSent ? 'default' : 'secondary' });
+        this.setState({ status1: this.state.clickedSent ? '' : 'Отправлена'});
+
+      };
     searchСomplete = event => {
-        this.setState({clickedComplete: !this.state.clickedComplete});
-        this.setState({colorComplete: this.state.clickedComplete ? 'default' : 'secondary'});
-        this.setState({status: this.state.clickedComplete ? '' : 'Выполнена'});
+        this.setState({ clickedComplete: ! this.state.clickedComplete });
+        this.setState({ colorComplete: this.state.clickedComplete ? 'default' : 'secondary' });
+        this.setState({ status3: this.state.clickedComplete ? '' : 'Выполнена'});
 
     };
     searchСarpenter = event => {
@@ -140,9 +144,8 @@ class Filter extends React.Component {
         });
     };
     showItems = event => {
-        console.log(apiUrls.filter(this.state.status, this.state.category1, this.state.category2, this.state.category3, this.state.category4, this.state.category5, this.state.urgency, this.state.fromDate, this.state.toDate));
-        this.props.filterRequest(apiUrls.filter(this.state.status, this.state.category1, this.state.category2, this.state.category3, this.state.category4, this.state.category5, this.state.urgency, this.state.fromDate, this.state.toDate), store.getState().auth.token);
-
+        // console.log(apiUrls.filter(this.state.status, this.state.category1, this.state.category2, this.state.category3, this.state.category4, this.state.category5, this.state.urgency, this.state.fromDate, this.state.toDate));
+        this.props.filterRequest(apiUrls.filter(this.state.status1,this.state.status2,this.state.status3, this.state.category1, this.state.category2, this.state.category3, this.state.category4, this.state.category5, this.state.urgency, this.state.fromDate, this.state.toDate), store.getState().auth.token);
     };
 
     render() {
@@ -184,7 +187,7 @@ class Filter extends React.Component {
                 </Button>
                 <Button variant="contained" className={classes.button}
                         style={
-                            this.state.colorСomplete === 'secondary'
+                            this.state.colorComplete === 'secondary'
                                 ? {
                                     '--background-start': '#ec407a',
                                 }
@@ -192,7 +195,7 @@ class Filter extends React.Component {
                                     '--background-start': '#ffffff',
                                 }
                         }
-                        onClick={this.searchСomplete}
+                        onClick={this.searchComplete}
                 >
                     ВЫПОЛНЕНО
                 </Button>

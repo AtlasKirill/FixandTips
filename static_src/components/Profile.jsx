@@ -22,20 +22,15 @@ import {bindActionCreators} from 'redux';
 import store from './../index.jsx';
 import apiUrls from './../constants/apiUrls.js';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import {Link, Redirect} from 'react-router-dom';
 
 
 
 const styles = theme => ({
-
-    root: {
-        display: 'flex',
-        alignItems: 'center',
-        flexDirection: 'row',
-    },
     card: {
         // maxWidth: 700,
         margin: 20,
-        minWidth: 650,
+        // minWidth: 650,
     },
 
     main_info: {
@@ -96,12 +91,14 @@ const styles = theme => ({
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',
-        flexWrap: 'wrap',
+        // flexWrap: 'wrap',
         maxWidth: 600,
         maxHeight: 200,
         marginTop: 'auto',
         marginBottom: 'auto',
         boxShadow: 'none',
+        marginLeft:20,
+        marginRight:10,
     },
     icon: {
         padding: 8,
@@ -176,7 +173,10 @@ class Profile extends React.Component {
                                     <Paper className={classes.Name}>
                                         <AccountCircle className={classes.icon}/>
                                         <Typography variant="h6" align="center">
-                                            {this.props.user.username}
+                                            {this.props.user.name}
+                                        </Typography>
+                                        <Typography variant="h6" align="center">
+                                            {this.props.user.surname}
                                         </Typography>
                                     </Paper>
                                 </Grid>
