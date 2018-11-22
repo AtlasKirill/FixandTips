@@ -18,12 +18,19 @@ CATEGORY_CHOICES = (
     ('Хим обработка','Хим обработка'),
     ('Другое','Другое'),
 )
+STATUS_CHOICES = (
+    ('Отправлена','Отправлена'),
+    ('В процессе','В процессе'),
+    ('Выполнена','Выполнена'),
+)
+
 
 class RequestFilter(filters.FilterSet):
 
     from_date = django_filters.DateTimeFilter(input_formats=['%Y-%m-%dT%H:%M:%S.%fZ',],field_name="created_at", lookup_expr='gte')
     to_date = django_filters.DateTimeFilter(input_formats=['%Y-%m-%dT%H:%M:%S.%fZ',],field_name="created_at", lookup_expr='lte')
     category = django_filters.MultipleChoiceFilter(choices= CATEGORY_CHOICES)
+    status = django_filters.MultipleChoiceFilter(choices= STATUS_CHOICES)
 
     class Meta:
         model = Request

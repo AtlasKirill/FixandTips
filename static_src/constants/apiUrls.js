@@ -1,4 +1,4 @@
-function filter(status='',category1='',category2='',category3='',category4='',category5='',urgency='',fromDate='',toDate='')
+function filter(status1='',status2='',status3='', category1='',category2='',category3='',category4='',category5='',urgency='',fromDate='',toDate='')
 {
     if( category1 != '')
     {
@@ -20,8 +20,20 @@ function filter(status='',category1='',category2='',category3='',category4='',ca
     {
         category5 = '&category=Другое';
     }
+    if( status1 != '')
+    {
+        status1 = '&status=Отправлена';
+    }
+    if( status2 != '')
+    {
+        status2 = '&status=В процессе';
+    }
+    if( status3 != '')
+    {
+        status3 = '&status=Выполнена';
+    }
 
-    var url = '/api/requests/?status='+status+category1+category2+category3+category4+category5+'&urgency='+urgency+'&from_date='+fromDate+'T00:00:00.000000Z&to_date='+toDate+'T23:59:59.000000Z'
+    var url = '/api/requests/?urgency='+urgency+category1+category2+category3+category4+category5+status1+status2+status3+'&from_date='+fromDate+'T00:00:00.000000Z&to_date='+toDate+'T23:59:59.000000Z'
     
     return url
 }
