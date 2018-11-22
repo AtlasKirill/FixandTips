@@ -110,6 +110,12 @@ class StudentRequest extends React.Component {
         this.props.deleteRequest(apiUrls.requestDetail(this.props.id), {is_deleted: true}, store.getState().auth.token);
     };
 
+    onCancel = (e) => {
+        this.setState(state => ({
+            confirmation: false,
+        }));
+
+    };
     render() {
         var cancel;
         const {classes} = this.props;
@@ -187,9 +193,14 @@ class StudentRequest extends React.Component {
                             <Grid item md={6}>
                                 <CardContent classes={{root: classes.cancelgrid}}>
                                     {this.state.confirmation && (
+                                        <div>
                                     <Button onClick={this.onDelete}>
                                         Подтвердить
                                     </Button>
+                                            <Button onClick={this.onCancel}>
+                                        Отменить
+                                    </Button>
+                                            </div>
                                 )}
                                     {!this.state.confirmation && (
                                         <div>

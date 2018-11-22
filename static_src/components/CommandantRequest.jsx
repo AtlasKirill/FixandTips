@@ -212,7 +212,7 @@ class CommandantRequest extends React.Component {
                         <Grid item md={6}>
                             <CardContent classes={{root: classes.content}}>
                                 <Typography variant="subtitle2">
-                                    { this.props.author.username }, { this.props.author.flat }к.
+                                    { this.props.author.name } { this.props.author.surname }, { this.props.author.flat }к.
                                 </Typography>
                                 <Typography variant="body1">
                                     { this.props.description }
