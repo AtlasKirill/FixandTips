@@ -13,6 +13,6 @@ class RequestSerializer(serializers.ModelSerializer):
     category = CategorySerializer
     class Meta:
         model = Request
-        fields = ('author', 'created_at', 'category', 'id', 'is_deleted', 'materials', 'status', 'description', 'urgency')
+        fields = ('author', 'created_at', 'category', 'id', 'is_deleted', 'materials', 'status', 'description', 'urgency', 'is_shown')
 
 

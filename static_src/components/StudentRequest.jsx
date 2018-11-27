@@ -40,10 +40,6 @@ const styles = theme => ({
         minHeight: '100%',
     },
     content: {
-        // borderRadius:0,
-        // borderColor: 'white',
-        // borderShadow:'white',
-        // color:'white',
         '&:last-child': {
             padding: 10,
             paddingRight: 5,
@@ -51,7 +47,6 @@ const styles = theme => ({
         },
     },
     Status: {
-        // ...theme.typography.button,
         padding: 5,
         marginLeft: 10,
         marginTop: 0,

@@ -59,7 +59,7 @@ button_show:{
 class Filter extends React.Component {
   state = {
     color: 'default',
-    clickedUrgent: false,
+    clickedComplete: false,
     clickedProcessing: false,
     clickedSent: false,
     clickedCarpenter: false,
@@ -181,7 +181,7 @@ class Filter extends React.Component {
         </Button>
         <Button variant="contained" className={classes.button} 
         style={
-          this.state.colorUrgent === 'secondary'
+          this.state.colorComplete === 'secondary'
             ? {
               '--background-start': '#ec407a',
             }

@@ -73,7 +73,7 @@ class Chart extends React.Component {
     
     state = {
         color: 'default',
-        clickedUrgent: false,
+        clickedComplete: false,
         clickedProcessing: false,
         clickedSent: false,
         clickedCarpenter: false,
@@ -83,7 +83,7 @@ class Chart extends React.Component {
         clickedOther: false,
         colorProcessing: 'default',
         colorSent: 'default',
-        colorUrgent: 'default',
+        colorComplete: 'default',
         colorCarpenter: 'default',
         colorElictrician: 'default',
         colorPlumber: 'default',
@@ -212,7 +212,7 @@ class Chart extends React.Component {
                 </Button>
                 <Button variant="contained" className={classes.button} 
                     style={
-                    this.state.colorUrgent === 'secondary'
+                    this.state.colorComplete === 'secondary'
                         ? {
                         '--background-start': '#ec407a',
                         }

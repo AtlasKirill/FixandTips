@@ -17,6 +17,7 @@ import { loadNews } from '../actions/news';
 import IconButton from '@material-ui/core/IconButton';
 import apiUrls from './../constants/apiUrls';
 import store from './../index.jsx';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
     card: {
@@ -57,12 +58,34 @@ class CommandantNews extends React.Component {
         is_deleted: PropTypes.bool,
     }
 
+    state = {
+        confirmation: false,
+    };
+
+    onClick=(e)=> {
+        console.log(apiUrls.newsDetail(this.props.id))
+        this.setState(state => ({
+            confirmation: true,
+        }));
+    };
     onDelete=(e)=> {
-        console.log(apiUrls.requestDetail(this.props.id))
+        console.log(apiUrls.newsDetail(this.props.id))
+        this.setState(state => ({
+            confirmation: false,
+        }));
         this.props.deleteNews(apiUrls.newsDetail(this.props.id),{is_deleted:true},store.getState().auth.token);
-    }
+    };
+
+    // onDelete=(e)=> {
+    //     console.log(apiUrls.requestDetail(this.props.id))
+    //     this.props.deleteNews(apiUrls.newsDetail(this.props.id),{is_deleted:true},store.getState().auth.token);
+    // }
     render() {
         const {classes} = this.props;
+        var cancel = <IconButton aria-label="Delete"
+                                onClick={this.onClick}>
+                            <DeleteIcon/>
+                    </IconButton>;
         if (this.props.is_deleted) {
             return(<div></div>);
         }
@@ -89,10 +112,16 @@ class CommandantNews extends React.Component {
                     </Grid>
                     <Grid item md={12}>
                         <CardContent classes={{root: classes.delete}}>
-                        <IconButton aria-label="Delete"
-                                    onClick={this.onDelete}>
-                                    <DeleteIcon/>
-                        </IconButton>
+                            {this.state.confirmation && (
+                                <Button onClick={this.onDelete}>
+                                    Подтвердить
+                                </Button>   
+                            )}
+                            {!this.state.confirmation && (
+                            <div>
+                                { cancel }
+                            </div>
+                            )}
                             {/* <CommandantNewsWarning/> */}
                         </CardContent>
                     </Grid>

@@ -33,7 +33,6 @@ import store from './../index.jsx';
 
 const styles = theme => ({
     card: {
-
         margin: 10,
     },
     urgently_button: {
@@ -116,7 +115,23 @@ class CommandantRequest extends React.Component {
         author: PropTypes.number,
         is_deleted: PropTypes.bool,
     }
+    state = {
+        confirmation: false,
+    };
 
+    onClick=(e)=> {
+        console.log(apiUrls.requestDetail(this.props.id))
+        this.setState(state => ({
+            confirmation: true,
+        }));
+    };
+    onDelete=(e)=> {
+        console.log(apiUrls.requestDetail(this.props.id))
+        this.setState(state => ({
+            confirmation: false,
+        }));
+        this.props.deleteRequest(apiUrls.requestDetail(this.props.id),{is_deleted:true},store.getState().auth.token);
+    };
 
     handleChange = name => event => {
         this.setState({
@@ -134,6 +149,10 @@ class CommandantRequest extends React.Component {
     handleComplete=(e)=> {
         this.setState({ anchorEl: null });
         this.props.updateRequest(apiUrls.requestDetail(this.props.id),{status:'Выполнена'}, store.getState().auth.token); 
+    };
+    handleReject=(e)=> {
+        this.setState({ anchorEl: null });
+        this.props.updateRequest(apiUrls.requestDetail(this.props.id),{status:'Отклонена'}, store.getState().auth.token); 
     };
     handleCarpenter=(e)=> {
         this.setState({ anchorEl1: null });
@@ -155,10 +174,10 @@ class CommandantRequest extends React.Component {
         this.setState({ anchorEl1: null });
         this.props.updateRequest(apiUrls.requestDetail(this.props.id),{category:'Другое'}, store.getState().auth.token); 
     };
-    onClick=(e)=> {
-        console.log(apiUrls.requestDetail(this.props.id))
-        this.props.deleteRequest(apiUrls.requestDetail(this.props.id),{is_deleted:true}, store.getState().auth.token);
-    };
+    // onClick=(e)=> {
+    //     console.log(apiUrls.requestDetail(this.props.id))
+    //     this.props.deleteRequest(apiUrls.requestDetail(this.props.id),{is_shown:false}, store.getState().auth.token);
+    // };
 
     onClickChange=(e)=> {
         this.setState(state => ({
@@ -199,9 +218,12 @@ class CommandantRequest extends React.Component {
         const open = Boolean(anchorEl);
         const open1 = Boolean(anchorEl1);
         var requestStatus = this.props.status === 'Отправлена' ? 'Новая' : this.props.status;
+        var cancel = <IconButton aria-label="Delete"
+                                 onClick={this.onClick}>
+                        <DeleteIcon/>
+                    </IconButton>;
 
-        if(this.props.is_deleted){
-            console.log('Deleted');
+        if(this.props.is_deleted || !this.props.is_shown){
             return(<div></div>);
         }
         return (
@@ -296,6 +318,7 @@ class CommandantRequest extends React.Component {
                                     <MenuItem onClick={this.handleNew}>Новая</MenuItem>
                                     <MenuItem onClick={this.handleProcessing}>В процессе</MenuItem>
                                     <MenuItem onClick={this.handleComplete}>Выполнена</MenuItem>
+                                    <MenuItem onClick={this.handleReject}>Отклонена</MenuItem>
                                 </Menu>
 
                             </CardContent>
@@ -326,12 +349,16 @@ class CommandantRequest extends React.Component {
                         </Grid>
                         <Grid item md={6}>
                             <CardContent classes={{root: classes.delete}}>
-                                <Tooltip title="Delete 'position: absolute;'">
-                                    <IconButton aria-label="Delete"
-                                        onClick={this.onClick}>
-                                        <DeleteIcon/>
-                                    </IconButton>
-                                </Tooltip>
+                            {this.state.confirmation && (
+                                <Button onClick={this.onDelete}>
+                                    Подтвердить
+                                </Button>   
+                            )}
+                            {!this.state.confirmation && (
+                                <div>
+                                { cancel }
+                                </div>
+                            )}
                             </CardContent>
                         </Grid>
                     </Grid>

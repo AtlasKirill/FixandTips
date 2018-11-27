@@ -16,6 +16,14 @@ class CommandantRequestList extends React.Component{
     }
     componentDidMount() {
         this.props.loadRequests(apiUrls.requests, store.getState().auth.token);
+        this.interval = setInterval(() => {
+            this.props.loadRequests(apiUrls.requests, store.getState().auth.token);
+          }, 30000);
+        
+    }
+
+    componentWillUnmount() {
+        clearInterval(this.interval);
     }
 
     render(){
