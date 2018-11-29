@@ -14,6 +14,8 @@ import {connect} from 'react-redux';
 import Redirect from 'react-router-dom/es/Redirect';
 import NavBar from './NavBar.jsx';
 import Paper from '@material-ui/core/Paper';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 
 const styles = theme => ({
@@ -21,7 +23,7 @@ const styles = theme => ({
         padding: 20,
     },
     headline: {
-        marginTop:0,
+        marginTop: 0,
         margin: 20,
         fontSize: 'xx-large',
     },
@@ -37,8 +39,8 @@ const styles = theme => ({
         boxShadow: 'none',
     },
     headAndButtonStud: {
-        position:'relative',
-        top:8,
+        position: 'relative',
+        top: 8,
         display: 'flex',
         alignItems: 'center',
         flexDirection: 'column',
@@ -46,10 +48,30 @@ const styles = theme => ({
         marginTop: 'auto',
         marginBottom: 'auto',
         boxShadow: 'none',
-    }
+    },
+    textField: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        minWidth:350,
+    },
+    button: {
+        margin: theme.spacing.unit,
+        marginTop: 'auto',
+        marginBottom: 'auto',
+    },
 });
 
 class MainPage extends React.Component {
+    state = {
+        name: '',
+        idcard: '',
+    };
+
+    handleChange = name => event => {
+        this.setState({
+            [name]: event.target.value,
+        });
+    };
 
     render() {
         let page;
@@ -94,7 +116,6 @@ class MainPage extends React.Component {
                             <Typography gutterBottom className={classes.headline}>
                                 Мои запросы
                             </Typography>
-                            <CreationModal/>
                         </Paper>
                     </Grid>
                     <Grid item md={6} container justify="center">
@@ -104,11 +125,48 @@ class MainPage extends React.Component {
                             </Typography>
                         </Paper>
                     </Grid>
+                    <Grid item md={6} container justify="center">
+                        <CreationModal/>
+                    </Grid>
+                    <Grid item md={6} container justify="center">
+                    </Grid>
                     <Grid item md={6}>
                         <StudentRequestList/>
                     </Grid>
                     <Grid item md={6}>
                         <StudentNewsList/>
+                    </Grid>
+                </Grid>
+        } else if (this.props.user.role == 3) {
+            page =
+                <Grid container spacing={8}>
+                    <Grid item md={3} container>
+                        <Typography variant="h5" gutterBottom>
+                            Введите email и id card пользователя, который подтвердил факт проживания в 12 общежитии
+                        </Typography>
+                        <TextField
+                            id="outlined-name"
+                            label="email"
+                            className={classes.textField}
+                            value={this.state.name}
+                            onChange={this.handleChange('name')}
+                            margin="normal"
+                            variant="outlined"
+                        />
+                        <TextField
+                            id="outlined-name"
+                            label="id card"
+                            className={classes.textField}
+                            value={this.state.idcard}
+                            onChange={this.handleChange('idcard')}
+                            margin="normal"
+                            variant="outlined"
+                        />
+                    </Grid>
+                    <Grid item md={3} container >
+                        <Button variant="contained" color="primary" className={classes.button}>
+                            Подтвердить
+                        </Button>
                     </Grid>
                 </Grid>
         }

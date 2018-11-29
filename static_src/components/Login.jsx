@@ -58,7 +58,6 @@ const styles = theme => ({
 });
 
 class Login extends Component {
-
     state = {
         username: '',
         password: '',
@@ -73,12 +72,14 @@ class Login extends Component {
     }
 
     render() {
+        var style = {backgroundImage: 'url()'};
+
         const {classes} = this.props;
         if (this.props.isAuthenticated) {
             return <Redirect to="/"/>
         }
         return (
-            <div>
+            <div style={style}>
 
                 <React.Fragment>
                     <CssBaseline/>

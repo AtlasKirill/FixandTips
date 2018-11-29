@@ -18,7 +18,7 @@ import GetPrintAndStatistics from './GetPrintAndStatistic';
 import {connect} from 'react-redux';
 import {logout} from '../actions/auth';
 import {bindActionCreators} from 'redux';
-
+import Avatar from '@material-ui/core/Avatar';
 
 
 const styles = {
@@ -33,7 +33,7 @@ const styles = {
         color: 'white',
         // font: "Roboto",
         fontSize: '1.2em',
-        flexWrap:'wrap',
+        flexWrap: 'wrap',
     },
     buttonLogo: {
         background: 'inherit',
@@ -45,9 +45,9 @@ const styles = {
         background: 'inherit',
         color: 'white',
         fontSize: '1.2em',
-        flexWrap:'wrap',
-        padding:15,
-        marginLeft:30,
+        flexWrap: 'wrap',
+        padding: 15,
+        marginLeft: 30,
     },
     icon: {
         padding: 8,
@@ -121,6 +121,17 @@ class NavBar extends React.Component {
                 </Grid>
             </div>
         }
+        else if (this.props.user.role == 3) {
+            buttons = <div>
+                <Grid container spacing={8}>
+                    <Grid item md={6}>
+                        <Button color="inherit" className={classes.buttonExit} onClick={this.props.logout}>
+                            Выйти
+                        </Button>
+                    </Grid>
+                </Grid>
+            </div>
+        }
         return (
             <div className={classes.root}>
                 <AppBar position="static">
@@ -129,6 +140,11 @@ class NavBar extends React.Component {
                             {/*<ListItemLink to="/" primary="Fix&Tips"  />*/}
                             <Button component={Link} to="/"
                                     className={classes.buttonLogo}>
+                                {/*<Avatar*/}
+                                    {/*alt="Adelle Charles"*/}
+                                    {/*src="/static_src/fix_tips_logo_1.png"*/}
+                                    {/*// className={classNames(classes.avatar, classes.bigAvatar)}*/}
+                                {/*/>*/}
                                 Fix&Tips
                             </Button>
                         </Typography>

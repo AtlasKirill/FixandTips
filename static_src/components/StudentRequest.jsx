@@ -82,6 +82,10 @@ const styles = theme => ({
             marginBottom: 12,
         },
     },
+    cancelConfirm: {
+        paddingBottom: 8,
+        paddingTop: 8,
+    },
 });
 
 
@@ -116,6 +120,7 @@ class StudentRequest extends React.Component {
         }));
 
     };
+
     render() {
         var cancel;
         const {classes} = this.props;
@@ -194,14 +199,25 @@ class StudentRequest extends React.Component {
                                 <CardContent classes={{root: classes.cancelgrid}}>
                                     {this.state.confirmation && (
                                         <div>
-                                    <Button onClick={this.onDelete}>
-                                        Подтвердить
-                                    </Button>
-                                            <Button onClick={this.onCancel}>
-                                        Отменить
-                                    </Button>
-                                            </div>
-                                )}
+                                            <Grid container spacing={8}>
+                                                <Grid item md={3}>
+                                                    <Typography className={classes.cancelConfirm}>
+                                                        Отменить заявку:
+                                                    </Typography>
+                                                </Grid>
+                                                <Grid item md={2}>
+                                                    <Button onClick={this.onDelete}>
+                                                        Да
+                                                    </Button>
+                                                </Grid>
+                                                <Grid item md={2}>
+                                                    <Button onClick={this.onCancel}>
+                                                        Нет
+                                                    </Button>
+                                                </Grid>
+                                            </Grid>
+                                        </div>
+                                    )}
                                     {!this.state.confirmation && (
                                         <div>
                                             {cancel}

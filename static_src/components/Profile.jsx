@@ -25,7 +25,6 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import {Link, Redirect} from 'react-router-dom';
 
 
-
 const styles = theme => ({
     card: {
         // maxWidth: 700,
@@ -97,13 +96,14 @@ const styles = theme => ({
         marginTop: 'auto',
         marginBottom: 'auto',
         boxShadow: 'none',
-        marginLeft:20,
-        marginRight:10,
+        marginLeft: 20,
+        marginRight: 10,
     },
     icon: {
         padding: 8,
-        minWidth: 50,
-        minHeight:50,
+        minWidth: 150,
+        minHeight: 150,
+        color: '#81d4fa',
     },
 });
 
@@ -186,7 +186,6 @@ class Profile extends React.Component {
                                             Основная информация
                                         </Typography>
                                         <Typography variant="subtitle2" gutterBottom>
-
                                             {this.props.user.email}
                                         </Typography>
                                         <Typography variant="subtitle1" gutterBottom>
