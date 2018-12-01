@@ -108,6 +108,7 @@ class NavBar extends React.Component {
         if (this.props.isLoading) {
             return (<div></div>)
         }
+
         if (!this.props.isAuthenticated) {
             return <Redirect push to="/login"/>
         }

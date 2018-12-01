@@ -232,3 +232,4 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withWidth()(withStyles(styles)(MainPage)));
+
