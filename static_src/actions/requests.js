@@ -84,6 +84,7 @@ export const deleteRequest = (url, data, token) => {
     };
 };
 
+
 export const updateRequest = (url, data, token) => {
     return {
         [RSAA]: {

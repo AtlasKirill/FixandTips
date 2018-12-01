@@ -17,13 +17,13 @@ import {loadNews} from '../actions/news';
 import IconButton from '@material-ui/core/IconButton';
 import apiUrls from './../constants/apiUrls';
 import store from './../index.jsx';
+import Button from '@material-ui/core/Button';
 
 const styles = theme => ({
     card: {
         margin: 10,
         marginTop: 10,
-        border:'solid 1px',
-        minHeight: 213,
+        border: 'solid 1px',
     },
     devider: {
         marginTop: 5,
@@ -48,12 +48,16 @@ const styles = theme => ({
             margin: 0,
         },
     },
-    font:{
-        fontSize:'x-large',
+    font: {
+        fontSize: 'x-large',
     },
-    date:{
-        fontSize:'1em',
-    }
+    date: {
+        fontSize: '1em',
+    },
+    cancelConfirm: {
+        paddingBottom: 8,
+        paddingTop: 8,
+    },
 });
 
 class CommandantNews extends React.Component {
@@ -64,13 +68,36 @@ class CommandantNews extends React.Component {
         is_deleted: PropTypes.bool,
     }
 
-    onDelete=(e)=> {
-        console.log(apiUrls.requestDetail(this.props.id))
-        this.props.deleteNews(apiUrls.newsDetail(this.props.id),{is_deleted:true},store.getState().auth.token);
-    }
+    state = {
+        confirmation: false,
+    };
+
+    onClick = (e) => {
+        console.log(apiUrls.newsDetail(this.props.id))
+        this.setState(state => ({
+            confirmation: true,
+        }));
+    };
+    onDelete = (e) => {
+        console.log(apiUrls.newsDetail(this.props.id))
+        this.setState(state => ({
+            confirmation: false,
+        }));
+        this.props.deleteNews(apiUrls.newsDetail(this.props.id), {is_deleted: true}, store.getState().auth.token);
+    };
+    onCancel = (e) => {
+        this.setState(state => ({
+            confirmation: false,
+        }));
+
+    };
 
     render() {
         const {classes} = this.props;
+        var cancel = <IconButton aria-label="Delete"
+                                 onClick={this.onClick}>
+            <DeleteIcon/>
+        </IconButton>;
         if (this.props.is_deleted) {
             return (<div></div>);
         }
@@ -78,33 +105,55 @@ class CommandantNews extends React.Component {
             <div>
                 <Card classes={{root: classes.card}} elevation={3}>
                     <Grid container spacing={8}>
-                            <Grid item md={12}>
-                                <CardContent classes={{root: classes.content}}>
-                                    <Typography variant="h5" gutterBottom className={classes.font} align={"center"}>
-                                        {this.props.title}
-                                    </Typography>
-                                    <Typography align={"center"} className={classes.date}>
-                                        {new Date(this.props.created_at).toDateString()}
-                                    </Typography>
-                                </CardContent>
-                            </Grid>
-                            <Grid item md={12}>
-                                <CardContent classes={{root: classes.content}}>
-                                    <Typography component="p" variant="h6">
-                                        {this.props.text}
-                                    </Typography>
-                                    <Divider className={classes.devider}/>
-                                </CardContent>
-                            </Grid>
-                            <Grid item md={12}>
-                                <CardContent classes={{root: classes.delete}}>
-                                    <IconButton aria-label="Delete"
-                                                onClick={this.onDelete}>
-                                        <DeleteIcon/>
-                                    </IconButton>
-                                    {/* <CommandantNewsWarning/> */}
-                                </CardContent>
-                            </Grid>
+                        <Grid item md={12}>
+                            <CardContent classes={{root: classes.content}}>
+                                <Typography variant="h5" gutterBottom className={classes.font} align={"center"}>
+                                    {this.props.title}
+                                </Typography>
+                                <Typography align={"center"} className={classes.date}>
+                                    {new Date(this.props.created_at).toDateString()}
+                                </Typography>
+                            </CardContent>
+                        </Grid>
+                        <Grid item md={12}>
+                            <CardContent classes={{root: classes.content}}>
+                                <Typography component="p" variant="h6">
+                                    {this.props.text}
+                                </Typography>
+                                <Divider className={classes.devider}/>
+                            </CardContent>
+                        </Grid>
+                        <Grid item md={12}>
+                            <CardContent classes={{root: classes.delete}}>
+                                {this.state.confirmation && (
+                                        <div>
+                                            <Grid container spacing={8}>
+                                                <Grid item md={6}>
+                                                    <Typography className={classes.cancelConfirm}>
+                                                        Удалить новость:
+                                                    </Typography>
+                                                </Grid>
+                                                <Grid item md={3}>
+                                                    <Button onClick={this.onDelete}>
+                                                        Да
+                                                    </Button>
+                                                </Grid>
+                                                <Grid item md={3}>
+                                                    <Button onClick={this.onCancel}>
+                                                        Нет
+                                                    </Button>
+                                                </Grid>
+                                            </Grid>
+                                        </div>
+                                    )}
+                                {!this.state.confirmation && (
+                                    <div>
+                                        {cancel}
+                                    </div>
+                                )}
+                                {/* <CommandantNewsWarning/> */}
+                            </CardContent>
+                        </Grid>
                     </Grid>
                 </Card>
             </div>

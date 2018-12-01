@@ -18,6 +18,8 @@ import {Link, Redirect} from "react-router-dom";
 import {login} from '../actions/auth';
 import RegButton from './Registration';
 import NavBar from './NavBar';
+import withWidth from '@material-ui/core/withWidth';
+
 
 const styles = theme => ({
     layout: {
@@ -72,12 +74,15 @@ class Login extends Component {
     }
 
     render() {
-        var style = {backgroundImage: 'url()'};
+
+        var style = {backgroundImage: 'url("static/build/landing_real.jpg")'};
 
         const {classes} = this.props;
         if (this.props.isAuthenticated) {
             return <Redirect to="/"/>
         }
+
+
         return (
             <div style={style}>
 
@@ -131,9 +136,7 @@ class Login extends Component {
                             </Typography>
                             <RegButton/>
                         </Paper>
-
                     </main>
-
                 </React.Fragment>
             </div>
         );

@@ -28,6 +28,8 @@ import apiUrls from './../constants/apiUrls.js';
 import {bindActionCreators} from 'redux';
 import {deleteRequest} from '../actions/requests';
 import store from './../index.jsx';
+import withWidth from '@material-ui/core/withWidth';
+
 
 const styles = theme => ({
     card: {
@@ -44,31 +46,20 @@ const styles = theme => ({
             padding: 10,
             paddingRight: 5,
             margin: 5,
-            marginBottom: 0,
-            paddingBottom: 0,
-            paddingTop: 0,
+            // marginBottom: 0,
+            paddingBottom: 5,
+            paddingTop: 5,
         },
     },
     Status: {
-        // ...theme.typography.button,
-        padding: 5,
-        margin: 10,
+        padding: 8,
+        // margin: 10,
         marginLeft: 0,
         paddingLeft: 0,
+        fontSize: '1.1em',
         // marginLeft: 10,
         // marginTop: 0,
         // marginBottom: 10,
-    },
-    Cancel: {
-        padding: 5,
-        marginLeft: 1,
-        marginright: 1,
-        marginTop: 5,
-        marginBottom: 5,
-        maxWidth: 100,
-        minWidth: 100,
-        textAlign: 'center',
-        backgroundColor: '#4fc3f7',
     },
     alert: {
         color: 'red',
@@ -76,15 +67,24 @@ const styles = theme => ({
     },
     cancelgrid: {
         '&:last-child': {
-            padding: 5,
+            padding: 8,
             paddingRight: 5,
-            margin: 0,
-            marginBottom: 12,
+            margin: 8,
+            // marginBottom: 12,
         },
     },
     cancelConfirm: {
         paddingBottom: 8,
         paddingTop: 8,
+    },
+    description: {
+        fontSize: '1em',
+    },
+    buttonYes: {
+        backgroundColor: '#ffa183',
+    },
+    buttonNo: {
+        backgroundColor: '#b9f6ca',
     },
 });
 
@@ -137,100 +137,158 @@ class StudentRequest extends React.Component {
         if (this.props.is_deleted) {
             return (<div></div>);
         }
-        else
-            return (
-                <div>
-                    <Card className={classes.card}>
-                        <Grid container spacing={8}>
-                            <Grid item md={6}>
-                                <CardContent classes={{root: classes.content}}>
-                                    <Typography variant="body1">
-                                        {this.props.description}
-                                    </Typography>
-                                </CardContent>
-                            </Grid>
-                            <Grid item md={3}>
-                                <CardContent classes={{root: classes.content}}>
-                                    {this.props.urgency && (
-                                        <div>
-                                            <Typography variant="subtitle2" classes={{root: classes.urgently_button}}>
-                                                Срочно
-                                            </Typography>
-                                            <ErrorOutline className={classes.alert}/>
-                                        </div>
-                                    )}
-                                    {!this.props.urgency && (
-                                        <div>
-                                            <Typography variant="subtitle2" classes={{root: classes.urgently_button}}>
-                                                Не срочно
-                                            </Typography>
-                                        </div>
-                                    )}
-                                </CardContent>
-                            </Grid>
-                            <Grid item md={3}>
-                                <CardContent classes={{root: classes.content}}>
-                                    <Typography variant="subtitle2" align="right">
-                                        {new Date(this.props.created_at).toDateString()}
-                                    </Typography>
-                                </CardContent>
-                            </Grid>
-                            <Grid item md={6}>
-                                <CardContent classes={{root: classes.content}}>
-                                    <Typography variant="subtitle2">
-                                        Tип заявки (тех персонал)
-                                    </Typography>
-                                    <Typography variant="body1">
-                                        {this.props.category}
-                                    </Typography>
-                                </CardContent>
-                            </Grid>
-                            <Grid item md={12}>
-                                <Divider/>
-                            </Grid>
-                            <Grid item md={6} className={classes.content}>
-                                <CardContent classes={{root: classes.content}}>
-                                    <Typography className={classes.Status}>
-                                        {this.props.status}
-                                    </Typography>
-                                </CardContent>
-                            </Grid>
-                            <Grid item md={6}>
-                                <CardContent classes={{root: classes.cancelgrid}}>
-                                    {this.state.confirmation && (
-                                        <div>
-                                            <Grid container spacing={8}>
-                                                <Grid item md={3}>
-                                                    <Typography className={classes.cancelConfirm}>
-                                                        Отменить заявку:
-                                                    </Typography>
+        else {
+            if ('xs' === this.props.width || 'sm' === this.props.width) {
+                return (
+                    <div>
+                        <Card className={classes.card}>
+                            <Grid container spacing={8}>
+                                <Grid item xs={6}>
+                                    <CardContent classes={{root: classes.content}}>
+                                        <Typography variant="body1" className={classes.description}>
+                                            {this.props.description}
+                                        </Typography>
+                                    </CardContent>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <CardContent classes={{root: classes.content}}>
+                                        <Typography variant="subtitle2" align="right">
+                                            {new Date(this.props.created_at).toDateString()}
+                                        </Typography>
+                                    </CardContent>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <CardContent classes={{root: classes.content}}>
+                                        <Typography variant="subtitle2">
+                                            Tип заявки (тех персонал)
+                                        </Typography>
+                                        <Typography variant="body1">
+                                            {this.props.category}
+                                        </Typography>
+                                    </CardContent>
+                                </Grid>
+                                <Grid item xs={12}>
+                                    <Divider/>
+                                </Grid>
+                                <Grid item xs={6} className={classes.content}>
+                                    <CardContent classes={{root: classes.content}}>
+                                        <Typography className={classes.Status}>
+                                            {this.props.status}
+                                        </Typography>
+                                    </CardContent>
+                                </Grid>
+                                <Grid item xs={6}>
+                                    <CardContent classes={{root: classes.cancelgrid}}>
+                                        {this.state.confirmation && (
+                                            <div>
+                                                <Grid container spacing={8}>
+                                                    {/*<Grid item xs={3}>*/}
+                                                    {/*<Typography className={classes.cancelConfirm}>*/}
+                                                    {/*Отменить заявку:*/}
+                                                    {/*</Typography>*/}
+                                                    {/*</Grid>*/}
+                                                    <Grid item xs={6}>
+                                                        <Button onClick={this.onDelete} className={classes.buttonYes}>
+                                                            Да
+                                                        </Button>
+                                                    </Grid>
+                                                    <Grid item xs={6}>
+                                                        <Button onClick={this.onCancel} className={classes.buttonNo}>
+                                                            Нет
+                                                        </Button>
+                                                    </Grid>
                                                 </Grid>
-                                                <Grid item md={2}>
-                                                    <Button onClick={this.onDelete}>
-                                                        Да
-                                                    </Button>
-                                                </Grid>
-                                                <Grid item md={2}>
-                                                    <Button onClick={this.onCancel}>
-                                                        Нет
-                                                    </Button>
-                                                </Grid>
-                                            </Grid>
-                                        </div>
-                                    )}
-                                    {!this.state.confirmation && (
-                                        <div>
-                                            {cancel}
-                                        </div>
-                                    )}
-                                </CardContent>
+                                            </div>
+                                        )}
+                                        {!this.state.confirmation && (
+                                            <div>
+                                                {cancel}
+                                            </div>
+                                        )}
+                                    </CardContent>
+                                </Grid>
                             </Grid>
-                        </Grid>
 
-                    </Card>
+                        </Card>
 
-                </div>
-            );
+                    </div>
+                );
+            } else
+                return (
+                    <div>
+                        <Card className={classes.card}>
+                            <Grid container spacing={8}>
+                                <Grid item md={6}>
+                                    <CardContent classes={{root: classes.content}}>
+                                        <Typography variant="body1" className={classes.description}>
+                                            {this.props.description}
+                                        </Typography>
+                                    </CardContent>
+                                </Grid>
+                                <Grid item md={6}>
+                                    <CardContent classes={{root: classes.content}}>
+                                        <Typography variant="subtitle2" align="right">
+                                            {new Date(this.props.created_at).toDateString()}
+                                        </Typography>
+                                    </CardContent>
+                                </Grid>
+                                <Grid item md={6}>
+                                    <CardContent classes={{root: classes.content}}>
+                                        <Typography variant="subtitle2">
+                                            Tип заявки (тех персонал)
+                                        </Typography>
+                                        <Typography variant="body1">
+                                            {this.props.category}
+                                        </Typography>
+                                    </CardContent>
+                                </Grid>
+                                <Grid item md={12}>
+                                    <Divider/>
+                                </Grid>
+                                <Grid item md={6} className={classes.content}>
+                                    <CardContent classes={{root: classes.content}}>
+                                        <Typography className={classes.Status}>
+                                            {this.props.status}
+                                        </Typography>
+                                    </CardContent>
+                                </Grid>
+                                <Grid item md={6}>
+                                    <CardContent classes={{root: classes.cancelgrid}}>
+                                        {this.state.confirmation && (
+                                            <div>
+                                                <Grid container spacing={8}>
+                                                    <Grid item md={4}>
+                                                        <Typography className={classes.cancelConfirm}>
+                                                            Отменить заявку:
+                                                        </Typography>
+                                                    </Grid>
+                                                    <Grid item md={2}>
+                                                        <Button onClick={this.onDelete}>
+                                                            Да
+                                                        </Button>
+                                                    </Grid>
+                                                    <Grid item md={2}>
+                                                        <Button onClick={this.onCancel}>
+                                                            Нет
+                                                        </Button>
+                                                    </Grid>
+                                                </Grid>
+                                            </div>
+                                        )}
+                                        {!this.state.confirmation && (
+                                            <div>
+                                                {cancel}
+                                            </div>
+                                        )}
+                                    </CardContent>
+                                </Grid>
+                            </Grid>
+
+                        </Card>
+
+                    </div>
+                );
+        }
     }
 }
 
@@ -247,4 +305,4 @@ const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({deleteRequest}, dispatch)
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(StudentRequest));
+export default connect(mapStateToProps, mapDispatchToProps)(withWidth()(withStyles(styles)(StudentRequest)));

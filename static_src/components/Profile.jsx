@@ -23,6 +23,7 @@ import store from './../index.jsx';
 import apiUrls from './../constants/apiUrls.js';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import {Link, Redirect} from 'react-router-dom';
+import withWidth from '@material-ui/core/withWidth';
 
 
 const styles = theme => ({
@@ -99,6 +100,14 @@ const styles = theme => ({
         marginLeft: 20,
         marginRight: 10,
     },
+    NameOnMobile:{
+        display: 'flex',
+        alignItems: 'center',
+        flexDirection: 'column',
+        marginTop: 'auto',
+        marginBottom: 'auto',
+        boxShadow: 'none',
+    },
     icon: {
         padding: 8,
         minWidth: 150,
@@ -162,118 +171,234 @@ class Profile extends React.Component {
             return <Redirect push to="/login"/>
         }
 
-        return (
-            <div>
-                <NavBar/>
-                <Grid container spacing={8} className={classes.grid}>
-                    <Grid item md={12}>
-                        <Paper className={classes.card}>
-                            <Grid container spacing={8}>
-                                <Grid item md={4} container justify="center">
-                                    <Paper className={classes.Name}>
-                                        <AccountCircle className={classes.icon}/>
-                                        <Typography variant="h6" align="center">
-                                            {this.props.user.name}
-                                        </Typography>
-                                        <Typography variant="h6" align="center">
-                                            {this.props.user.surname}
-                                        </Typography>
-                                    </Paper>
-                                </Grid>
-                                <Grid item sm={8}>
-                                    <Paper className={classes.main_info}>
-                                        <Typography variant="h5" gutterBottom>
-                                            Основная информация
-                                        </Typography>
-                                        <Typography variant="subtitle2" gutterBottom>
-                                            {this.props.user.email}
-                                        </Typography>
-                                        <Typography variant="subtitle1" gutterBottom>
-                                            студент
-                                        </Typography>
-                                    </Paper>
-                                    <Paper className={classes.main_info}>
-                                        <Typography variant="h5" gutterBottom>
-                                            Контактная информация
-                                        </Typography>
+        if ('xs' === this.props.width || 'sm' === this.props.width) {
+            return (
+                <div>
+                    <NavBar/>
+                    <Grid container spacing={8} className={classes.grid}>
+                        <Grid item xs={12}>
+                            <Paper className={classes.card}>
+                                <Grid container spacing={8}>
+                                    <Grid item xs={12} container justify="center" zeroMinWidth>
+                                        <Paper className={classes.NameOnMobile}>
+                                            <AccountCircle className={classes.icon}/>
+                                            <Typography variant="h6" align="center">
+                                                {this.props.user.name}
+                                            </Typography>
+                                            <Typography variant="h6" align="center">
+                                                {this.props.user.surname}
+                                            </Typography>
+                                        </Paper>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Paper className={classes.main_info}>
+                                            <Typography variant="h5" gutterBottom>
+                                                Основная информация
+                                            </Typography>
+                                            <Typography variant="subtitle2" gutterBottom>
+                                                {this.props.user.email}
+                                            </Typography>
+                                            <Typography variant="subtitle1" gutterBottom>
+                                                студент
+                                            </Typography>
+                                        </Paper>
+                                        <Paper className={classes.main_info}>
+                                            <Typography variant="h5" gutterBottom>
+                                                Контактная информация
+                                            </Typography>
 
-                                        <List>
+                                            <List>
+                                                {!this.state.edited && (
+                                                    <div>
+                                                        <ListItem>
+                                                            <ListItemText primary="Группа"
+                                                                          secondary={this.props.user.group_num}/>
+                                                        </ListItem>
+                                                        <ListItem>
+                                                            <ListItemText primary="Квартира"
+                                                                          secondary={this.props.user.flat}/>
+                                                        </ListItem>
+                                                        <ListItem>
+                                                            <ListItemText primary="Телефон"
+                                                                          secondary={this.props.user.phone}/>
+                                                        </ListItem>
+                                                    </div>
+                                                )}
+                                                {this.state.edited && (
+                                                    <div>
+                                                        <ListItem className={classes.listItem}>
+                                                            <TextField
+                                                                id="outlined-name"
+                                                                label="Группа"
+                                                                className={classes.textField}
+                                                                value={this.state.group_num}
+                                                                onChange={this.handleChange('group_num')}
+                                                                margin="normal"
+                                                                variant="outlined"
+                                                            />
+                                                        </ListItem>
+                                                        <ListItem>
+                                                            <TextField
+                                                                id="outlined-name"
+                                                                label="Квартира"
+                                                                className={classes.textField}
+                                                                value={this.state.flat}
+                                                                onChange={this.handleChange('flat')}
+                                                                margin="normal"
+                                                                variant="outlined"
+                                                            />
+                                                        </ListItem>
+                                                        <ListItem>
+                                                            <TextField
+                                                                id="outlined-name"
+                                                                label="Телефон"
+                                                                className={classes.textField}
+                                                                value={this.state.phone}
+                                                                onChange={this.handleChange('phone')}
+                                                                margin="normal"
+                                                                variant="outlined"
+                                                            />
+                                                        </ListItem>
+                                                    </div>
+                                                )}
+
+                                            </List>
                                             {!this.state.edited && (
-                                                <div>
-                                                    <ListItem>
-                                                        <ListItemText primary="Группа"
-                                                                      secondary={this.props.user.group_num}/>
-                                                    </ListItem>
-                                                    <ListItem>
-                                                        <ListItemText primary="Квартира"
-                                                                      secondary={this.props.user.flat}/>
-                                                    </ListItem>
-                                                    <ListItem>
-                                                        <ListItemText primary="Телефон"
-                                                                      secondary={this.props.user.phone}/>
-                                                    </ListItem>
-                                                </div>
+                                                <Button variant="outlined" className={classes.button}
+                                                        onClick={this.handleClickEdit}>
+                                                    ИЗМЕНИТЬ
+                                                </Button>
                                             )}
                                             {this.state.edited && (
-                                                <div>
-                                                    <ListItem className={classes.listItem}>
-                                                        <TextField
-                                                            id="outlined-name"
-                                                            label="Группа"
-                                                            className={classes.textField}
-                                                            value={this.state.group_num}
-                                                            onChange={this.handleChange('group_num')}
-                                                            margin="normal"
-                                                            variant="outlined"
-                                                        />
-                                                    </ListItem>
-                                                    <ListItem>
-                                                        <TextField
-                                                            id="outlined-name"
-                                                            label="Квартира"
-                                                            className={classes.textField}
-                                                            value={this.state.flat}
-                                                            onChange={this.handleChange('flat')}
-                                                            margin="normal"
-                                                            variant="outlined"
-                                                        />
-                                                    </ListItem>
-                                                    <ListItem>
-                                                        <TextField
-                                                            id="outlined-name"
-                                                            label="Телефон"
-                                                            className={classes.textField}
-                                                            value={this.state.phone}
-                                                            onChange={this.handleChange('phone')}
-                                                            margin="normal"
-                                                            variant="outlined"
-                                                        />
-                                                    </ListItem>
-                                                </div>
+                                                <Button variant="outlined" className={classes.button}
+                                                        onClick={this.handleClickSubmit}>
+                                                    Сохранить
+                                                </Button>
                                             )}
-
-                                        </List>
-                                        {!this.state.edited && (
-                                            <Button variant="outlined" className={classes.button}
-                                                    onClick={this.handleClickEdit}>
-                                                ИЗМЕНИТЬ
-                                            </Button>
-                                        )}
-                                        {this.state.edited && (
-                                            <Button variant="outlined" className={classes.button}
-                                                    onClick={this.handleClickSubmit}>
-                                                Сохранить
-                                            </Button>
-                                        )}
-                                    </Paper>
+                                        </Paper>
+                                    </Grid>
                                 </Grid>
-                            </Grid>
-                        </Paper>
+                            </Paper>
+                        </Grid>
                     </Grid>
-                </Grid>
 
-            </div>
-        );
+                </div>
+            );
+
+        } else {
+            return (
+                <div>
+                    <NavBar/>
+                    <Grid container spacing={8} className={classes.grid}>
+                        <Grid item md={12}>
+                            <Paper className={classes.card}>
+                                <Grid container spacing={8}>
+                                    <Grid item md={4} container justify="center">
+                                        <Paper className={classes.Name}>
+                                            <AccountCircle className={classes.icon}/>
+                                            <Typography variant="h6" align="center">
+                                                {this.props.user.name}
+                                            </Typography>
+                                            <Typography variant="h6" align="center">
+                                                {this.props.user.surname}
+                                            </Typography>
+                                        </Paper>
+                                    </Grid>
+                                    <Grid item sm={8}>
+                                        <Paper className={classes.main_info}>
+                                            <Typography variant="h5" gutterBottom>
+                                                Основная информация
+                                            </Typography>
+                                            <Typography variant="subtitle2" gutterBottom>
+                                                {this.props.user.email}
+                                            </Typography>
+                                            <Typography variant="subtitle1" gutterBottom>
+                                                студент
+                                            </Typography>
+                                        </Paper>
+                                        <Paper className={classes.main_info}>
+                                            <Typography variant="h5" gutterBottom>
+                                                Контактная информация
+                                            </Typography>
+
+                                            <List>
+                                                {!this.state.edited && (
+                                                    <div>
+                                                        <ListItem>
+                                                            <ListItemText primary="Группа"
+                                                                          secondary={this.props.user.group_num}/>
+                                                        </ListItem>
+                                                        <ListItem>
+                                                            <ListItemText primary="Квартира"
+                                                                          secondary={this.props.user.flat}/>
+                                                        </ListItem>
+                                                        <ListItem>
+                                                            <ListItemText primary="Телефон"
+                                                                          secondary={this.props.user.phone}/>
+                                                        </ListItem>
+                                                    </div>
+                                                )}
+                                                {this.state.edited && (
+                                                    <div>
+                                                        <ListItem className={classes.listItem}>
+                                                            <TextField
+                                                                id="outlined-name"
+                                                                label="Группа"
+                                                                className={classes.textField}
+                                                                value={this.state.group_num}
+                                                                onChange={this.handleChange('group_num')}
+                                                                margin="normal"
+                                                                variant="outlined"
+                                                            />
+                                                        </ListItem>
+                                                        <ListItem>
+                                                            <TextField
+                                                                id="outlined-name"
+                                                                label="Квартира"
+                                                                className={classes.textField}
+                                                                value={this.state.flat}
+                                                                onChange={this.handleChange('flat')}
+                                                                margin="normal"
+                                                                variant="outlined"
+                                                            />
+                                                        </ListItem>
+                                                        <ListItem>
+                                                            <TextField
+                                                                id="outlined-name"
+                                                                label="Телефон"
+                                                                className={classes.textField}
+                                                                value={this.state.phone}
+                                                                onChange={this.handleChange('phone')}
+                                                                margin="normal"
+                                                                variant="outlined"
+                                                            />
+                                                        </ListItem>
+                                                    </div>
+                                                )}
+
+                                            </List>
+                                            {!this.state.edited && (
+                                                <Button variant="outlined" className={classes.button}
+                                                        onClick={this.handleClickEdit}>
+                                                    ИЗМЕНИТЬ
+                                                </Button>
+                                            )}
+                                            {this.state.edited && (
+                                                <Button variant="outlined" className={classes.button}
+                                                        onClick={this.handleClickSubmit}>
+                                                    Сохранить
+                                                </Button>
+                                            )}
+                                        </Paper>
+                                    </Grid>
+                                </Grid>
+                            </Paper>
+                        </Grid>
+                    </Grid>
+
+                </div>
+            );
+        }
     }
 }
 
@@ -294,4 +419,4 @@ const mapStateToProps = ({auth}, state) => {
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({logout, updateUser, loadUser}, dispatch)
 }
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Profile));
+export default connect(mapStateToProps, mapDispatchToProps)(withWidth()(withStyles(styles)(Profile)));

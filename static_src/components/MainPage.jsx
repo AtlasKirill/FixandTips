@@ -16,6 +16,7 @@ import NavBar from './NavBar.jsx';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import withWidth from '@material-ui/core/withWidth';
 
 
 const styles = theme => ({
@@ -52,7 +53,7 @@ const styles = theme => ({
     textField: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
-        minWidth:350,
+        minWidth: 350,
     },
     button: {
         margin: theme.spacing.unit,
@@ -109,34 +110,64 @@ class MainPage extends React.Component {
         }
 
         else if (this.props.user.role == 1) {
-            page =
-                <Grid container spacing={8}>
-                    <Grid item md={6} container justify="center">
-                        <Paper className={classes.headAndButtonStud}>
-                            <Typography gutterBottom className={classes.headline}>
-                                Мои запросы
-                            </Typography>
-                        </Paper>
+            if ('xs' === this.props.width ||'sm' === this.props.width ) {
+                page =
+                    <Grid container spacing={8}>
+                        <Grid item xs={12} container justify="center">
+                            <Paper className={classes.headAndButtonStud}>
+                                <Typography gutterBottom className={classes.headline}>
+                                    Мои запросы
+                                </Typography>
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={12} container justify="center">
+                            <CreationModal/>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <StudentRequestList/>
+                        </Grid>
+                        <Grid item xs={12} container justify="center">
+                            <Paper className={classes.headAndButtonStud}>
+                                <Typography gutterBottom className={classes.headline} align={"center"}>
+                                    Объявления общежития
+                                </Typography>
+                            </Paper>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <StudentNewsList/>
+                        </Grid>
                     </Grid>
-                    <Grid item md={6} container justify="center">
-                        <Paper className={classes.headAndButtonStud}>
-                            <Typography gutterBottom className={classes.headline}>
-                                Объявления общежития
-                            </Typography>
-                        </Paper>
+            } else {
+                page =
+                    <Grid container spacing={8}>
+                        <Grid item md={6} container justify="center">
+                            <Paper className={classes.headAndButtonStud}>
+                                <Typography gutterBottom className={classes.headline}>
+                                    Мои запросы
+                                </Typography>
+                            </Paper>
+                        </Grid>
+                        <Grid item md={6} container justify="center">
+                            <Paper className={classes.headAndButtonStud}>
+                                <Typography gutterBottom className={classes.headline}>
+                                    Объявления общежития
+                                </Typography>
+                            </Paper>
+                        </Grid>
+                        <Grid item md={6} container justify="center">
+                            <CreationModal/>
+                        </Grid>
+                        <Grid item md={6} container justify="center">
+                        </Grid>
+                        <Grid item md={6}>
+                            <StudentRequestList/>
+                        </Grid>
+                        <Grid item md={6}>
+                            <StudentNewsList/>
+                        </Grid>
                     </Grid>
-                    <Grid item md={6} container justify="center">
-                        <CreationModal/>
-                    </Grid>
-                    <Grid item md={6} container justify="center">
-                    </Grid>
-                    <Grid item md={6}>
-                        <StudentRequestList/>
-                    </Grid>
-                    <Grid item md={6}>
-                        <StudentNewsList/>
-                    </Grid>
-                </Grid>
+            }
+
         } else if (this.props.user.role == 3) {
             page =
                 <Grid container spacing={8}>
@@ -163,7 +194,7 @@ class MainPage extends React.Component {
                             variant="outlined"
                         />
                     </Grid>
-                    <Grid item md={3} container >
+                    <Grid item md={3} container>
                         <Button variant="contained" color="primary" className={classes.button}>
                             Подтвердить
                         </Button>
@@ -191,13 +222,13 @@ const mapStateToProps = ({auth}) => {
         isAuthenticated: auth.isAuthenticated,
         isLoading: auth.isLoading,
     }
-}
+};
 const mapDispatchToProps = dispatch => {
     return {
         loadUser: () => {
             return dispatch(loadUser());
         }
     }
-}
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(MainPage));
+export default connect(mapStateToProps, mapDispatchToProps)(withWidth()(withStyles(styles)(MainPage)));

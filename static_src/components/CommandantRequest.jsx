@@ -24,18 +24,17 @@ import DoneIcon from '@material-ui/icons/Done';
 import TextField from '@material-ui/core/TextField';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { deleteRequest } from '../actions/requests';
-import { updateRequest } from '../actions/requests';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {deleteRequest} from '../actions/requests';
+import {updateRequest} from '../actions/requests';
 import apiUrls from './../constants/apiUrls';
 import store from './../index.jsx';
 
 const styles = theme => ({
     card: {
-
         margin: 10,
-        border:'solid 1px',
+        border: 'solid 1px',
     },
     urgently_button: {
         float: 'left',
@@ -95,9 +94,16 @@ const styles = theme => ({
     textField: {
         marginLeft: 0,
         marginRight: theme.spacing.unit,
-        marginTop:0,
-        marginBottom:0,
+        marginTop: 0,
+        marginBottom: 0,
         width: 300,
+    },
+    cancelConfirm: {
+        paddingBottom: 8,
+        paddingTop: 8,
+    },
+    cancelbutton: {
+        marginRight: 8,
     },
 });
 
@@ -117,77 +123,103 @@ class CommandantRequest extends React.Component {
         author: PropTypes.number,
         is_deleted: PropTypes.bool,
     }
+    state = {
+        confirmation: false,
+    };
 
+    onClick = (e) => {
+        console.log(apiUrls.requestDetail(this.props.id))
+        this.setState(state => ({
+            confirmation: true,
+        }));
+    };
+    onDelete = (e) => {
+        console.log(apiUrls.requestDetail(this.props.id))
+        this.setState(state => ({
+            confirmation: false,
+        }));
+        this.props.deleteRequest(apiUrls.requestDetail(this.props.id), {is_deleted: true}, store.getState().auth.token);
+    };
 
     handleChange = name => event => {
         this.setState({
             [name]: event.target.value,
         });
     };
-    handleNew=(e)=> {
-        this.setState({ anchorEl: null });
-        this.props.updateRequest(apiUrls.requestDetail(this.props.id),{status:'Отправлена'}, store.getState().auth.token);
+    handleNew = (e) => {
+        this.setState({anchorEl: null});
+        this.props.updateRequest(apiUrls.requestDetail(this.props.id), {status: 'Отправлена'}, store.getState().auth.token);
     };
-    handleProcessing=(e)=> {
-        this.setState({ anchorEl: null });
-        this.props.updateRequest(apiUrls.requestDetail(this.props.id),{status:'В процессе'}, store.getState().auth.token);
+    handleProcessing = (e) => {
+        this.setState({anchorEl: null});
+        this.props.updateRequest(apiUrls.requestDetail(this.props.id), {status: 'В процессе'}, store.getState().auth.token);
     };
-    handleComplete=(e)=> {
-        this.setState({ anchorEl: null });
-        this.props.updateRequest(apiUrls.requestDetail(this.props.id),{status:'Выполнена'}, store.getState().auth.token); 
+    handleComplete = (e) => {
+        this.setState({anchorEl: null});
+        this.props.updateRequest(apiUrls.requestDetail(this.props.id), {status: 'Выполнена'}, store.getState().auth.token);
     };
-    handleCarpenter=(e)=> {
-        this.setState({ anchorEl1: null });
-        this.props.updateRequest(apiUrls.requestDetail(this.props.id),{category:'Плотник'}, store.getState().auth.token);
+    handleReject = (e) => {
+        this.setState({anchorEl: null});
+        this.props.updateRequest(apiUrls.requestDetail(this.props.id), {status: 'Отклонена'}, store.getState().auth.token);
     };
-    handleChemistry=(e)=> {
-        this.setState({ anchorEl1: null });
-        this.props.updateRequest(apiUrls.requestDetail(this.props.id),{category:'Хим обработка'}, store.getState().auth.token);
+    handleCarpenter = (e) => {
+        this.setState({anchorEl1: null});
+        this.props.updateRequest(apiUrls.requestDetail(this.props.id), {category: 'Плотник'}, store.getState().auth.token);
     };
-    handlePlumber=(e)=> {
-        this.setState({ anchorEl1: null });
-        this.props.updateRequest(apiUrls.requestDetail(this.props.id),{category:'Сантехник'}, store.getState().auth.token); 
+    handleChemistry = (e) => {
+        this.setState({anchorEl1: null});
+        this.props.updateRequest(apiUrls.requestDetail(this.props.id), {category: 'Хим обработка'}, store.getState().auth.token);
     };
-    handleElictrician=(e)=> {
-        this.setState({ anchorEl1: null });
-        this.props.updateRequest(apiUrls.requestDetail(this.props.id),{category:'Электрик'}, store.getState().auth.token); 
+    handlePlumber = (e) => {
+        this.setState({anchorEl1: null});
+        this.props.updateRequest(apiUrls.requestDetail(this.props.id), {category: 'Сантехник'}, store.getState().auth.token);
     };
-    handleOther=(e)=> {
-        this.setState({ anchorEl1: null });
-        this.props.updateRequest(apiUrls.requestDetail(this.props.id),{category:'Другое'}, store.getState().auth.token); 
+    handleElictrician = (e) => {
+        this.setState({anchorEl1: null});
+        this.props.updateRequest(apiUrls.requestDetail(this.props.id), {category: 'Электрик'}, store.getState().auth.token);
     };
-    onClick=(e)=> {
-        console.log(apiUrls.requestDetail(this.props.id))
-        this.props.deleteRequest(apiUrls.requestDetail(this.props.id),{is_deleted:true}, store.getState().auth.token);
+    handleOther = (e) => {
+        this.setState({anchorEl1: null});
+        this.props.updateRequest(apiUrls.requestDetail(this.props.id), {category: 'Другое'}, store.getState().auth.token);
     };
+    // onClick=(e)=> {
+    //     console.log(apiUrls.requestDetail(this.props.id))
+    //     this.props.deleteRequest(apiUrls.requestDetail(this.props.id),{is_shown:false}, store.getState().auth.token);
+    // };
 
-    onClickChange=(e)=> {
+    onClickChange = (e) => {
         this.setState(state => ({
             edited: !state.edited,
         }));
     };
 
-    onSubmit=(e)=> {
-        this.props.deleteRequest(apiUrls.requestDetail(this.props.id),{materials:this.state.materials}, store.getState().auth.token);
+    onSubmit = (e) => {
+        this.props.deleteRequest(apiUrls.requestDetail(this.props.id), {materials: this.state.materials}, store.getState().auth.token);
         this.setState(state => ({
             edited: !state.edited,
         }));
     };
 
     handleClickStatus = event => {
-        this.setState({ anchorEl: event.currentTarget });
+        this.setState({anchorEl: event.currentTarget});
     };
 
     handleClickCategory = event => {
-        this.setState({ anchorEl1: event.currentTarget });
+        this.setState({anchorEl1: event.currentTarget});
     }
 
     handleCloseStatus = () => {
-        this.setState({ anchorEl: null });
+        this.setState({anchorEl: null});
     };
 
     handleCloseCategory = () => {
-        this.setState({ anchorEl1: null });
+        this.setState({anchorEl1: null});
+    };
+    onCancel = (e) => {
+        this.setState(state => ({
+            confirmation: false,
+        }));
+
     };
 
     render() {
@@ -195,15 +227,18 @@ class CommandantRequest extends React.Component {
         const {type} = this.state;
         const {edited} = this.state;
         const {classes} = this.props;
-        const { anchorEl } = this.state;
-        const { anchorEl1 } = this.state;
+        const {anchorEl} = this.state;
+        const {anchorEl1} = this.state;
         const open = Boolean(anchorEl);
         const open1 = Boolean(anchorEl1);
         var requestStatus = this.props.status === 'Отправлена' ? 'Новая' : this.props.status;
+        var cancel = <IconButton aria-label="Delete"
+                                 onClick={this.onClick}>
+            <DeleteIcon/>
+        </IconButton>;
 
-        if(this.props.is_deleted){
-            console.log('Deleted');
-            return(<div></div>);
+        if (this.props.is_deleted || !this.props.is_shown) {
+            return (<div></div>);
         }
         return (
             <div>
@@ -212,49 +247,30 @@ class CommandantRequest extends React.Component {
                         <Grid item md={6}>
                             <CardContent classes={{root: classes.content}}>
                                 <Typography variant="subtitle2">
-                                    { this.props.author.name } { this.props.author.surname }, { this.props.author.flat }к.
+                                    {this.props.author.name} {this.props.author.surname}, {this.props.author.flat}к.
                                 </Typography>
                                 <Typography variant="body1">
-                                    { this.props.description }
+                                    {this.props.description}
                                 </Typography>
 
                             </CardContent>
                         </Grid>
-                        <Grid item md={3}>
-                            <CardContent classes={{root: classes.content}}>
-                            {this.props.urgency && (
-                                    <div>
-                                        <Typography variant="subtitle2" classes={{root: classes.urgently_button}}>
-                                            Срочно
-                                        </Typography>
-                                        <ErrorOutline className={classes.alert}/>
-                                    </div>
-                                )}
-                                {!this.props.urgency && (
-                                    <div>
-                                        <Typography variant="subtitle2" classes={{root: classes.urgently_button}}>
-                                            Не срочно
-                                        </Typography>
-                                    </div>
-                                )}
-                            </CardContent>
-                        </Grid>
-                        <Grid item md={3}>
+                        <Grid item md={6}>
                             <CardContent classes={{root: classes.content}}>
                                 <Typography variant="subtitle2" align="right">
-                                    { new Date(this.props.created_at).toDateString() }
+                                    {new Date(this.props.created_at).toDateString()}
                                 </Typography>
                             </CardContent>
                         </Grid>
                         <Grid item md={6}>
-                        <CardContent classes={{root: classes.content}}>
-                            {!this.state.edited && (
+                            <CardContent classes={{root: classes.content}}>
+                                {!this.state.edited && (
                                     <div>
                                         <Typography variant="subtitle2">
                                             Использованные материалы:
                                         </Typography>
                                         <Typography variant="body1" onClick={this.onClickChange}>
-                                            { this.props.materials }
+                                            {this.props.materials}
                                         </Typography>
                                     </div>)}
 
@@ -264,21 +280,22 @@ class CommandantRequest extends React.Component {
                                             id="standard-name"
                                             label="Использованные материалы"
                                             className={classes.textField}
-                                            value={ this.state.materials }
+                                            value={this.state.materials}
                                             onChange={this.handleChange('materials')}
                                             margin="normal"
                                         />
-                                <IconButton className={classes.button} aria-label="Done" onClick={this.onSubmit}>
-                                    <DoneIcon/>
-                                </IconButton>
-                                </div>
-                            )}
+                                        <IconButton className={classes.button} aria-label="Done"
+                                                    onClick={this.onSubmit}>
+                                            <DoneIcon/>
+                                        </IconButton>
+                                    </div>
+                                )}
                             </CardContent>
                         </Grid>
                         <Grid item md={12}>
                             <Divider/>
                         </Grid>
-                            
+
                         <Grid item md={3} className={classes.content}>
                             <CardContent classes={{root: classes.content}}>
                                 <Button
@@ -286,7 +303,7 @@ class CommandantRequest extends React.Component {
                                     aria-haspopup="true"
                                     onClick={this.handleClickStatus}
                                 >
-                                    { requestStatus }
+                                    {requestStatus}
                                 </Button>
                                 <Menu
                                     id="simple-menu"
@@ -297,6 +314,7 @@ class CommandantRequest extends React.Component {
                                     <MenuItem onClick={this.handleNew}>Новая</MenuItem>
                                     <MenuItem onClick={this.handleProcessing}>В процессе</MenuItem>
                                     <MenuItem onClick={this.handleComplete}>Выполнена</MenuItem>
+                                    <MenuItem onClick={this.handleReject}>Отклонена</MenuItem>
                                 </Menu>
 
                             </CardContent>
@@ -327,12 +345,32 @@ class CommandantRequest extends React.Component {
                         </Grid>
                         <Grid item md={6}>
                             <CardContent classes={{root: classes.delete}}>
-                                <Tooltip title="Delete 'position: absolute;'">
-                                    <IconButton aria-label="Delete"
-                                        onClick={this.onClick}>
-                                        <DeleteIcon/>
-                                    </IconButton>
-                                </Tooltip>
+                                {this.state.confirmation && (
+                                    <div>
+                                        <Grid container spacing={8}>
+                                            <Grid item md={6}>
+                                                <Typography className={classes.cancelConfirm}>
+                                                    Удалить заявку:
+                                                </Typography>
+                                            </Grid>
+                                            <Grid item md={3}>
+                                                <Button onClick={this.onDelete}>
+                                                    Да
+                                                </Button>
+                                            </Grid>
+                                            <Grid item md={3}>
+                                                <Button onClick={this.onCancel} className={classes.cancelbutton}>
+                                                    Нет
+                                                </Button>
+                                            </Grid>
+                                        </Grid>
+                                    </div>
+                                )}
+                                {!this.state.confirmation && (
+                                    <div>
+                                        {cancel}
+                                    </div>
+                                )}
                             </CardContent>
                         </Grid>
                     </Grid>
@@ -345,13 +383,13 @@ class CommandantRequest extends React.Component {
 CommandantRequest.propTypes = {
     classes: PropTypes.object.isRequired,
 };
-const mapStateToProps = ({ requests }, ownProps ) => {
+const mapStateToProps = ({requests}, ownProps) => {
     return {
         ...requests.requests[ownProps.id],
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({ deleteRequest, updateRequest }, dispatch)
-  }
-export default connect(mapStateToProps,mapDispatchToProps)(withStyles(styles)(CommandantRequest));
+    return bindActionCreators({deleteRequest, updateRequest}, dispatch)
+}
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(CommandantRequest));
