@@ -95,20 +95,19 @@ class Filter extends React.Component {
         this.setState({ status2: this.state.clickedProcessing ? '' : 'В процессе'});
 
       };
-
     searchSent = event => {
         this.setState({ clickedSent: ! this.state.clickedSent });
         this.setState({ colorSent: this.state.clickedSent ? 'default' : 'secondary' });
         this.setState({ status1: this.state.clickedSent ? '' : 'Отправлена'});
 
       };
-    searchСomplete = event => {
+    searchComplete = event => {
         this.setState({ clickedComplete: ! this.state.clickedComplete });
         this.setState({ colorComplete: this.state.clickedComplete ? 'default' : 'secondary' });
         this.setState({ status3: this.state.clickedComplete ? '' : 'Выполнена'});
 
     };
-    searchСarpenter = event => {
+    searchCarpenter = event => {
         this.setState({clickedCarpenter: !this.state.clickedCarpenter});
         this.setState({colorCarpenter: this.state.clickedCarpenter ? 'default' : 'secondary'});
         this.setState({category1: this.state.clickedCarpenter ? '' : 'Плотник'});
@@ -212,7 +211,7 @@ class Filter extends React.Component {
                                     '--background-start': '#ffffff',
                                 }
                         }
-                        onClick={this.searchСarpenter}
+                        onClick={this.searchCarpenter}
                 >
                     ПЛОТНИК
                 </Button>
@@ -321,7 +320,7 @@ Filter.propTypes = {
 
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({filterRequest}, dispatch)
-}
+};
 
 
 export default connect(null, mapDispatchToProps)(withStyles(styles)(Filter));

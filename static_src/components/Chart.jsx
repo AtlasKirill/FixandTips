@@ -77,7 +77,7 @@ class Chart extends React.Component {
 
     state = {
         color: 'default',
-        clickedUrgent: false,
+        clickedComplete: false,
         clickedProcessing: false,
         clickedSent: false,
         clickedCarpenter: false,
@@ -87,7 +87,7 @@ class Chart extends React.Component {
         clickedOther: false,
         colorProcessing: 'default',
         colorSent: 'default',
-        colorСomplete: 'default',
+        colorComplete: 'default',
         colorCarpenter: 'default',
         colorElictrician: 'default',
         colorPlumber: 'default',
@@ -120,13 +120,13 @@ class Chart extends React.Component {
         this.setState({ status1: this.state.clickedSent ? '' : 'Отправлена'});
 
       };
-    searchСomplete = event => {
+    searchComplete = event => {
         this.setState({ clickedComplete: ! this.state.clickedComplete });
         this.setState({ colorComplete: this.state.clickedComplete ? 'default' : 'secondary' });
         this.setState({ status3: this.state.clickedComplete ? '' : 'Выполнена'});
     
       };
-    searchСarpenter = event => {
+    searchCarpenter = event => {
         this.setState({ clickedCarpenter: ! this.state.clickedCarpenter });
         this.setState({ colorCarpenter: this.state.clickedCarpenter ? 'default' : 'secondary' });
         this.setState({ category1: this.state.clickedCarpenter ? '' : 'Плотник' });
@@ -226,7 +226,7 @@ class Chart extends React.Component {
                         '--background-end': '#ffffff',
                         }
                     }
-                    onClick={this.searchСomplete}>
+                    onClick={this.searchComplete}>
                         ВЫПОЛНЕНО
                     </Button>
                     <Typography variant="overline" gutterBottom className={classes.status}>
@@ -242,7 +242,7 @@ class Chart extends React.Component {
                                         '--background-end': '#ffffff',
                                     }
                             }
-                            onClick={this.searchСarpenter}
+                            onClick={this.searchCarpenter}
                     >
                         ПЛОТНИК
                     </Button>
