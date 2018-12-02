@@ -73,6 +73,15 @@ const styles = {
     icon: {
         padding: 8,
     },
+    buttonExitCommand: {
+        padding: 13,
+        background: 'inherit',
+        color: 'white',
+        fontSize: '1.2em',
+        flexWrap: 'wrap',
+        marginLeft:20,
+        margin:12,
+    },
 };
 
 class ListItemLink extends React.Component {
@@ -113,12 +122,12 @@ class NavBar extends React.Component {
         }
         else if (this.props.user.role == 2) {
             buttons = <div>
-                <Grid container spacing={8}>
+                <Grid container spacing={8} className={classes.root}>
                     <Grid item md={6}>
                         <GetPrintAndStatistics/>
                     </Grid>
                     <Grid item md={6}>
-                        <Button color="inherit" className={classes.buttonExit} onClick={this.props.logout}>
+                        <Button color="inherit" className={classes.buttonExitCommand} onClick={this.props.logout}>
                             Выйти
                         </Button>
                     </Grid>

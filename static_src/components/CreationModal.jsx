@@ -59,6 +59,12 @@ const styles = theme => ({
     title: {
         fontSize: '1.5em',
     },
+    dialogOnMobile:{
+        '&:last-child': {
+        marginright:5,
+        marginLeft: 5,
+      },
+    },
 });
 
 
@@ -122,6 +128,7 @@ class NewRequest extends React.Component {
                     open={this.state.open}
                     onClose={this.handleClose}
                     aria-labelledby="registration-dialog-title"
+                    className={classes.dialogOnMobile}
                 >
                     <DialogTitle id="registration-dialog-title" className={classes.title} align="center">Создание
                         заявки</DialogTitle>
@@ -159,22 +166,21 @@ class NewRequest extends React.Component {
                                 <FormControlLabel value="Другое" control={<Radio/>} label="Другое"/>
                             </RadioGroup>
                         </FormControl>
-                        <Typography align="center" className={classes.head}>
-                            Выберите приоритет заявки
-                        </Typography>
-                        <FormGroup className={classes.formGroupControl}>
-                            <FormControlLabel
-                                control={
-                                    <Checkbox
-                                        checked={this.state.urgency}
-                                        onChange={this.handleChangePriority}
-                                        value={this.state.urgency}
-                                    />
-                                }
-                                label="Срочно"
-                            />
-                        </FormGroup>
-
+                        {/*<Typography align="center" className={classes.head}>*/}
+                            {/*Выберите приоритет заявки*/}
+                        {/*</Typography>*/}
+                        {/*<FormGroup className={classes.formGroupControl}>*/}
+                            {/*<FormControlLabel*/}
+                                {/*control={*/}
+                                    {/*<Checkbox*/}
+                                        {/*checked={this.state.urgency}*/}
+                                        {/*onChange={this.handleChangePriority}*/}
+                                        {/*value={this.state.urgency}*/}
+                                    {/*/>*/}
+                                {/*}*/}
+                                {/*label="Срочно"*/}
+                            {/*/>*/}
+                        {/*</FormGroup>*/}
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleClose} color="primary">
