@@ -85,6 +85,7 @@ const styles = theme => ({
     },
     buttonNo: {
         backgroundColor: '#b9f6ca',
+
     },
 });
 
@@ -182,11 +183,6 @@ class StudentRequest extends React.Component {
                                         {this.state.confirmation && (
                                             <div>
                                                 <Grid container spacing={8}>
-                                                    {/*<Grid item xs={3}>*/}
-                                                    {/*<Typography className={classes.cancelConfirm}>*/}
-                                                    {/*Отменить заявку:*/}
-                                                    {/*</Typography>*/}
-                                                    {/*</Grid>*/}
                                                     <Grid item xs={6}>
                                                         <Button onClick={this.onDelete} className={classes.buttonYes}>
                                                             Да
