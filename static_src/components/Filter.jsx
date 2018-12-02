@@ -60,7 +60,22 @@ const styles = theme => ({
     },
 });
 
+var date = new Date(Date.now());
+var month = date.getMonth() + 1;
+if (month < 9)
+    month = '0' + month.toString();
+else
+    month = month.toString();
+var day = date.getDate();
+if (day < 9)
+    day = '0' + day.toString();
+else
+    day = day.toString();
+
+var timeInMs = date.getFullYear().toString() + "-" + month + "-" + day;
+
 class Filter extends React.Component {
+
     state = {
         color: 'default',
         clickedComplete: false,
@@ -88,23 +103,25 @@ class Filter extends React.Component {
         category4: '',
         category5: '',
         urgency: '',
+        toDate: timeInMs,
+        fromDate: timeInMs,
     };
     searchProcessing = event => {
-        this.setState({ clickedProcessing: ! this.state.clickedProcessing });
-        this.setState({ colorProcessing: this.state.clickedProcessing ? 'default' : 'secondary' });
-        this.setState({ status2: this.state.clickedProcessing ? '' : 'В процессе'});
+        this.setState({clickedProcessing: !this.state.clickedProcessing});
+        this.setState({colorProcessing: this.state.clickedProcessing ? 'default' : 'secondary'});
+        this.setState({status2: this.state.clickedProcessing ? '' : 'В процессе'});
 
-      };
+    };
     searchSent = event => {
-        this.setState({ clickedSent: ! this.state.clickedSent });
-        this.setState({ colorSent: this.state.clickedSent ? 'default' : 'secondary' });
-        this.setState({ status1: this.state.clickedSent ? '' : 'Отправлена'});
+        this.setState({clickedSent: !this.state.clickedSent});
+        this.setState({colorSent: this.state.clickedSent ? 'default' : 'secondary'});
+        this.setState({status1: this.state.clickedSent ? '' : 'Отправлена'});
 
-      };
+    };
     searchComplete = event => {
-        this.setState({ clickedComplete: ! this.state.clickedComplete });
-        this.setState({ colorComplete: this.state.clickedComplete ? 'default' : 'secondary' });
-        this.setState({ status3: this.state.clickedComplete ? '' : 'Выполнена'});
+        this.setState({clickedComplete: !this.state.clickedComplete});
+        this.setState({colorComplete: this.state.clickedComplete ? 'default' : 'secondary'});
+        this.setState({status3: this.state.clickedComplete ? '' : 'Выполнена'});
 
     };
     searchCarpenter = event => {
@@ -144,10 +161,27 @@ class Filter extends React.Component {
     };
     showItems = event => {
         // console.log(apiUrls.filter(this.state.status, this.state.category1, this.state.category2, this.state.category3, this.state.category4, this.state.category5, this.state.urgency, this.state.fromDate, this.state.toDate));
-        this.props.filterRequest(apiUrls.filter(this.state.status1,this.state.status2,this.state.status3, this.state.category1, this.state.category2, this.state.category3, this.state.category4, this.state.category5, this.state.urgency, this.state.fromDate, this.state.toDate), store.getState().auth.token);
+        this.props.filterRequest(apiUrls.filter(this.state.status1, this.state.status2, this.state.status3, this.state.category1, this.state.category2, this.state.category3, this.state.category4, this.state.category5, this.state.urgency, this.state.fromDate, this.state.toDate), store.getState().auth.token);
     };
 
     render() {
+        var date = new Date(Date.now());
+        var month = date.getMonth() + 1;
+        if (month < 9)
+            month = '0' + month.toString();
+        else
+            month = month.toString();
+        var day = date.getDate();
+        if (day < 9)
+            day = '0' + day.toString();
+        else
+            day = day.toString();
+
+        var timeInMs = date.getFullYear().toString() + "-" + month + "-" + day;
+
+        // this.state.toDate = timeInMs;
+        // this.state.fromDate = timeInMs;
+
         const {classes} = this.props;
 
         return (
@@ -283,6 +317,7 @@ class Filter extends React.Component {
                             value={this.state.fromDate}
                             onChange={this.handleChange('fromDate')}
                             className={classes.textField}
+                            // defaultValue={timeInMs}
                             InputLabelProps={{
                                 shrink: true,
                             }}
@@ -297,6 +332,7 @@ class Filter extends React.Component {
                             value={this.state.toDate}
                             onChange={this.handleChange('toDate')}
                             className={classes.textField}
+                            // defaultValue={timeInMs}
                             InputLabelProps={{
                                 shrink: true,
                             }}
