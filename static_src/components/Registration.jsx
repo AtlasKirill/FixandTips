@@ -12,6 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import {connect} from "react-redux";
 import {Link, Redirect} from "react-router-dom";
 import {register} from '../actions/auth';
+import withWidth from '@material-ui/core/withWidth';
 
 
 const styles = theme => ({
@@ -61,7 +62,9 @@ class RegButton extends React.Component {
         if (this.props.isAuthenticated) {
             return <Redirect to="/"/>
         }
-        return (
+
+        if ('xs' === this.props.width){
+            return (
             <div>
                 <Button onClick={this.handleClickOpen} color="primary" className={classes.root}>Регистрация</Button>
                 <Dialog
@@ -69,14 +72,15 @@ class RegButton extends React.Component {
                     onClose={this.handleClose}
                     aria-labelledby="registration-dialog-title"
                     maxWidth={"sm"}
+                    fullScreen={true}
                 >
                     <DialogTitle id="registration-dialog-title" align="center">Регистрация</DialogTitle>
                     <DialogContent>
                         <DialogContentText align="center">
                             Создайте аккаунт в Fix&Tips
                         </DialogContentText>
-                        <Grid Grid container spacing={8}>
-                            <Grid item md={12}>
+                        <Grid container spacing={8}>
+                            <Grid item md={12} sm = {12} xs = {12}>
                                 <TextField
                                     id="outlined-email-input"
                                     label="email"
@@ -90,7 +94,7 @@ class RegButton extends React.Component {
                                     value={this.state.username}
                                 />
                             </Grid>
-                            <Grid item md={12}>
+                            <Grid item md={12} sm = {12} xs = {12}>
                                 <TextField
                                     id="outlined-password-input"
                                     label="Пароль"
@@ -108,7 +112,7 @@ class RegButton extends React.Component {
                             Укажите Ваше ФИО и номер комнаты
                         </DialogContentText>
                         <Grid Grid container spacing={8}>
-                            <Grid item md={12}>
+                            <Grid item md={12} sm = {12} xs = {12}>
                                 <TextField
                                     id="outlined-name-input"
                                     label="Имя"
@@ -121,7 +125,7 @@ class RegButton extends React.Component {
                                     value={this.state.name}
                                 />
                             </Grid>
-                            <Grid item md={12}>
+                            <Grid item md={12} sm = {12} xs = {12}>
                                 <TextField
                                     id="outlined-surname-input"
                                     label="Фамилия"
@@ -134,7 +138,105 @@ class RegButton extends React.Component {
                                     value={this.state.surname}
                                 />
                             </Grid>
-                            <Grid item md={12}>
+                            <Grid item md={12} sm = {12} xs = {12}>
+                                <TextField
+                                    id="outlined-flat-input"
+                                    label="Квартира"
+                                    className={classes.textField}
+                                    margin="normal"
+                                    variant="outlined"
+                                    onChange={this.onChange('flat')}
+                                    value={this.state.flat}
+                                />
+                            </Grid>
+                        </Grid>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleClose} color="primary">
+                            Отмена
+                        </Button>
+                        <Button onClick={this.onSubmit} color="primary">
+                            Зарегистрироваться
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
+        );
+        } else
+        return (
+            <div>
+                <Button onClick={this.handleClickOpen} color="primary" className={classes.root}>Регистрация</Button>
+                <Dialog
+                    open={this.state.open}
+                    onClose={this.handleClose}
+                    aria-labelledby="registration-dialog-title"
+                    maxWidth={"sm"}
+                >
+                    <DialogTitle id="registration-dialog-title" align="center">Регистрация</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText align="center">
+                            Создайте аккаунт в Fix&Tips
+                        </DialogContentText>
+                        <Grid container spacing={8}>
+                            <Grid item md={12} sm = {12} xs = {12}>
+                                <TextField
+                                    id="outlined-email-input"
+                                    label="email"
+                                    className={classes.textField}
+                                    type="email"
+                                    name="username"
+                                    autoComplete="email"
+                                    margin="normal"
+                                    variant="outlined"
+                                    onChange={this.onChange('username')}
+                                    value={this.state.username}
+                                />
+                            </Grid>
+                            <Grid item md={12} sm = {12} xs = {12}>
+                                <TextField
+                                    id="outlined-password-input"
+                                    label="Пароль"
+                                    className={classes.textField}
+                                    type="password"
+                                    autoComplete="new-password"
+                                    margin="normal"
+                                    variant="outlined"
+                                    onChange={this.onChange('password')}
+                                    value={this.state.password}
+                                />
+                            </Grid>
+                        </Grid>
+                        <DialogContentText align="center">
+                            Укажите Ваше ФИО и номер комнаты
+                        </DialogContentText>
+                        <Grid Grid container spacing={8}>
+                            <Grid item md={12} sm = {12} xs = {12}>
+                                <TextField
+                                    id="outlined-name-input"
+                                    label="Имя"
+                                    className={classes.textField}
+                                    type="name"
+                                    autoComplete="name"
+                                    margin="normal"
+                                    variant="outlined"
+                                    onChange={this.onChange('name')}
+                                    value={this.state.name}
+                                />
+                            </Grid>
+                            <Grid item md={12} sm = {12} xs = {12}>
+                                <TextField
+                                    id="outlined-surname-input"
+                                    label="Фамилия"
+                                    className={classes.textField}
+                                    type="family-name"
+                                    autoComplete="family-name"
+                                    margin="normal"
+                                    variant="outlined"
+                                    onChange={this.onChange('surname')}
+                                    value={this.state.surname}
+                                />
+                            </Grid>
+                            <Grid item md={12} sm = {12} xs = {12}>
                                 <TextField
                                     id="outlined-flat-input"
                                     label="Квартира"
@@ -184,4 +286,4 @@ const mapDispatchToProps = dispatch => {
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(RegButton));
+export default connect(mapStateToProps, mapDispatchToProps)(withWidth()(withStyles(styles)(RegButton)));
