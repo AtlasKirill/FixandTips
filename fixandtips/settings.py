@@ -34,7 +34,7 @@ SECRET_KEY = 'b!^*)yd+g(h90u@_ime%4e9qwrj=9r15m=m#)p6gl!#f^@p)#@'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['95.163.209.25','localhost']
+ALLOWED_HOSTS = ['fixandtips.ru','95.163.209.25','localhost']
 
 
 # Application definition
