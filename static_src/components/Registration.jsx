@@ -75,8 +75,8 @@ class RegButton extends React.Component {
                         <DialogContentText align="center">
                             Создайте аккаунт в Fix&Tips
                         </DialogContentText>
-                        <Grid Grid container spacing={8}>
-                            <Grid item md={12}>
+                        <Grid container spacing={8}>
+                            <Grid item md={12} sm = {12} xs = {12}>
                                 <TextField
                                     id="outlined-email-input"
                                     label="email"
@@ -90,7 +90,7 @@ class RegButton extends React.Component {
                                     value={this.state.username}
                                 />
                             </Grid>
-                            <Grid item md={12}>
+                            <Grid item md={12} sm = {12} xs = {12}>
                                 <TextField
                                     id="outlined-password-input"
                                     label="Пароль"
@@ -108,7 +108,7 @@ class RegButton extends React.Component {
                             Укажите Ваше ФИО и номер комнаты
                         </DialogContentText>
                         <Grid Grid container spacing={8}>
-                            <Grid item md={12}>
+                            <Grid item md={12} sm = {12} xs = {12}>
                                 <TextField
                                     id="outlined-name-input"
                                     label="Имя"
@@ -121,7 +121,7 @@ class RegButton extends React.Component {
                                     value={this.state.name}
                                 />
                             </Grid>
-                            <Grid item md={12}>
+                            <Grid item md={12} sm = {12} xs = {12}>
                                 <TextField
                                     id="outlined-surname-input"
                                     label="Фамилия"
@@ -134,7 +134,7 @@ class RegButton extends React.Component {
                                     value={this.state.surname}
                                 />
                             </Grid>
-                            <Grid item md={12}>
+                            <Grid item md={12} sm = {12} xs = {12}>
                                 <TextField
                                     id="outlined-flat-input"
                                     label="Квартира"
