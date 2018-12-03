@@ -73,6 +73,39 @@ const styles = theme => ({
     },
 });
 
+var date = new Date(Date.now());
+var month = date.getMonth() + 1;
+var monthFrom = date.getMonth();
+
+if (month < 9)
+    month = '0' + month.toString();
+else
+    month = month.toString();
+
+if (monthFrom < 9)
+    monthFrom = '0' + month.toString();
+else
+    monthFrom = monthFrom.toString();
+
+
+var day = date.getDate();
+if (day < 9)
+    day = '0' + day.toString();
+else
+    day = day.toString();
+
+var timeInMsTo = date.getFullYear().toString() + "-" + month + "-" + day;
+
+var timeInMsFrom = 0;
+if (month === '01') {
+    month = '12';
+    timeInMsFrom = (date.getFullYear() - 1).toString() + "-" + month + "-" + day;
+}
+else
+    timeInMsFrom = date.getFullYear().toString() + "-" + monthFrom + "-" + day;
+
+
+
 class Chart extends React.Component {
 
     state = {
@@ -93,69 +126,69 @@ class Chart extends React.Component {
         colorPlumber: 'default',
         colorChemistry: 'default',
         colorOther: 'default',
-        fromDate: '',
-        toDate: '',
-        status1:'',
-        status2:'',
-        status3:'',
-        category1:'',
-        category2:'',
-        category3:'',
-        category4:'',
-        category5:'',
+        fromDate: timeInMsFrom,
+        toDate: timeInMsTo,
+        status1: '',
+        status2: '',
+        status3: '',
+        category1: '',
+        category2: '',
+        category3: '',
+        category4: '',
+        category5: '',
         urgency: false,
         Data: [],
     };
 
     searchProcessing = event => {
-        this.setState({ clickedProcessing: ! this.state.clickedProcessing });
-        this.setState({ colorProcessing: this.state.clickedProcessing ? 'default' : 'secondary' });
-        this.setState({ status2: this.state.clickedProcessing ? '' : 'В процессе'});
+        this.setState({clickedProcessing: !this.state.clickedProcessing});
+        this.setState({colorProcessing: this.state.clickedProcessing ? 'default' : 'secondary'});
+        this.setState({status2: this.state.clickedProcessing ? '' : 'В процессе'});
 
-      };
+    };
 
     searchSent = event => {
-        this.setState({ clickedSent: ! this.state.clickedSent });
-        this.setState({ colorSent: this.state.clickedSent ? 'default' : 'secondary' });
-        this.setState({ status1: this.state.clickedSent ? '' : 'Отправлена'});
+        this.setState({clickedSent: !this.state.clickedSent});
+        this.setState({colorSent: this.state.clickedSent ? 'default' : 'secondary'});
+        this.setState({status1: this.state.clickedSent ? '' : 'Отправлена'});
 
-      };
+    };
     searchComplete = event => {
-        this.setState({ clickedComplete: ! this.state.clickedComplete });
-        this.setState({ colorComplete: this.state.clickedComplete ? 'default' : 'secondary' });
-        this.setState({ status3: this.state.clickedComplete ? '' : 'Выполнена'});
-    
-      };
+        this.setState({clickedComplete: !this.state.clickedComplete});
+        this.setState({colorComplete: this.state.clickedComplete ? 'default' : 'secondary'});
+        this.setState({status3: this.state.clickedComplete ? '' : 'Выполнена'});
+
+    };
     searchCarpenter = event => {
-        this.setState({ clickedCarpenter: ! this.state.clickedCarpenter });
-        this.setState({ colorCarpenter: this.state.clickedCarpenter ? 'default' : 'secondary' });
-        this.setState({ category1: this.state.clickedCarpenter ? '' : 'Плотник' });
-    
-      };
+        this.setState({clickedCarpenter: !this.state.clickedCarpenter});
+        this.setState({colorCarpenter: this.state.clickedCarpenter ? 'default' : 'secondary'});
+        this.setState({category1: this.state.clickedCarpenter ? '' : 'Плотник'});
+
+    };
     searchPlumber = event => {
-        this.setState({ clickedPlumber: ! this.state.clickedPlumber });
-        this.setState({ colorPlumber: this.state.clickedPlumber ? 'default' : 'secondary' });
-        this.setState({ category2: this.state.clickedPlumber ? '' : 'Сантехник' });
-    
-      };
+        this.setState({clickedPlumber: !this.state.clickedPlumber});
+        this.setState({colorPlumber: this.state.clickedPlumber ? 'default' : 'secondary'});
+        this.setState({category2: this.state.clickedPlumber ? '' : 'Сантехник'});
+
+    };
     searchElectrician = event => {
-        this.setState({ clickedElictrician: ! this.state.clickedElictrician });
-        this.setState({ colorElictrician: this.state.clickedElictrician ? 'default' : 'secondary' });
-        this.setState({ category3: this.state.clickedElictrician ? '' : 'Электрик' });
-    
-      };
+        this.setState({clickedElictrician: !this.state.clickedElictrician});
+        this.setState({colorElictrician: this.state.clickedElictrician ? 'default' : 'secondary'});
+        this.setState({category3: this.state.clickedElictrician ? '' : 'Электрик'});
+
+    };
     searchChemistry = event => {
-        this.setState({ clickedChemistry: ! this.state.clickedChemistry });
-        this.setState({ colorChemistry: this.state.clickedChemistry ? 'default' : 'secondary' });
-        this.setState({ category4: this.state.clickedChemistry ? '' : 'Хим обработка' });
-    
-      };
+        this.setState({clickedChemistry: !this.state.clickedChemistry});
+        this.setState({colorChemistry: this.state.clickedChemistry ? 'default' : 'secondary'});
+        this.setState({category4: this.state.clickedChemistry ? '' : 'Хим обработка'});
+
+    };
     searchOther = event => {
-        this.setState({ clickedOther: ! this.state.clickedOther });
-        this.setState({ colorOther: this.state.clickedOther ? 'default' : 'secondary' });
-        this.setState({ category5: this.state.clickedOther ? '' : 'Другое' });
-    
-      };
+        this.setState({clickedOther: !this.state.clickedOther});
+        this.setState({colorOther: this.state.clickedOther ? 'default' : 'secondary'});
+        this.setState({category5: this.state.clickedOther ? '' : 'Другое'});
+
+    };
     handleChange = name => event => {
         this.setState({
             [name]: event.target.value,
@@ -178,6 +211,7 @@ class Chart extends React.Component {
             this.state.toDate),
             store.getState().auth.token);
     };
+
     render() {
         const {classes} = this.props;
         return (
@@ -199,8 +233,8 @@ class Chart extends React.Component {
                             }
                             onClick={this.searchSent}
                     >
-                    НОВЫЕ
-                </Button>
+                        НОВЫЕ
+                    </Button>
                     <Button
                         className={classes.button}
                         style={
@@ -216,17 +250,17 @@ class Chart extends React.Component {
                     >
                         В ПРОЦЕССЕ
                     </Button>
-                <Button variant="contained" className={classes.button} 
-                    style={
-                    this.state.colorComplete === 'secondary'
-                        ? {
-                        '--background-start': '#ec407a',
-                        }
-                        : {
-                        '--background-end': '#ffffff',
-                        }
-                    }
-                    onClick={this.searchComplete}>
+                    <Button variant="contained" className={classes.button}
+                            style={
+                                this.state.colorComplete === 'secondary'
+                                    ? {
+                                        '--background-start': '#ec407a',
+                                    }
+                                    : {
+                                        '--background-end': '#ffffff',
+                                    }
+                            }
+                            onClick={this.searchComplete}>
                         ВЫПОЛНЕНО
                     </Button>
                     <Typography variant="overline" gutterBottom className={classes.status}>

@@ -26,6 +26,8 @@ import {loadNews} from './../actions/news.js';
 import Checkbox from '@material-ui/core/Checkbox';
 import FormGroup from '@material-ui/core/FormGroup';
 import store from './../index.jsx';
+import withWidth from '@material-ui/core/withWidth';
+
 
 
 const styles = theme => ({
@@ -39,11 +41,18 @@ const styles = theme => ({
         borderWidth: 1,
     },
     textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-        width: 400,
+        margin: 5,
+        // minWidth: '100%',
+        alignSelf: 'center',
+        minWidth: 400,
+
+    },
+    textFieldOnMobile: {
+        margin: 5,
+        minWidth: '100%',
         alignSelf: 'center',
     },
+
     formControl: {
         margin: theme.spacing.unit * 3,
     },
@@ -59,11 +68,11 @@ const styles = theme => ({
     title: {
         fontSize: '1.5em',
     },
-    dialogOnMobile:{
+    dialogOnMobile: {
         '&:last-child': {
-        marginright:5,
-        marginLeft: 5,
-      },
+            marginright: 5,
+            marginLeft: 5,
+        },
     },
 });
 
@@ -106,16 +115,95 @@ class NewRequest extends React.Component {
     onClick = (e) => {
         console.log('onClick')
         this.props.createRequest(apiUrls.requests,
-            {   description: this.state.description,
+            {
+                description: this.state.description,
                 category: this.state.category,
                 materials: this.state.materials,
                 status: this.state.status,
-                urgency: this.state.urgency},
+                urgency: this.state.urgency
+            },
             store.getState().auth.token);
-        this.setState({ open: false, description: 'No description' });
+        this.setState({open: false, description: 'No description'});
     }
+
     render() {
+        // var fullscreen
+        // if ('xs' === this.props.width)
+        //     fullscreen = "true";
+        // else fullscreen = "false";
+
         const {classes} = this.props;
+
+        if ('xs' === this.props.width) {
+            return (
+                <div>
+                    <Button onClick={this.handleClickOpen} className={classes.root} size={"large"}>
+                        <AddIcon/>
+                        <Typography variant={"h6"}>
+                            СОЗДАТЬ
+                        </Typography>
+                    </Button>
+                    <Dialog
+                        open={this.state.open}
+                        onClose={this.handleClose}
+                        aria-labelledby="registration-dialog-title"
+                        // maxWidth={"lg"}
+                        fullScreen={"true"}
+                    >
+                        <DialogTitle id="registration-dialog-title" className={classes.title} align="center">Создание
+                            заявки</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText align="center" className={classes.head}>
+                                Заполните данные формы
+                            </DialogContentText>
+                            <Grid container spacing={8}>
+                                <Grid item md={12} sm={12} xs={12}>
+                                    <TextField
+                                        id="outlined-multiline-flexible"
+                                        label="Опишите проблему"
+                                        multiline
+                                        rowsMax="4"
+                                        value={this.state.description}
+                                        onChange={this.handleChange('description')}
+                                        className={classes.textFieldOnMobile}
+                                        margin="normal"
+                                        helperText="Что сломалось"
+                                        variant="outlined"
+                                    />
+                                </Grid>
+                            </Grid>
+                            <Typography align="center" className={classes.head}>
+                                Выберите тип заявки
+                            </Typography>
+                            <FormControl component="fieldset" className={classes.formControl}>
+                                <RadioGroup
+                                    aria-label="requestType"
+                                    name="request"
+                                    className={classes.group}
+                                    value={this.state.category}
+                                    onChange={this.handleChange('category')}
+                                >
+                                    <FormControlLabel value="Сантехник" control={<Radio/>} label="Сантехник"/>
+                                    <FormControlLabel value="Плотник" control={<Radio/>} label="Плотник"/>
+                                    <FormControlLabel value="Электрик" control={<Radio/>} label="Электрик"/>
+                                    <FormControlLabel value="Хим обработка" control={<Radio/>} label="Хим обработка"/>
+                                    <FormControlLabel value="Другое" control={<Radio/>} label="Другое"/>
+                                </RadioGroup>
+                            </FormControl>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={this.handleClose} color="primary">
+                                Отмена
+                            </Button>
+                            <Button onClick={this.onClick} color="primary">
+                                Создать
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                </div>
+            );
+
+        } else
         return (
             <div>
                 <Button onClick={this.handleClickOpen} className={classes.root} size={"large"}>
@@ -128,7 +216,7 @@ class NewRequest extends React.Component {
                     open={this.state.open}
                     onClose={this.handleClose}
                     aria-labelledby="registration-dialog-title"
-                    className={classes.dialogOnMobile}
+                    maxWidth={"lg"}
                 >
                     <DialogTitle id="registration-dialog-title" className={classes.title} align="center">Создание
                         заявки</DialogTitle>
@@ -136,18 +224,22 @@ class NewRequest extends React.Component {
                         <DialogContentText align="center" className={classes.head}>
                             Заполните данные формы
                         </DialogContentText>
-                        <TextField
-                            id="outlined-multiline-flexible"
-                            label="Опишите проблему"
-                            multiline
-                            rowsMax="4"
-                            value={this.state.description}
-                            onChange={this.handleChange('description')}
-                            className={classes.textField}
-                            margin="normal"
-                            helperText="Что сломалось"
-                            variant="outlined"
-                        />
+                        <Grid container spacing={8}>
+                            <Grid item md={12} sm={12} xs={12}>
+                                <TextField
+                                    id="outlined-multiline-flexible"
+                                    label="Опишите проблему"
+                                    multiline
+                                    rowsMax="4"
+                                    value={this.state.description}
+                                    onChange={this.handleChange('description')}
+                                    className={classes.textField}
+                                    margin="normal"
+                                    helperText="Что сломалось"
+                                    variant="outlined"
+                                />
+                            </Grid>
+                        </Grid>
                         <Typography align="center" className={classes.head}>
                             Выберите тип заявки
                         </Typography>
@@ -166,21 +258,6 @@ class NewRequest extends React.Component {
                                 <FormControlLabel value="Другое" control={<Radio/>} label="Другое"/>
                             </RadioGroup>
                         </FormControl>
-                        {/*<Typography align="center" className={classes.head}>*/}
-                            {/*Выберите приоритет заявки*/}
-                        {/*</Typography>*/}
-                        {/*<FormGroup className={classes.formGroupControl}>*/}
-                            {/*<FormControlLabel*/}
-                                {/*control={*/}
-                                    {/*<Checkbox*/}
-                                        {/*checked={this.state.urgency}*/}
-                                        {/*onChange={this.handleChangePriority}*/}
-                                        {/*value={this.state.urgency}*/}
-                                    {/*/>*/}
-                                {/*}*/}
-                                {/*label="Срочно"*/}
-                            {/*/>*/}
-                        {/*</FormGroup>*/}
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.handleClose} color="primary">
@@ -209,4 +286,4 @@ const mapStateToProps = ({auth}) => {
 const mapDispatchToProps = (dispatch) => {
     return bindActionCreators({createRequest, loadRequests}, dispatch)
 }
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(NewRequest));
+export default connect(mapStateToProps, mapDispatchToProps)(withWidth()(withStyles(styles)(NewRequest)));

@@ -53,7 +53,7 @@ class User(AbstractUser):
     gender = models.CharField(max_length=1)
     avatar = models.ImageField(upload_to='images')
     role = models.ForeignKey('role.Role', default=1)
-    is_active = models.BooleanField(default=False)
+    # is_active = models.BooleanField(default=False)
 
     def get_username(self):
         return self.username
